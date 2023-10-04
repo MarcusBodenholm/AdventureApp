@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Items>
+	<Item id="0">
+		<Name>Key</Name>
+		<Description>Used to open exits</Description>
+		<UsableOn>1,2,3</UsableOn>
+	</Item>
+	<Item id="2">
+		<Name>Green Key</Name>
+		<Description>Used to open exits</Description>
+		<UsableOn>1,2,3</UsableOn>
+	</Item>
+
+	<Item id="1">
+		<Name>Bottle</Name>
+		<Description>A bottle used to hold liquid</Description>
+		<UsableOn></UsableOn>
+	</Item>
+</Items>

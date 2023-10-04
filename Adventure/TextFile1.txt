@@ -1,0 +1,24 @@
+﻿Klassdiagram
+
+Character
+Name
+List<Item> Items
+
+Location
+ID
+Name
+Description
+List<Exit>
+List<Item>
+Endpoint
+
+Exit
+ID
+IsLocked - Bool
+LocationDirection1
+LocationDirection2
+
+Item
+Name
+Description
+ID
