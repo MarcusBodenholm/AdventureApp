@@ -37,15 +37,23 @@ namespace Adventure.Classes.Models
                     {
                         containerInfo += container.ToString();
                     }
-                    else if (count)
+                    else if (count == Containers.Count-1)
+                    {
+                        containerInfo += $" & {container}";
+                    }
                     else
                     {
-                        containerInfo += $", {}";
+                        containerInfo += $", {container}";
                     }
                     count++;
                 }
+                output += " " + containerInfo;
             }
-            return "";
+            else
+            {
+                return output;
+            }
+            return output;
         }
         public string ListItems()
         {

@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using Microsoft.VisualBasic;
 
 namespace Adventure
 {
@@ -47,13 +48,7 @@ namespace Adventure
         private void DirectionButton_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            Directions direction;
-            if (button.Text == "North") direction = Directions.North;
-            if (button.Text == "East") direction = Directions.East;
-            if (button.Text == "South") direction = Directions.South;
-            if (button.Text == "West") direction = Directions.West;
-
-            //Then do something with the direction
+            HandleInput($"Go {button.Text}");
         }
         private void UpdateStatus()
         {
@@ -65,16 +60,39 @@ namespace Adventure
                 listPlayerItems.Items.Add(item.Name);
             }
         }
+        private void HandleInput(string text)
+        {
+            string message = GameLogic.Parser(text);
+            UpdateLog($"Player: {text}");
+            UpdateLog(message);
+            textInput.Text = "";
+            UpdateStatus();
+        }
         private void textInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                string message = GameLogic.Parser(textInput.Text);
-                UpdateLog($"Player: {textInput.Text}");
-                UpdateLog(message);
-                textInput.Text = "";
+                HandleInput(textInput.Text);
             }
             UpdateStatus();
+        }
+
+        private void buttonLook_Click(object sender, EventArgs e)
+        {
+            HandleInput("look");
+        }
+
+        private void buttonPickup_Click(object sender, EventArgs e)
+        {
+            //InputPrompt prompt = new InputPrompt();
+            //prompt.ShowDialog();
+            //if (prompt.ShowDialog() == DialogResult.OK)
+            //{
+            //    HandleInput($"take {prompt.ItemName}");
+            //}
+            //prompt.Dispose();
+            string input = Interaction.InputBox("Which item do you want to pick up? ", "Item", "", 250, 250);
+            HandleInput($"take {input}");
         }
 
         //private ItemBase XMLTEST(string id)

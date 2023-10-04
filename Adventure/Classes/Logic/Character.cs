@@ -13,7 +13,7 @@ namespace Adventure.Classes.Models
             bool pathExists = CurrentLocation.Exits.ContainsKey(direction);
             if (pathExists == false)
             {
-                return (false, $"There is no door to the {direction}");
+                return (false, $"There is no door to the {direction.ToString().ToLower()}");
             }
 
             bool hasObstruction = CurrentLocation.Exits[direction].Obstruction != null;

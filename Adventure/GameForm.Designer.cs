@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            buttonPickup = new Button();
+            buttonLook = new Button();
             currentLocation = new Label();
             labelLocation = new Label();
             button4 = new Button();
@@ -38,12 +40,13 @@
             button1 = new Button();
             gameLog = new ListBox();
             textInput = new TextBox();
-            button5 = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(buttonPickup);
+            groupBox1.Controls.Add(buttonLook);
             groupBox1.Controls.Add(currentLocation);
             groupBox1.Controls.Add(labelLocation);
             groupBox1.Controls.Add(button4);
@@ -52,38 +55,63 @@
             groupBox1.Controls.Add(button2);
             groupBox1.Controls.Add(button1);
             groupBox1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBox1.Location = new Point(12, 12);
+            groupBox1.Location = new Point(10, 9);
+            groupBox1.Margin = new Padding(3, 2, 3, 2);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(751, 240);
+            groupBox1.Padding = new Padding(3, 2, 3, 2);
+            groupBox1.Size = new Size(657, 180);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Player";
+            // 
+            // buttonPickup
+            // 
+            buttonPickup.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonPickup.Location = new Point(327, 22);
+            buttonPickup.Name = "buttonPickup";
+            buttonPickup.Size = new Size(87, 28);
+            buttonPickup.TabIndex = 7;
+            buttonPickup.Text = "Pick up item";
+            buttonPickup.UseVisualStyleBackColor = true;
+            buttonPickup.Click += buttonPickup_Click;
+            // 
+            // buttonLook
+            // 
+            buttonLook.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonLook.Location = new Point(66, 115);
+            buttonLook.Name = "buttonLook";
+            buttonLook.Size = new Size(45, 22);
+            buttonLook.TabIndex = 6;
+            buttonLook.Text = "Look";
+            buttonLook.UseVisualStyleBackColor = true;
+            buttonLook.Click += buttonLook_Click;
             // 
             // currentLocation
             // 
             currentLocation.AutoSize = true;
             currentLocation.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            currentLocation.Location = new Point(98, 39);
+            currentLocation.Location = new Point(86, 29);
             currentLocation.Name = "currentLocation";
-            currentLocation.Size = new Size(0, 28);
+            currentLocation.Size = new Size(0, 21);
             currentLocation.TabIndex = 5;
             // 
             // labelLocation
             // 
             labelLocation.AutoSize = true;
             labelLocation.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            labelLocation.Location = new Point(10, 39);
+            labelLocation.Location = new Point(9, 29);
             labelLocation.Name = "labelLocation";
-            labelLocation.Size = new Size(91, 28);
+            labelLocation.Size = new Size(72, 21);
             labelLocation.TabIndex = 3;
             labelLocation.Text = "Location:";
             // 
             // button4
             // 
             button4.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button4.Location = new Point(71, 202);
+            button4.Location = new Point(77, 142);
+            button4.Margin = new Padding(3, 2, 3, 2);
             button4.Name = "button4";
-            button4.Size = new Size(50, 30);
+            button4.Size = new Size(22, 22);
             button4.TabIndex = 4;
             button4.Text = "South";
             button4.UseVisualStyleBackColor = true;
@@ -93,18 +121,20 @@
             // 
             listPlayerItems.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             listPlayerItems.FormattingEnabled = true;
-            listPlayerItems.ItemHeight = 28;
-            listPlayerItems.Location = new Point(480, 29);
+            listPlayerItems.ItemHeight = 21;
+            listPlayerItems.Location = new Point(420, 22);
+            listPlayerItems.Margin = new Padding(3, 2, 3, 2);
             listPlayerItems.Name = "listPlayerItems";
-            listPlayerItems.Size = new Size(265, 200);
+            listPlayerItems.Size = new Size(232, 151);
             listPlayerItems.TabIndex = 0;
             // 
             // button3
             // 
             button3.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button3.Location = new Point(71, 143);
+            button3.Location = new Point(77, 88);
+            button3.Margin = new Padding(3, 2, 3, 2);
             button3.Name = "button3";
-            button3.Size = new Size(50, 30);
+            button3.Size = new Size(22, 22);
             button3.TabIndex = 3;
             button3.Text = "North";
             button3.UseVisualStyleBackColor = true;
@@ -113,9 +143,10 @@
             // button2
             // 
             button2.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(15, 173);
+            button2.Location = new Point(117, 115);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(50, 30);
+            button2.Size = new Size(22, 22);
             button2.TabIndex = 2;
             button2.Text = "East";
             button2.UseVisualStyleBackColor = true;
@@ -124,9 +155,10 @@
             // button1
             // 
             button1.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(127, 173);
+            button1.Location = new Point(38, 115);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(50, 30);
+            button1.Size = new Size(22, 22);
             button1.TabIndex = 1;
             button1.Text = "West";
             button1.UseVisualStyleBackColor = true;
@@ -137,39 +169,32 @@
             gameLog.FormattingEnabled = true;
             gameLog.HorizontalExtent = 500;
             gameLog.HorizontalScrollbar = true;
-            gameLog.ItemHeight = 20;
-            gameLog.Location = new Point(12, 295);
+            gameLog.ItemHeight = 15;
+            gameLog.Location = new Point(10, 221);
+            gameLog.Margin = new Padding(3, 2, 3, 2);
             gameLog.Name = "gameLog";
             gameLog.SelectionMode = SelectionMode.None;
-            gameLog.Size = new Size(751, 144);
+            gameLog.Size = new Size(658, 109);
             gameLog.TabIndex = 1;
             // 
             // textInput
             // 
-            textInput.Location = new Point(12, 262);
+            textInput.Location = new Point(10, 196);
+            textInput.Margin = new Padding(3, 2, 3, 2);
             textInput.Name = "textInput";
-            textInput.Size = new Size(625, 27);
+            textInput.Size = new Size(658, 23);
             textInput.TabIndex = 0;
             textInput.KeyDown += textInput_KeyDown;
             // 
-            // button5
-            // 
-            button5.Location = new Point(643, 260);
-            button5.Name = "button5";
-            button5.Size = new Size(120, 29);
-            button5.TabIndex = 3;
-            button5.Text = "Send";
-            button5.UseVisualStyleBackColor = true;
-            // 
             // GameForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(775, 455);
-            Controls.Add(button5);
+            ClientSize = new Size(678, 341);
             Controls.Add(textInput);
             Controls.Add(gameLog);
             Controls.Add(groupBox1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "GameForm";
             Text = "GameForm";
             groupBox1.ResumeLayout(false);
@@ -190,6 +215,7 @@
         private TextBox textInput;
         private Label currentLocation;
         private Label labelLocation;
-        private Button button5;
+        private Button buttonLook;
+        private Button buttonPickup;
     }
 }
