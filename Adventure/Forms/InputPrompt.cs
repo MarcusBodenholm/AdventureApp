@@ -12,24 +12,20 @@ namespace Adventure.Classes.Models
 {
     public partial class InputPrompt : Form
     {
-        public string ItemName { get; set; } = string.Empty;
-        public InputPrompt()
+        public string Input { get; set; } = string.Empty;
+        public InputPrompt(string question, string title)
         {
             InitializeComponent();
+            this.Text = title;
+            labelQuestion.Text = question;
         }
         private void UserIsDone(object sender, EventArgs e)
         {
-            ItemName = textItem.Text;
+            Input = textItem.Text;
             DialogResult = DialogResult.OK;
             this.Close();
         }
-
-        private void buttonDone_Click(object sender, EventArgs e)
-        {
-            UserIsDone(sender, e);
-        }
-
-        private void textItem_KeyDown(object sender, KeyEventArgs e)
+        private void textItem_KeyDown_1(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {

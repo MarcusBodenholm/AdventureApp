@@ -7,23 +7,23 @@ namespace Adventure.Classes.Logic
 {
     public class GameLogic
     {
-        public Character PC { get; set; } = new Character();
-        public string Parser(string text)
+        private GameState GameState { get; set; } = new GameState();
+        public string DecisionTree(string text)
         {
             //Add in new 
             Dictionary<Commands, Func<Parsed, string>> methods = new()
             {
-                {Commands.Drop, PC.DropItem },
+                {Commands.Drop, DropItem },
                 {Commands.Inventory, ShowPlayerInventory},
                 {Commands.Move, MoveCharacter },
                 {Commands.Check, CheckDirection },
                 {Commands.Look, InspectLocation },
-                {Commands.Examine, PC.ExamineItem },
+                {Commands.Examine, ExamineX },
                 {Commands.Inspect, InspectDirection },
-                {Commands.Take, PC.PickUpItem}
+                {Commands.Take, TakeItem}
 
             };
-            Parsed parsedText = EnumParser.ParseText(text.ToLower());
+            Parsed parsedText = Parser.ParseText(text.ToLower());
             MessageBox.Show($"{parsedText.Command}, {parsedText.Direction}, {parsedText.ItemOne}, {parsedText.ItemTwo}, {parsedText.Obstruction}, {parsedText.Remaining}");
 
             if (parsedText.Command == Commands.Use && parsedText.ItemOne != Items.Unknown &&
@@ -38,7 +38,26 @@ namespace Adventure.Classes.Logic
             }
             return "Command was not recognized";
         }
-        public string InspectDirection(Parsed parsed)
+        private string ExamineX(Parsed parsed)
+        {
+            if (parsed.ItemOne != Items.Unknown) return GameState.ExamineItem(parsed);
+            if (parsed.Container != Containers.Unknown) return GameState.ExamineContainer(parsed);
+            return "Command was not recognized";
+        }
+        private string DropItem(Parsed parsed)
+        {
+            return GameState.DropItem(parsed);
+        }
+        private string TakeItem(Parsed parsed)
+        {
+            if (parsed.Container != Containers.Unknown && parsed.Remaining.Contains("from")
+                && parsed.ItemOne != Items.Unknown && parsed.Remaining.Length == 4)
+            {
+                return GameState.PickUpItemFromContainer(parsed);
+            }
+            return GameState.PickUpItem(parsed);
+        }
+        private string InspectDirection(Parsed parsed)
         {
             if (parsed.Remaining.Length > 2)
             {
@@ -48,53 +67,49 @@ namespace Adventure.Classes.Logic
             {
                 return "Not a valid direction.";
             }
-            return PC.InspectDirection(parsed);
+            return GameState.InspectDirection(parsed);
         }
-        public string UseItemOnX(Parsed parsed)
+        private string UseItemOnX(Parsed parsed)
         {
             if (parsed.ItemTwo != Items.Unknown)
             {
-                return PC.UseItemOnItem(parsed);
+                return GameState.UseItemOnItem(parsed);
             }
             if (parsed.Obstruction != Obstructions.Unknown)
             {
-                return PC.ClearObstruction(parsed);
+                return GameState.ClearObstruction(parsed);
             }
             return "Command was not recognized";
         }
-        public string CheckDirection(Parsed parsed)
+        private string CheckDirection(Parsed parsed)
         {
             if (parsed.Direction == Directions.Unknown)
             {
                 return "The direction needs to be North, South, East or West";
             }
-            (bool check, string output) = PC.CheckDirection(parsed);
+            (bool check, string output) = GameState.CheckDirection(parsed);
             return output;
 
         }
-        public string InspectLocation(Parsed parsed)
+        private string InspectLocation(Parsed parsed)
         {
-            return PC.InspectLocation();
+            return GameState.InspectLocation();
         }
-        public string MoveCharacter(Parsed parsed)
+        private string MoveCharacter(Parsed parsed)
         {
             if (parsed.Direction == Directions.Unknown)
             {
                 return "The direction needs to be North, South, East or West";
             }
-            return PC.MoveToLocation(parsed);
+            return GameState.MoveToLocation(parsed);
         }
-        public string ShowPlayerInventory(Parsed parsed)
+        private string ShowPlayerInventory(Parsed parsed)
         {
-            return PC.ShowItems();
+            return GameState.DisplayInventory();
         }
-        public Character UpdateStatus()
+        public GameState UpdateState()
         {
-            return PC;
-        }
-        public string ClearObstruction(Parsed parsed)
-        {
-            return PC.ClearObstruction(parsed);
+            return GameState;
         }
         public void HardCodeGameStart()
         {
@@ -108,7 +123,7 @@ namespace Adventure.Classes.Logic
             LocationItem.Article = "A";
             LocationItem.Type = Items.Corkscrew;
             LocationItem.Description = "This is a Corkscrew.";
-            LocationItem.UsableOn = "Bottle";
+            LocationItem.UsableOn = Items.Bottle;
 
             Item extinguisher = new Item();
             extinguisher.Name = "Fire extinguisher";
@@ -149,7 +164,7 @@ namespace Adventure.Classes.Logic
             testExit.Locations.Add(Directions.North, secondL);
             testLocation.Exits.Add(Directions.North, testExit);
             secondL.Exits.Add(Directions.South, testExit);
-            PC.CurrentLocation = testLocation;
+            GameState.SetStartingLocation(testLocation);
             Obstruction obstruction = new Obstruction();
             obstruction.Name = "Boulder";
             obstruction.Article = "A";
@@ -157,13 +172,27 @@ namespace Adventure.Classes.Logic
             obstruction.ClearedBy = "Shovel";
             testExit.Obstruction = obstruction;
 
+            Container testContainer = new();
+            testContainer.Name = "Cupboard";
+            testContainer.Article = "A";
+            testContainer.Description = "This is a cupboard.";
+            testContainer.Type = Containers.Cupboard;
+            testLocation.Containers.Add(testContainer);
+
+            Item key = new Item();
+            key.Name = "Key";
+            key.Article = "A";
+            key.Description = "This is a key.";
+            key.Type = Items.Key;
+            testContainer.AddItem(key);
+
         }
         public string[] GameStart()
         {
             string[] output = new string[]
             {
                 "You awake with no memory of where you are or how you got here",
-                $"{PC.InspectLocation()}"
+                $"{GameState.InspectLocation()}"
             };
             return output;
         }

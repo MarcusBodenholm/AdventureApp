@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
+            buttonUseItemOn = new Button();
+            buttonExamineitem = new Button();
+            buttonDropitem = new Button();
             buttonPickup = new Button();
             buttonLook = new Button();
             currentLocation = new Label();
@@ -45,6 +48,9 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(buttonUseItemOn);
+            groupBox1.Controls.Add(buttonExamineitem);
+            groupBox1.Controls.Add(buttonDropitem);
             groupBox1.Controls.Add(buttonPickup);
             groupBox1.Controls.Add(buttonLook);
             groupBox1.Controls.Add(currentLocation);
@@ -55,20 +61,54 @@
             groupBox1.Controls.Add(button2);
             groupBox1.Controls.Add(button1);
             groupBox1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBox1.Location = new Point(11, 12);
+            groupBox1.Location = new Point(10, 9);
+            groupBox1.Margin = new Padding(3, 2, 3, 2);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(751, 240);
+            groupBox1.Padding = new Padding(3, 2, 3, 2);
+            groupBox1.Size = new Size(657, 195);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Player";
             // 
+            // buttonUseItemOn
+            // 
+            buttonUseItemOn.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonUseItemOn.Location = new Point(327, 124);
+            buttonUseItemOn.Name = "buttonUseItemOn";
+            buttonUseItemOn.Size = new Size(87, 28);
+            buttonUseItemOn.TabIndex = 10;
+            buttonUseItemOn.Text = "Use item on";
+            buttonUseItemOn.UseVisualStyleBackColor = true;
+            buttonUseItemOn.Click += buttonUseItemOn_Click;
+            // 
+            // buttonExamineitem
+            // 
+            buttonExamineitem.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonExamineitem.Location = new Point(327, 90);
+            buttonExamineitem.Name = "buttonExamineitem";
+            buttonExamineitem.Size = new Size(87, 28);
+            buttonExamineitem.TabIndex = 9;
+            buttonExamineitem.Text = "Examine item";
+            buttonExamineitem.UseVisualStyleBackColor = true;
+            buttonExamineitem.Click += buttonExamineitem_Click;
+            // 
+            // buttonDropitem
+            // 
+            buttonDropitem.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonDropitem.Location = new Point(327, 56);
+            buttonDropitem.Name = "buttonDropitem";
+            buttonDropitem.Size = new Size(87, 28);
+            buttonDropitem.TabIndex = 8;
+            buttonDropitem.Text = "Drop item";
+            buttonDropitem.UseVisualStyleBackColor = true;
+            buttonDropitem.Click += buttonDropitem_Click;
+            // 
             // buttonPickup
             // 
             buttonPickup.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonPickup.Location = new Point(374, 29);
-            buttonPickup.Margin = new Padding(3, 4, 3, 4);
+            buttonPickup.Location = new Point(327, 22);
             buttonPickup.Name = "buttonPickup";
-            buttonPickup.Size = new Size(99, 37);
+            buttonPickup.Size = new Size(87, 28);
             buttonPickup.TabIndex = 7;
             buttonPickup.Text = "Pick up item";
             buttonPickup.UseVisualStyleBackColor = true;
@@ -77,10 +117,9 @@
             // buttonLook
             // 
             buttonLook.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonLook.Location = new Point(75, 153);
-            buttonLook.Margin = new Padding(3, 4, 3, 4);
+            buttonLook.Location = new Point(66, 115);
             buttonLook.Name = "buttonLook";
-            buttonLook.Size = new Size(51, 29);
+            buttonLook.Size = new Size(45, 22);
             buttonLook.TabIndex = 6;
             buttonLook.Text = "Look";
             buttonLook.UseVisualStyleBackColor = true;
@@ -90,27 +129,28 @@
             // 
             currentLocation.AutoSize = true;
             currentLocation.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            currentLocation.Location = new Point(98, 39);
+            currentLocation.Location = new Point(86, 29);
             currentLocation.Name = "currentLocation";
-            currentLocation.Size = new Size(0, 28);
+            currentLocation.Size = new Size(0, 21);
             currentLocation.TabIndex = 5;
             // 
             // labelLocation
             // 
             labelLocation.AutoSize = true;
             labelLocation.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            labelLocation.Location = new Point(10, 39);
+            labelLocation.Location = new Point(9, 29);
             labelLocation.Name = "labelLocation";
-            labelLocation.Size = new Size(91, 28);
+            labelLocation.Size = new Size(72, 21);
             labelLocation.TabIndex = 3;
             labelLocation.Text = "Location:";
             // 
             // button4
             // 
             button4.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button4.Location = new Point(88, 189);
+            button4.Location = new Point(77, 142);
+            button4.Margin = new Padding(3, 2, 3, 2);
             button4.Name = "button4";
-            button4.Size = new Size(25, 29);
+            button4.Size = new Size(22, 22);
             button4.TabIndex = 4;
             button4.Text = "South";
             button4.UseVisualStyleBackColor = true;
@@ -120,18 +160,20 @@
             // 
             listPlayerItems.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             listPlayerItems.FormattingEnabled = true;
-            listPlayerItems.ItemHeight = 28;
-            listPlayerItems.Location = new Point(480, 29);
+            listPlayerItems.ItemHeight = 21;
+            listPlayerItems.Location = new Point(420, 22);
+            listPlayerItems.Margin = new Padding(3, 2, 3, 2);
             listPlayerItems.Name = "listPlayerItems";
-            listPlayerItems.Size = new Size(265, 200);
+            listPlayerItems.Size = new Size(232, 172);
             listPlayerItems.TabIndex = 0;
             // 
             // button3
             // 
             button3.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button3.Location = new Point(88, 117);
+            button3.Location = new Point(77, 88);
+            button3.Margin = new Padding(3, 2, 3, 2);
             button3.Name = "button3";
-            button3.Size = new Size(25, 29);
+            button3.Size = new Size(22, 22);
             button3.TabIndex = 3;
             button3.Text = "North";
             button3.UseVisualStyleBackColor = true;
@@ -140,9 +182,10 @@
             // button2
             // 
             button2.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(134, 153);
+            button2.Location = new Point(117, 115);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(25, 29);
+            button2.Size = new Size(22, 22);
             button2.TabIndex = 2;
             button2.Text = "East";
             button2.UseVisualStyleBackColor = true;
@@ -151,9 +194,10 @@
             // button1
             // 
             button1.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(43, 153);
+            button1.Location = new Point(38, 115);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(25, 29);
+            button1.Size = new Size(22, 22);
             button1.TabIndex = 1;
             button1.Text = "West";
             button1.UseVisualStyleBackColor = true;
@@ -164,29 +208,32 @@
             gameLog.FormattingEnabled = true;
             gameLog.HorizontalExtent = 500;
             gameLog.HorizontalScrollbar = true;
-            gameLog.ItemHeight = 20;
-            gameLog.Location = new Point(11, 295);
+            gameLog.ItemHeight = 15;
+            gameLog.Location = new Point(10, 208);
+            gameLog.Margin = new Padding(3, 2, 3, 2);
             gameLog.Name = "gameLog";
             gameLog.SelectionMode = SelectionMode.None;
-            gameLog.Size = new Size(751, 144);
+            gameLog.Size = new Size(870, 169);
             gameLog.TabIndex = 1;
             // 
             // textInput
             // 
-            textInput.Location = new Point(11, 261);
+            textInput.Location = new Point(10, 381);
+            textInput.Margin = new Padding(3, 2, 3, 2);
             textInput.Name = "textInput";
-            textInput.Size = new Size(751, 27);
+            textInput.Size = new Size(658, 23);
             textInput.TabIndex = 0;
             textInput.KeyDown += textInput_KeyDown;
             // 
             // GameForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(775, 455);
+            ClientSize = new Size(892, 415);
             Controls.Add(textInput);
             Controls.Add(gameLog);
             Controls.Add(groupBox1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "GameForm";
             Text = "GameForm";
             groupBox1.ResumeLayout(false);
@@ -209,5 +256,8 @@
         private Label labelLocation;
         private Button buttonLook;
         private Button buttonPickup;
+        private Button buttonDropitem;
+        private Button buttonExamineitem;
+        private Button buttonUseItemOn;
     }
 }

@@ -1,15 +1,26 @@
-﻿namespace Adventure.Classes.Models
+﻿using Adventure.Enums;
+
+namespace Adventure.Classes.Models
 {
-    public class Container
+    public class Container : IInventory
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int ID { get; set; } = -1;
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public List<Item> Items { get; set; } = new List<Item>();
-        public string Article { get; set; }
+        public string Article { get; set; } = string.Empty;
+        public Containers Type { get; set; } = Containers.Unknown;
         public override string ToString()
         {
             return $"{Article.ToLower()} {Name.ToLower()}";
+        }
+        public bool HasItem(Items itemType)
+        {
+            return Items.Any(item => item.Type == itemType);
+        }
+        public Item? GetItem(Items itemType)
+        {
+            return Items.Find(item => item.Type == itemType);
         }
         public void RemoveItem(Item item)
         {

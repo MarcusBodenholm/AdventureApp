@@ -25,7 +25,7 @@ namespace Adventure
             InitializeComponent();
             GameLogic = new GameLogic();
             GameLogic.HardCodeGameStart();
-            UpdateStatus();
+            UpdateState();
             string[] gameStartText = GameLogic.GameStart();
             foreach (var text in gameStartText)
             {
@@ -50,49 +50,71 @@ namespace Adventure
             Button button = (Button)sender;
             HandleInput($"Go {button.Text}");
         }
-        private void UpdateStatus()
+        private void UpdateState()
         {
-            Character PC = GameLogic.UpdateStatus();
-            currentLocation.Text = PC.CurrentLocation.Name;
+            GameState GameState = GameLogic.UpdateState();
+            currentLocation.Text = GameState.GetCurrentLocationInfo();
             listPlayerItems.Items.Clear();
-            foreach (var item in PC.Items)
+            foreach (var item in GameState.GetPlayerItems())
             {
-                listPlayerItems.Items.Add(item.Name);
+                listPlayerItems.Items.Add(item);
             }
         }
         private void HandleInput(string text)
         {
-            string message = GameLogic.Parser(text);
+            string message = GameLogic.DecisionTree(text);
             UpdateLog($"Player: {text}");
             UpdateLog(message);
             textInput.Text = "";
-            UpdateStatus();
+            UpdateState();
         }
         private void textInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 HandleInput(textInput.Text);
+                UpdateState();
+                e.SuppressKeyPress = true;
             }
-            UpdateStatus();
         }
 
         private void buttonLook_Click(object sender, EventArgs e)
         {
             HandleInput("look");
         }
-
+        private string PromptUser(string question, string title)
+        {
+            InputPrompt prompt = new InputPrompt(question, title);
+            prompt.ShowDialog();
+            return prompt.Input;
+        }
         private void buttonPickup_Click(object sender, EventArgs e)
         {
-            //InputPrompt prompt = new InputPrompt();
-            //prompt.ShowDialog();
-            //if (prompt.ShowDialog() == DialogResult.OK)
-            //{
-            //    HandleInput($"take {prompt.ItemName}");
-            //}
-            //prompt.Dispose();
-            string input = Interaction.InputBox("Which item do you want to pick up? ", "Item", "", 250, 250);
-            HandleInput($"take {input}");
+            HandleInput($"take {PromptUser("Which item do you want to take?", "Item")}");
+        }
+
+        private void buttonDropitem_Click(object sender, EventArgs e)
+        {
+            if (listPlayerItems.SelectedItem != null)
+            {
+                HandleInput($"drop {listPlayerItems.SelectedItem}");
+            }
+        }
+        private void buttonExamineitem_Click(object sender, EventArgs e)
+        {
+            if (listPlayerItems.SelectedItem != null)
+            {
+                HandleInput($"examine {listPlayerItems.SelectedItem}");
+            }
+
+        }
+
+        private void buttonUseItemOn_Click(object sender, EventArgs e)
+        {
+            if (listPlayerItems.SelectedItem != null)
+            {
+                HandleInput($"use {listPlayerItems.SelectedItem} on {PromptUser("What do you want to use it on?", "Use on")}");
+            }
         }
 
         //private ItemBase XMLTEST(string id)

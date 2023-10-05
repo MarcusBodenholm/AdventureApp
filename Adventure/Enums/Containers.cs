@@ -1,9 +1,8 @@
 ﻿namespace Adventure.Enums
 {
-    public enum Obstructions
+    public enum Containers
     {
         Unknown,
-        Fire,
-        Boulder
+        Cupboard
     }
 }

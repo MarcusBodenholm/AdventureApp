@@ -3,20 +3,20 @@ using System.Security.Permissions;
 
 namespace Adventure.Classes
 {
-    public static class EnumParser
+    public static class Parser
     {
         private readonly static Dictionary<string, Directions> directions = new()
         {
-                {"north", Directions.North },
-                {"south", Directions.South },
-                {"east", Directions.East },
-                {"west", Directions.West }
+            {"north", Directions.North },
+            {"south", Directions.South },
+            {"east", Directions.East },
+            {"west", Directions.West }
 
         };
         private readonly static Dictionary<string, Obstructions> obstructions = new()
         {
-                {"fire", Obstructions.Fire },
-                {"boulder", Obstructions.Boulder}
+            {"fire", Obstructions.Fire },
+            {"boulder", Obstructions.Boulder}
         };
         private readonly static Dictionary<string, Commands> commands = new()
         {
@@ -47,16 +47,32 @@ namespace Adventure.Classes
 
         private readonly static Dictionary<string, Items> items = new()
         {
-                {"fire extinguisher", Items.Extinguisher },
-                {"corkscrew", Items.Corkscrew },
-                {"bottle", Items.Bottle },
-                {"opened bottle", Items.OpenedBottle },
-                {"extinguisher", Items.Extinguisher },
-                {"shovel", Items.Shovel }
+            {"fire extinguisher", Items.Extinguisher },
+            {"corkscrew", Items.Corkscrew },
+            {"bottle", Items.Bottle },
+            {"opened bottle", Items.OpenedBottle },
+            {"extinguisher", Items.Extinguisher },
+            {"shovel", Items.Shovel },
+            {"key", Items.Key }
 
         };
-
-        public static Directions Direction(string input)
+        private readonly static Dictionary<string, Containers> containers = new()
+        {
+            {"cupboard", Containers.Cupboard },
+        };
+        private static Containers Container(string input)
+        {
+            string text = input.ToLower();
+            if (containers.ContainsKey(text))
+            {
+                return containers[text];
+            }
+            else
+            {
+                return Containers.Unknown;
+            }
+        }
+        private static Directions Direction(string input)
         {
             string text = input.ToLower();
 
@@ -69,7 +85,7 @@ namespace Adventure.Classes
                 return Directions.Unknown;
             }
         }
-        public static Commands Command(string input)
+        private static Commands Command(string input)
         {
             string text = input.ToLower();
 
@@ -83,7 +99,7 @@ namespace Adventure.Classes
                 return Commands.Unknown;
             }
         }
-        public static Items Item(string text)
+        private static Items Item(string text)
         {
             if (items.ContainsKey(text))
             {
@@ -94,7 +110,7 @@ namespace Adventure.Classes
                 return Items.Unknown;
             }
         }
-        public static Obstructions Obstruction(string text)
+        private static Obstructions Obstruction(string text)
         {
             if (obstructions.ContainsKey(text))
             {
@@ -108,25 +124,25 @@ namespace Adventure.Classes
         public static Parsed ParseText(string input)
         {
             Parsed parsed = new();
-            string[] inputs = input.Split(" ");
             input = ParseCommand(input, parsed);
             input = ParseDirection(input, parsed);
             input = ParseItem(input, parsed, 1);
             input = ParseItem(input, parsed, 2);
             input = ParseObstruction(input, parsed);
-            parsed.Remaining = input;
+            input = ParseContainer(input, parsed);
+            parsed.Remaining = input.Replace(".", "");
             return parsed;
         }
-        public static string ConsumeTextAtStart(string input, string toConsume)
+        private static string ConsumeTextAtStart(string input, string toConsume)
         {
             return input.Substring(toConsume.Length).Trim();
         }
-        public static string ConsumeTextAtEnd(string input, string toConsume)
+        private static string ConsumeTextAtEnd(string input, string toConsume)
         {
             int idx = input.Length -toConsume.Length- 1;
-            return input.Substring(0,idx).Trim();
+            return idx != -1 ? input.Substring(0,idx).Trim() : "";
         }
-        public static string ParseDirection(string input, Parsed parsed)
+        private static string ParseDirection(string input, Parsed parsed)
         {
             foreach (string direction in directions.Keys)
             {
@@ -141,7 +157,7 @@ namespace Adventure.Classes
             }
             return input;
         }
-        public static string ParseObstruction(string input, Parsed parsed)
+        private static string ParseObstruction(string input, Parsed parsed)
         {
             foreach (string obstruction in obstructions.Keys)
             {
@@ -156,7 +172,7 @@ namespace Adventure.Classes
             }
             return input;
         }
-        public static string ParseCommand(string input, Parsed parsed)
+        private static string ParseCommand(string input, Parsed parsed)
         {
             foreach (string command in commands.Keys)
             {
@@ -170,7 +186,7 @@ namespace Adventure.Classes
             }
             return input;
         }
-        public static string ParseItem(string input, Parsed parsed, int itemNr)
+        private static string ParseItem(string input, Parsed parsed, int itemNr)
         {
             foreach (string item in items.Keys)
             {
@@ -191,6 +207,20 @@ namespace Adventure.Classes
             }
             return input;
         }
+        private static string ParseContainer(string input, Parsed parsed)
+        {
+            foreach (string container in containers.Keys)
+            {
+                if (input.EndsWith(container))
+                {
+                    input = ConsumeTextAtEnd(input, container);
+                    parsed.Container = Container(container);
+                    parsed.ContainerText = container;
+                    return input;
+                }
+            }
+            return input;
+        }
     }
 
     public class Parsed
@@ -200,11 +230,13 @@ namespace Adventure.Classes
         public Commands Command { get; set; } = Commands.Unknown;
         public Obstructions Obstruction { get; set; } = Obstructions.Unknown;
         public Directions Direction { get; set; } = Directions.Unknown;
-        public string Remaining { get; set; }
+        public Containers Container { get; set; } = Containers.Unknown;
+        public string Remaining { get; set; } = string.Empty;
         public string ItemOneText { get; set; } = "";
         public string ItemTwoText { get; set; } = "";
         public string CommandText { get; set; } = "";
         public string ObstructionText { get; set; } = "";
         public string DirectionText { get; set; } = "";
+        public string ContainerText { get; set; } = "";
     }
 }

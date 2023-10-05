@@ -2,13 +2,21 @@
 
 namespace Adventure.Classes.Models
 {
-    public class Location
+    public interface IInventory
+    {
+        public void RemoveItem(Item item);
+        public void AddItem(Item item);
+        public Item? GetItem(Items itemType);
+        public bool HasItem(Items itemType);
+    }
+
+    public class Location : IInventory
     {
         public string Name { get; set; } = string.Empty;
         public int ID { get; set; } = -1;
         public string Description { get; set; } = string.Empty;
-        public List<Containers> Containers { get; set; } = new List<Containers>();
-        public Dictionary<Directions, Exit> Exits { get; set; } = new Dictionary<Directions, Exit>();
+        public List<Container> Containers { get; set; } = new();
+        public Dictionary<Directions, Exit> Exits { get; set; } = new();
         public string Article { get; set; }
         public bool IsEndPoint { get; set; } = false;
         public List<Item> Items { get; set; } = new List<Item>();
@@ -16,17 +24,37 @@ namespace Adventure.Classes.Models
         {
             return $"{Article.ToLower()} {Name}".ToLower();
         }
-        public void RemoveItem(int id)
+        public void RemoveItem(Item item)
         {
-            Items = Items.Where(item => item.ID != id).ToList();
+            Items.Remove(item);
         }
         public void AddItem(Item item)
         {
             Items.Add(item);
         }
+        public bool HasItem(Items itemType)
+        {
+            return Items.Any(item => item.Type == itemType);
+        }
+        public Item? GetItem(Items itemType)
+        {
+            return Items.Find(item => item.Type == itemType);
+        }
+        public Container? GetContainer(Containers containerType)
+        {
+            return Containers.Find(container => container.Type == containerType);
+        }
         public string Inspect()
         {
             string output = Description;
+            if (Items.Count == 0)
+            {
+                output += " There are no items here.";
+            }
+            else
+            {
+                output += $" You see the following items in the room: {ListItems()}.";
+            }
             if (Containers.Count > 0)
             {
                 string containerInfo = $"In the {Name.ToLower()} there's ";
@@ -49,10 +77,6 @@ namespace Adventure.Classes.Models
                 }
                 output += " " + containerInfo;
             }
-            else
-            {
-                return output;
-            }
             return output;
         }
         public string ListItems()
@@ -65,6 +89,10 @@ namespace Adventure.Classes.Models
                 {
                     items += item.ToString();
                 }
+                else if (count == Items.Count-1)
+                {
+                    items += $" & {item}";
+                } 
                 else
                 {
                     items += ", " + item.ToString();

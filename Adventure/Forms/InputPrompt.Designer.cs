@@ -28,46 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            labelQuestion = new Label();
             textItem = new TextBox();
-            buttonDone = new Button();
             SuspendLayout();
             // 
-            // label1
+            // labelQuestion
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(73, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Which item?";
+            labelQuestion.AutoSize = true;
+            labelQuestion.Location = new Point(12, 9);
+            labelQuestion.Name = "labelQuestion";
+            labelQuestion.Size = new Size(73, 15);
+            labelQuestion.TabIndex = 0;
+            labelQuestion.Text = "Which item?";
             // 
             // textItem
             // 
             textItem.Location = new Point(12, 27);
             textItem.Name = "textItem";
-            textItem.Size = new Size(146, 23);
-            textItem.TabIndex = 1;
-            // 
-            // buttonDone
-            // 
-            buttonDone.Location = new Point(164, 26);
-            buttonDone.Name = "buttonDone";
-            buttonDone.Size = new Size(57, 23);
-            buttonDone.TabIndex = 2;
-            buttonDone.Text = "Done";
-            buttonDone.UseVisualStyleBackColor = true;
-            buttonDone.Click += buttonDone_Click;
+            textItem.Size = new Size(173, 23);
+            textItem.TabIndex = 0;
+            textItem.KeyDown += textItem_KeyDown_1;
             // 
             // InputPrompt
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(233, 59);
-            Controls.Add(buttonDone);
+            ClientSize = new Size(197, 59);
             Controls.Add(textItem);
-            Controls.Add(label1);
+            Controls.Add(labelQuestion);
+            MaximizeBox = false;
             Name = "InputPrompt";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "InputPrompt";
             ResumeLayout(false);
             PerformLayout();
@@ -75,8 +66,7 @@
 
         #endregion
 
-        private Label label1;
+        private Label labelQuestion;
         private TextBox textItem;
-        private Button buttonDone;
     }
 }
