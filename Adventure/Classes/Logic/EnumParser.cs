@@ -37,6 +37,8 @@ namespace Adventure.Classes
             {"head", Commands.Move },
             {"utilize", Commands.Use },
             {"throw", Commands.Drop },
+            {"throw away", Commands.Drop },
+            {"discard", Commands.Drop },
             {"get", Commands.Take },
             {"examine", Commands.Examine },
             {"pick up", Commands.Take },

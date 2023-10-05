@@ -10,7 +10,7 @@ namespace Adventure.Classes.Logic
         public Character PC { get; set; } = new Character();
         public string Parser(string text)
         {
-            Dictionary<Commands, Func<string, string>> methods = new Dictionary<Commands, Func<string, string>>()
+            Dictionary<Commands, Func<Parsed, string>> methods = new()
             {
                 //{Commands.Take, PC.PickUpItem },
                 {Commands.Drop, PC.DropItem },
@@ -18,72 +18,73 @@ namespace Adventure.Classes.Logic
                 {Commands.Move, MoveCharacter },
                 {Commands.Check, CheckDirection },
                 {Commands.Look, InspectLocation },
-                {Commands.Examine, PC.ExamineItem }
+                {Commands.Examine, PC.ExamineItem },
+                {Commands.Inspect, InspectDirection },
+                {Commands.Take, PC.PickUpItem}
 
             };
             Parsed parsedText = EnumParser.ParseText(text.ToLower());
             MessageBox.Show($"{parsedText.Command}, {parsedText.Direction}, {parsedText.ItemOne}, {parsedText.ItemTwo}, {parsedText.Obstruction}, {parsedText.Remaining}");
-            string[] inputs = text.Split(" ");
-            string secondInput = inputs.Length < 2 ? "" : inputs[1];
 
-            //Commands command = EnumParser.Command(inputs[0].ToLower());
-            //Obstructions obstruction = inputs.Length > 3 ? EnumParser.Obstruction(inputs[3].ToLower()) 
-            //                                             : Obstructions.Unknown;
-            //Items firstItem = inputs.Length > 1 ? EnumParser.Item(inputs[1].ToLower()) : Items.Unknown;
-            //Items secondItem = inputs.Length > 3 ? EnumParser.Item(inputs[3].ToLower()) : Items.Unknown;
-            //Directions direction = inputs.Length > 1 ? EnumParser.Direction(inputs[1].ToLower()) 
-            //                                           : Directions.Unknown;
-            if (parsedText.Command == Commands.Take) return PC.PickUpItem(parsedText);
-            if (parsedText.Command == Commands.Use && parsedText.Obstruction != Obstructions.Unknown &&
-                inputs.Length == 4 && parsedText.Remaining.Contains("on")) return ClearObstruction(secondInput, inputs[3]);
+            if (parsedText.Command == Commands.Use && parsedText.ItemOne != Items.Unknown &&
+                (parsedText.Obstruction != Obstructions.Unknown || parsedText.ItemTwo != Items.Unknown)
+                && parsedText.Remaining.Contains("on") && parsedText.Remaining.Length == 2)
+            {
+                return UseItemOnX(parsedText);
+            }
             if (methods.ContainsKey(parsedText.Command))
             {
-                return methods[parsedText.Command](secondInput);
-            }
-            if (parsedText.Command == Commands.Use && parsedText.ItemOne != Items.Unknown 
-                && parsedText.ItemTwo != Items.Unknown && parsedText.Remaining.Contains("on") && inputs.Length == 4)
-            {
-                string combined = $"{secondInput},{inputs[3]}";
-                return PC.UseItemOnItem(combined);
-            }
-            if (parsedText.Command == Commands.Use && parsedText.Remaining.Contains("on") && inputs.Length == 4)
-            {
-                //Directions direction = EnumParser.Direction(inputs[3]);
-                //if (direction == Directions.Unknown) return "Not a valid direction.";
-                //return "";
-            }
-            if (parsedText.Command == Commands.Inspect && parsedText.Direction != Directions.Unknown 
-                && inputs.Length == 2)
-            {
-                return PC.InspectDirection(parsedText.Direction);
+                return methods[parsedText.Command](parsedText);
             }
             return "Command was not recognized";
         }
-        public string CheckDirection(string input)
+        public string InspectDirection(Parsed parsed)
         {
-            Directions direction = EnumParser.Direction(input);
-            if (direction == Directions.Unknown)
+            if (parsed.Remaining.Length > 2)
+            {
+                return "Command was not recognized";
+            }
+            if (parsed.Direction == Directions.Unknown)
+            {
+                return "Not a valid direction.";
+            }
+            return PC.InspectDirection(parsed);
+        }
+        public string UseItemOnX(Parsed parsed)
+        {
+            if (parsed.ItemTwo != Items.Unknown)
+            {
+                return PC.UseItemOnItem(parsed);
+            }
+            if (parsed.Obstruction != Obstructions.Unknown)
+            {
+                return PC.ClearObstruction(parsed);
+            }
+            return "Command was not recognized";
+        }
+        public string CheckDirection(Parsed parsed)
+        {
+            if (parsed.Direction == Directions.Unknown)
             {
                 return "The direction needs to be North, South, East or West";
             }
-            (bool check, string output) = PC.CheckDirection(direction);
+            (bool check, string output) = PC.CheckDirection(parsed);
             return output;
 
         }
-        public string InspectLocation(string input)
+        public string InspectLocation(Parsed parsed)
         {
             return PC.InspectLocation();
         }
-        public string MoveCharacter(string input)
+        public string MoveCharacter(Parsed parsed)
         {
-            Directions direction = EnumParser.Direction(input);
-            if (direction == Directions.Unknown)
+            if (parsed.Direction == Directions.Unknown)
             {
                 return "The direction needs to be North, South, East or West";
             }
-            return PC.MoveToLocation(direction);
+            return PC.MoveToLocation(parsed);
         }
-        public string ShowPlayerInventory(string input)
+        public string ShowPlayerInventory(Parsed parsed)
         {
             return PC.ShowItems();
         }
@@ -91,9 +92,9 @@ namespace Adventure.Classes.Logic
         {
             return PC;
         }
-        public string ClearObstruction(string input, string obstructionName)
+        public string ClearObstruction(Parsed parsed)
         {
-            return PC.ClearObstruction(input, obstructionName);
+            return PC.ClearObstruction(parsed);
         }
         public void HardCodeGameStart()
         {
@@ -110,7 +111,7 @@ namespace Adventure.Classes.Logic
             LocationItem.UsableOn = "Bottle";
 
             Item extinguisher = new Item();
-            extinguisher.Name = "Extinguisher";
+            extinguisher.Name = "Fire extinguisher";
             extinguisher.Article = "An";
             extinguisher.Type = Items.Extinguisher;
             Item shovel = new Item();
@@ -120,7 +121,7 @@ namespace Adventure.Classes.Logic
             shovel.Type = Items.Shovel;
 
             Item SpecialItem = new Item();
-            SpecialItem.Name = "Opened-bottle";
+            SpecialItem.Name = "Opened bottle";
             SpecialItem.ID = 3;
             SpecialItem.Article = "An";
             SpecialItem.Type = Items.OpenedBottle;
@@ -152,6 +153,7 @@ namespace Adventure.Classes.Logic
             Obstruction obstruction = new Obstruction();
             obstruction.Name = "Boulder";
             obstruction.Article = "A";
+            obstruction.Type = Obstructions.Boulder;
             obstruction.ClearedBy = "Shovel";
             testExit.Obstruction = obstruction;
 

@@ -1,4 +1,6 @@
-﻿namespace Adventure.Classes.Models
+﻿using Adventure.Enums;
+
+namespace Adventure.Classes.Models
 {
     public class Obstruction
     {
@@ -7,6 +9,7 @@
         public string Description { get; set; }
         public string ClearedBy { get; set; }
         public string Article { get; set; }
+        public Obstructions Type { get; set; }
         public override string ToString()
         {
             return $"{Article.ToLower()} {Name.ToLower()}";

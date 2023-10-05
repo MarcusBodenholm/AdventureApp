@@ -9,51 +9,60 @@ namespace Adventure.Classes.Models
         public string Name { get; set; }
         public List<Item> Items { get; set; } = new List<Item>();
         public Location CurrentLocation { get; set; }
-        public (bool, string) CheckDirection(Directions direction)
+        public (bool, string) CheckDirection(Parsed parsed)
         {
-            bool pathExists = CurrentLocation.Exits.ContainsKey(direction);
+            bool pathExists = CurrentLocation.Exits.ContainsKey(parsed.Direction);
             if (pathExists == false)
             {
-                return (false, $"There is no door to the {direction.ToString().ToLower()}");
+                return (false, $"There is no door to the {parsed.DirectionText.ToLower()}");
             }
 
-            bool hasObstruction = CurrentLocation.Exits[direction].Obstruction != null;
+            bool hasObstruction = CurrentLocation.Exits[parsed.Direction].Obstruction != null;
             if (hasObstruction)
             {
-                Obstruction obstruction = CurrentLocation.Exits[direction].Obstruction;
+                Obstruction obstruction = CurrentLocation.Exits[parsed.Direction].Obstruction;
                 string output = $"{obstruction.Article} {obstruction.Name.ToLower()} blocks the exit.";
                 return (false, output);
             }
-            if (CurrentLocation.Exits[direction].IsLocked)
+            if (CurrentLocation.Exits[parsed.Direction].IsLocked)
             {
                 return (false, $"The door is locked");
             }
-            return (true, $"The door is open and leads to {CurrentLocation.Exits[direction].Locations[direction].Name.ToLower()})");
+            return (true, $"The door is open and leads to {CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction].Name.ToLower()})");
         }
-        public string MoveToLocation(Directions direction)
+        public string MoveToLocation(Parsed parsed)
         {
-            (bool check, string output) = CheckDirection(direction);
+            (bool check, string output) = CheckDirection(parsed);
             if (check == false)
             {
                 return output;
             }
-            CurrentLocation = CurrentLocation.Exits[direction].Locations[direction];
-            return $"You move to the {direction.ToString().ToLower()}. You are now in {CurrentLocation.Name.ToLower()}";
+            CurrentLocation = CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction];
+            return $"You move to the {parsed.DirectionText.ToLower()}. You are now in {CurrentLocation.Name.ToLower()}";
         }
-        public void UseItem(string command)
+        public string UseItemOn(Parsed parsed)
         {
+            if (parsed.ItemTwo != Enums.Items.Unknown)
+            {
+                return UseItemOnItem(parsed);
+            }
+            if (parsed.Obstruction != Enums.Obstructions.Unknown)
+            {
+                return ClearObstruction(parsed);
+            }
+            return "Command not recognized";
         }
-        public string DropItem(string nameOfItem)
+        public string DropItem(Parsed parsed)
         {
-            bool hasItem = Items.Any(item => item.Name.ToLower() == nameOfItem.ToLower());
+            bool hasItem = Items.Any(item => item.Type == parsed.ItemOne);
             if (hasItem)
             {
-                Item itemToDrop = Items.Find(item => item.Name.ToLower() == nameOfItem.ToLower());
+                Item itemToDrop = Items.Find(item => item.Type == parsed.ItemOne);
                 CurrentLocation.Items.Add(itemToDrop);
                 Items.Remove(itemToDrop);
                 return $"You drop {itemToDrop} on the ground";
             }
-            return $"You do not have {nameOfItem}";
+            return $"You do not have {parsed.ItemOneText}";
         }
         public string PickUpItem(Parsed parsed)
         {
@@ -68,7 +77,7 @@ namespace Adventure.Classes.Models
             }
             else
             {
-                return $"There is no {parsed.ItemOne} in the room";
+                return $"There is no {parsed.ItemOneText} in the room";
             }
         }
         public string ShowItems()
@@ -104,22 +113,26 @@ namespace Adventure.Classes.Models
             }
             return output;
         }
-        public string ClearObstruction(string itemInput, string obstructionName)
+        public string ClearObstruction(Parsed parsed)
         {
-            Item item = Items.Find(item => item.Name.ToLower() == itemInput);
+            Item item = Items.Find(item => item.Type == parsed.ItemOne);
             if (item == null)
             {
-                return $"You do not have {itemInput}";
+                return $"You do not have {parsed.ItemOneText}";
             }
             Exit? exit = null;
             Obstruction? obstruction = null;
             foreach (Exit value in CurrentLocation.Exits.Values)
             {
-                if (value.Obstruction != null && value.Obstruction.Name.ToLower() == obstructionName.ToLower())
+                if (value.Obstruction != null && value.Obstruction.Type == parsed.Obstruction)
                 {
                     exit = value;
                     obstruction = value.Obstruction;
                 }
+            }
+            if (obstruction == null)
+            {
+                return $"There is no {parsed.ObstructionText} in the {CurrentLocation.Name.ToLower()}";
             }
             if (obstruction != null && exit != null && obstruction.ClearedBy.ToLower() == item.Name.ToLower())
             {
@@ -129,57 +142,50 @@ namespace Adventure.Classes.Models
             }
             if (item.Name.ToLower() != obstruction.ClearedBy.ToLower())
             {
-                return $"You cannot clear a {obstructionName} with {item.Name}";
+                return $"You cannot clear a {parsed.ObstructionText} with {item.Name}";
             }
             return "Something went wrong";
 
         }
-        public string UseItemOnItem(string items)
+        public string UseItemOnItem(Parsed parsed)
         {
-            bool output = false;
-            string message = "";
-            string[] splitItems = items.Split(',');
-            string firstItemName = splitItems[0];
-            string secondItemName = splitItems[1];
-            Item itemOne = Items.Find(item => item.Name.ToLower() == firstItemName.ToLower());
-            if (itemOne == null) return $"You do not have {firstItemName}";
-            Item itemTwo = Items.Find(item => item.Name.ToLower() == secondItemName.ToLower());
-            if (itemTwo == null) return $"You do not have {secondItemName}";
+            Item itemOne = Items.Find(item => item.Type == parsed.ItemOne);
+            if (itemOne == null) return $"You do not have {parsed.ItemOneText}";
+            Item itemTwo = Items.Find(item => item.Type == parsed.ItemTwo);
+            if (itemTwo == null) return $"You do not have {parsed.ItemTwoText}";
 
             if (itemOne.UsableOn != itemTwo.Name || itemOne.SpecialItem == null)
             {
-                return $"Nothing happens when you use {itemOne.Name.ToLower()} on {itemTwo.Name.ToLower()}";
+                return $"Nothing happens when you use {parsed.ItemOneText} on {parsed.ItemTwoText}";
             }
             Item newItem = itemOne.SpecialItem;
             Items.Add(newItem);
             Items.Remove(itemOne);
             Items.Remove(itemTwo);
-            message = $"You use {itemOne.Name.ToLower()} on {itemTwo.Name.ToLower()}, and gain {newItem}";
-            return message;
+            return $"You use {parsed.ItemOneText} on {parsed.ItemTwoText}, and gain {newItem}";
         }
-        public string ExamineItem(string itemName)
+        public string ExamineItem(Parsed parsed)
         {
             string message = "";
-            Item InspectedItem = Items.Find(item => item.Name.ToLower() == itemName.ToLower());
-            if (itemName == "") return "You need to specify an item to examine.";
+            Item InspectedItem = Items.Find(item => item.Type == parsed.ItemOne);
+            if (parsed.ItemOne == Enums.Items.Unknown) return "You need to specify an item to examine.";
             if (InspectedItem == null)
             {
-                InspectedItem = CurrentLocation.Items.Find(item => item.Name.ToLower() == itemName.ToLower());
+                InspectedItem = CurrentLocation.Items.Find(item => item.Type == parsed.ItemOne);
                 if (InspectedItem == null)
                 {
-                    return $"There's no {itemName} in neither your inventory nor the {CurrentLocation.Name.ToLower()}";
+                    return $"There's no {parsed.ItemOneText} in neither your inventory nor the {CurrentLocation.Name.ToLower()}";
                 }
                 return InspectedItem.Inspect();
 
             }
-            message = InspectedItem.Inspect();
-            return message;
+            return InspectedItem.Inspect();
         }
-        public string InspectDirection(Directions direction)
+        public string InspectDirection(Parsed parsed)
         {
-            (bool check, string message) = CheckDirection(direction);
-            if (message == $"There is no path to the {direction}") return "Not a valid direction.";
-            message = CurrentLocation.Exits[direction].Inspect();
+            (bool check, string message) = CheckDirection(parsed);
+            if (message == $"There is no path to the {parsed.DirectionText}") return "Not a valid direction.";
+            message = CurrentLocation.Exits[parsed.Direction].Inspect();
             return message;
         }
         public string UseItemInDirection(string itemName, Directions direction)
