@@ -10,9 +10,9 @@ namespace Adventure.Classes.Logic
         public Character PC { get; set; } = new Character();
         public string Parser(string text)
         {
+            //Add in new 
             Dictionary<Commands, Func<Parsed, string>> methods = new()
             {
-                //{Commands.Take, PC.PickUpItem },
                 {Commands.Drop, PC.DropItem },
                 {Commands.Inventory, ShowPlayerInventory},
                 {Commands.Move, MoveCharacter },

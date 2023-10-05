@@ -4,6 +4,45 @@ using Adventure.Enums;
 
 namespace Adventure.Classes.Models
 {
+    public class State
+    {
+        public Character PC { get; set; }
+        public Location CurrentLocation { get; set; }
+        public (bool, string) CheckDirection(Parsed parsed)
+        {
+            bool pathExists = CurrentLocation.Exits.ContainsKey(parsed.Direction);
+            if (pathExists == false)
+            {
+                return (false, $"There is no door to the {parsed.DirectionText.ToLower()}");
+            }
+
+            bool hasObstruction = CurrentLocation.Exits[parsed.Direction].Obstruction != null;
+            if (hasObstruction)
+            {
+                Obstruction obstruction = CurrentLocation.Exits[parsed.Direction].Obstruction;
+                string output = $"{obstruction.Article} {obstruction.Name.ToLower()} blocks the exit.";
+                return (false, output);
+            }
+            if (CurrentLocation.Exits[parsed.Direction].IsLocked)
+            {
+                return (false, $"The door is locked");
+            }
+            return (true, $"The door is open and leads to {CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction].Name.ToLower()})");
+        }
+        public string MoveToLocation(Parsed parsed)
+        {
+            (bool check, string output) = CheckDirection(parsed);
+            if (check == false)
+            {
+                return output;
+            }
+            CurrentLocation = CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction];
+            return $"You move to the {parsed.DirectionText.ToLower()}. You are now in {CurrentLocation.Name.ToLower()}";
+        }
+
+
+    }
+
     public class Character
     {
         public string Name { get; set; }
@@ -39,18 +78,6 @@ namespace Adventure.Classes.Models
             }
             CurrentLocation = CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction];
             return $"You move to the {parsed.DirectionText.ToLower()}. You are now in {CurrentLocation.Name.ToLower()}";
-        }
-        public string UseItemOn(Parsed parsed)
-        {
-            if (parsed.ItemTwo != Enums.Items.Unknown)
-            {
-                return UseItemOnItem(parsed);
-            }
-            if (parsed.Obstruction != Enums.Obstructions.Unknown)
-            {
-                return ClearObstruction(parsed);
-            }
-            return "Command not recognized";
         }
         public string DropItem(Parsed parsed)
         {
