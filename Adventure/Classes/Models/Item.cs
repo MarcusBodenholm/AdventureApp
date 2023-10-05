@@ -18,7 +18,7 @@ namespace Adventure.Classes.Models
         public string Inspect()
         {
             string usableOn = UsableOn == string.Empty || SpecialItem == null ? "" : $"This item can be used on {UsableOn} to gain {SpecialItem.Name}";
-            return $"{Description}. {usableOn}";
+            return $"{Description} {usableOn}";
         }
     }
 }

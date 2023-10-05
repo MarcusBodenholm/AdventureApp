@@ -1,5 +1,6 @@
 ﻿using Adventure.Enums;
 using System.Collections.Specialized;
+using Adventure.Enums;
 
 namespace Adventure.Classes.Models
 {
@@ -54,19 +55,20 @@ namespace Adventure.Classes.Models
             }
             return $"You do not have {nameOfItem}";
         }
-        public string PickUpItem(string nameOfItem)
+        public string PickUpItem(Parsed parsed)
         {
-            bool roomHasItem = CurrentLocation.Items.Any(item => item.Name.ToLower() == nameOfItem.ToLower());
+            if (parsed.ItemOne == Enums.Items.Unknown) return "You need to specify an item";
+            bool roomHasItem = CurrentLocation.Items.Any(item => item.Type == parsed.ItemOne);
             if (roomHasItem)
             {
-                Item itemToPickup = CurrentLocation.Items.Find(item => item.Name.ToLower() == nameOfItem.ToLower());
+                Item itemToPickup = CurrentLocation.Items.Find(item => item.Type == parsed.ItemOne);
                 Items.Add(itemToPickup);
                 CurrentLocation.Items.Remove(itemToPickup);
                 return $"You pick up {itemToPickup}";
             }
             else
             {
-                return $"There is no {nameOfItem} in the room";
+                return $"There is no {parsed.ItemOne} in the room";
             }
         }
         public string ShowItems()
@@ -160,7 +162,16 @@ namespace Adventure.Classes.Models
             string message = "";
             Item InspectedItem = Items.Find(item => item.Name.ToLower() == itemName.ToLower());
             if (itemName == "") return "You need to specify an item to examine.";
-            if (InspectedItem == null) return $"You do not have {itemName} in your inventory.";
+            if (InspectedItem == null)
+            {
+                InspectedItem = CurrentLocation.Items.Find(item => item.Name.ToLower() == itemName.ToLower());
+                if (InspectedItem == null)
+                {
+                    return $"There's no {itemName} in neither your inventory nor the {CurrentLocation.Name.ToLower()}";
+                }
+                return InspectedItem.Inspect();
+
+            }
             message = InspectedItem.Inspect();
             return message;
         }
