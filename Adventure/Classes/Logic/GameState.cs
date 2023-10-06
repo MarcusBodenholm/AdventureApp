@@ -8,7 +8,7 @@
         {
             CurrentLocation = location;
         }
-        public (bool, string) CheckDirection(Parsed parsed)
+        public (bool, string) CheckDirection(ParsedText parsed)
         {
             bool pathExists = CurrentLocation.Exits.ContainsKey(parsed.Direction);
             if (pathExists == false)
@@ -28,7 +28,7 @@
             }
             return (true, CurrentLocation.Exits[parsed.Direction].Inspect());
         }
-        public string MoveToLocation(Parsed parsed)
+        public string MoveToLocation(ParsedText parsed)
         {
             (bool check, string output) = CheckDirection(parsed);
             if (check == false)
@@ -38,7 +38,7 @@
             CurrentLocation = CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction];
             return $"You move to the {parsed.DirectionText.ToLower()}. You are now in {CurrentLocation.Name.ToLower()}.";
         }
-        public string DropItem(Parsed parsed)
+        public string DropItem(ParsedText parsed)
         {
             Item? itemToDrop = PC.GetItem(parsed.ItemOne);
             if (itemToDrop != null)
@@ -49,13 +49,13 @@
             }
             return $"You do not have {parsed.ItemOneText}.";
         }
-        public string InspectDirection(Parsed parsed)
+        public string InspectDirection(ParsedText parsed)
         {
             (bool check, string message) = CheckDirection(parsed);
             if (message == $"There is no path to the {parsed.DirectionText}") return "Not a valid direction.";
             return CurrentLocation.Exits[parsed.Direction].Inspect();
         }
-        public string UseItemOnItem(Parsed parsed)
+        public string UseItemOnItem(ParsedText parsed)
         {
             Item? itemOne = PC.GetItem(parsed.ItemOne);
             if (itemOne == null) return $"You do not have {parsed.ItemOneText}.";
@@ -72,7 +72,7 @@
             PC.RemoveItem(itemTwo);
             return $"You use {parsed.ItemOneText} on {parsed.ItemTwoText}, and gain {newItem}.";
         }
-        public string PickUpItem(Parsed parsed)
+        public string PickUpItem(ParsedText parsed)
         {
             if (parsed.ItemOne == Enums.Items.Unknown) return "You need to specify an item.";
             Item? itemToPickup = CurrentLocation.GetItem(parsed.ItemOne);
@@ -87,7 +87,7 @@
                 return $"There is no {parsed.ItemOneText} in the room.";
             }
         }
-        public string PickUpItemFromContainer(Parsed parsed)
+        public string PickUpItemFromContainer(ParsedText parsed)
         {
             Container? container = CurrentLocation.GetContainer(parsed.Container);
             if (container == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.Name.ToLower()}";
@@ -97,7 +97,7 @@
             container.RemoveItem(itemToPickUp);
             return $"You pick up {itemToPickUp} from {parsed.ContainerText}";
         }
-        public string ExamineItem(Parsed parsed)
+        public string ExamineItem(ParsedText parsed)
         {
             Item? InspectedItem = PC.GetItem(parsed.ItemOne);
             if (parsed.ItemOne == Enums.Items.Unknown) return "You need to specify an item to examine.";
@@ -113,13 +113,13 @@
             }
             return InspectedItem.Inspect();
         }
-        public string ExamineContainer(Parsed parsed)
+        public string ExamineContainer(ParsedText parsed)
         {
             Container? examinedContainer = CurrentLocation.GetContainer(parsed.Container);
             if (examinedContainer == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.Name.ToLower()}.";
             return examinedContainer.Inspect();
         }
-        public string ClearObstruction(Parsed parsed)
+        public string ClearObstruction(ParsedText parsed)
         {
             Item? item = PC.GetItem(parsed.ItemOne);
             if (item == null)

@@ -11,44 +11,53 @@ namespace Adventure.Classes.Logic
         public string DecisionTree(string text)
         {
             //Add in new 
-            Dictionary<Commands, Func<Parsed, string>> methods = new()
+            Dictionary<Commands, Func<ParsedText, string>> methods = new()
             {
                 {Commands.Drop, DropItem },
                 {Commands.Inventory, ShowPlayerInventory},
                 {Commands.Move, MoveCharacter },
                 {Commands.Check, CheckDirection },
-                {Commands.Look, InspectLocation },
-                {Commands.Examine, ExamineX },
-                {Commands.Inspect, InspectDirection },
-                {Commands.Take, TakeItem}
+                {Commands.Examine, InspectX },
+                {Commands.Inspect, InspectX },
+                {Commands.Take, TakeItem},
+                {Commands.Use, UseItemOnX }
 
             };
-            Parsed parsedText = Parser.ParseText(text.ToLower());
+            ParsedText parsedText = Parser.ParseText(text.ToLower());
             MessageBox.Show($"{parsedText.Command}, {parsedText.Direction}, {parsedText.ItemOne}, {parsedText.ItemTwo}, {parsedText.Obstruction}, {parsedText.Remaining}");
 
-            if (parsedText.Command == Commands.Use && parsedText.ItemOne != Items.Unknown &&
-                (parsedText.Obstruction != Obstructions.Unknown || parsedText.ItemTwo != Items.Unknown)
-                && parsedText.Remaining.Contains("on") && parsedText.Remaining.Length == 2)
-            {
-                return UseItemOnX(parsedText);
-            }
             if (methods.ContainsKey(parsedText.Command))
             {
                 return methods[parsedText.Command](parsedText);
             }
-            return "Command was not recognized";
+            return "Command was not recognized.";
         }
-        private string ExamineX(Parsed parsed)
+        private string InspectX(ParsedText parsed)
         {
-            if (parsed.ItemOne != Items.Unknown) return GameState.ExamineItem(parsed);
-            if (parsed.Container != Containers.Unknown) return GameState.ExamineContainer(parsed);
-            return "Command was not recognized";
+            bool isRemainingZero = parsed.Remaining.Length == 0;
+            if (parsed.ItemOne != Items.Unknown && isRemainingZero) return GameState.ExamineItem(parsed);
+            if (parsed.Container != Containers.Unknown && isRemainingZero) return GameState.ExamineContainer(parsed);
+            if (parsed.Direction != Directions.Unknown && isRemainingZero) 
+            {
+                (bool check, string output) = GameState.CheckDirection(parsed);
+                return output;
+            }
+            if (isRemainingZero) return GameState.InspectLocation();
+            if (parsed.Direction == Directions.Unknown) return "Not a valid direction";
+            return "Command was not recognized.";
+            
         }
-        private string DropItem(Parsed parsed)
+        //private string ExamineX(ParsedText parsed)
+        //{
+        //    if (parsed.ItemOne != Items.Unknown) return GameState.ExamineItem(parsed);
+        //    if (parsed.Container != Containers.Unknown) return GameState.ExamineContainer(parsed);
+        //    return "Command was not recognized.";
+        //}
+        private string DropItem(ParsedText parsed)
         {
             return GameState.DropItem(parsed);
         }
-        private string TakeItem(Parsed parsed)
+        private string TakeItem(ParsedText parsed)
         {
             if (parsed.Container != Containers.Unknown && parsed.Remaining.Contains("from")
                 && parsed.ItemOne != Items.Unknown && parsed.Remaining.Length == 4)
@@ -57,20 +66,27 @@ namespace Adventure.Classes.Logic
             }
             return GameState.PickUpItem(parsed);
         }
-        private string InspectDirection(Parsed parsed)
+        //private string InspectDirection(ParsedText parsed)
+        //{
+        //    if (parsed.Remaining.Length > 2)
+        //    {
+        //        return "Command was not recognized.";
+        //    }
+        //    if (parsed.Direction == Directions.Unknown)
+        //    {
+        //        return "Not a valid direction.";
+        //    }
+        //    return GameState.InspectDirection(parsed);
+        //}
+        private string UseItemOnX(ParsedText parsed)
         {
-            if (parsed.Remaining.Length > 2)
+            if (parsed.ItemOne == Items.Unknown &&
+                (parsed.Obstruction == Obstructions.Unknown || parsed.ItemTwo == Items.Unknown)
+                && !parsed.Remaining.Contains("on") && parsed.Remaining.Length != 2)
             {
-                return "Command was not recognized";
+                return "Command was not recognized.";
             }
-            if (parsed.Direction == Directions.Unknown)
-            {
-                return "Not a valid direction.";
-            }
-            return GameState.InspectDirection(parsed);
-        }
-        private string UseItemOnX(Parsed parsed)
-        {
+
             if (parsed.ItemTwo != Items.Unknown)
             {
                 return GameState.UseItemOnItem(parsed);
@@ -79,31 +95,31 @@ namespace Adventure.Classes.Logic
             {
                 return GameState.ClearObstruction(parsed);
             }
-            return "Command was not recognized";
+            return "Command was not recognized.";
         }
-        private string CheckDirection(Parsed parsed)
+        private string CheckDirection(ParsedText parsed)
         {
             if (parsed.Direction == Directions.Unknown)
             {
-                return "The direction needs to be North, South, East or West";
+                return "The direction needs to be North, South, East or West.";
             }
             (bool check, string output) = GameState.CheckDirection(parsed);
             return output;
 
         }
-        private string InspectLocation(Parsed parsed)
-        {
-            return GameState.InspectLocation();
-        }
-        private string MoveCharacter(Parsed parsed)
+        //private string InspectLocation(ParsedText parsed)
+        //{
+        //    return GameState.InspectLocation();
+        //}
+        private string MoveCharacter(ParsedText parsed)
         {
             if (parsed.Direction == Directions.Unknown)
             {
-                return "The direction needs to be North, South, East or West";
+                return "The direction needs to be North, South, East or West.";
             }
             return GameState.MoveToLocation(parsed);
         }
-        private string ShowPlayerInventory(Parsed parsed)
+        private string ShowPlayerInventory(ParsedText parsed)
         {
             return GameState.DisplayInventory();
         }

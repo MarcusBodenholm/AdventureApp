@@ -3,7 +3,7 @@ using System.Security.Permissions;
 
 namespace Adventure.Classes
 {
-    public static class EnumParser
+    public static class Parser
     {
         private readonly static Dictionary<string, Directions> directions = new()
         {
@@ -20,6 +20,10 @@ namespace Adventure.Classes
         };
         private readonly static Dictionary<string, Commands> commands = new()
         {
+            {"a really long way to say take", Commands.Take },
+            {"look at", Commands.Inspect },
+            {"pick up", Commands.Take },
+            {"throw away", Commands.Drop },
             {"use", Commands.Use },
             {"take", Commands.Take},
             {"drop", Commands.Drop },
@@ -29,7 +33,7 @@ namespace Adventure.Classes
             {"inventory", Commands.Inventory },
             {"inspect", Commands.Inspect },
             {"check", Commands.Check },
-            {"look", Commands.Look },
+            {"look", Commands.Inspect },
             {"trip", Commands.Move },
             {"fall", Commands.Move },
             {"collapse", Commands.Move },
@@ -37,20 +41,17 @@ namespace Adventure.Classes
             {"head", Commands.Move },
             {"utilize", Commands.Use },
             {"throw", Commands.Drop },
-            {"throw away", Commands.Drop },
             {"discard", Commands.Drop },
             {"get", Commands.Take },
-            {"examine", Commands.Examine },
-            {"pick up", Commands.Take },
-            {"a really long way to say take", Commands.Take }
+            {"examine", Commands.Inspect },
         };
 
         private readonly static Dictionary<string, Items> items = new()
         {
             {"fire extinguisher", Items.Extinguisher },
             {"corkscrew", Items.Corkscrew },
-            {"bottle", Items.Bottle },
             {"opened bottle", Items.OpenedBottle },
+            {"bottle", Items.Bottle },
             {"extinguisher", Items.Extinguisher },
             {"shovel", Items.Shovel },
             {"key", Items.Key }
@@ -121,9 +122,9 @@ namespace Adventure.Classes
                 return Obstructions.Unknown;
             }
         }
-        public static Parsed ParseText(string input)
+        public static ParsedText ParseText(string input)
         {
-            Parsed parsed = new();
+            ParsedText parsed = new();
             input = ParseCommand(input, parsed);
             input = ParseDirection(input, parsed);
             input = ParseItem(input, parsed, 1);
@@ -142,7 +143,7 @@ namespace Adventure.Classes
             int idx = input.Length -toConsume.Length- 1;
             return idx != -1 ? input.Substring(0,idx).Trim() : "";
         }
-        private static string ParseDirection(string input, Parsed parsed)
+        private static string ParseDirection(string input, ParsedText parsed)
         {
             foreach (string direction in directions.Keys)
             {
@@ -157,7 +158,7 @@ namespace Adventure.Classes
             }
             return input;
         }
-        private static string ParseObstruction(string input, Parsed parsed)
+        private static string ParseObstruction(string input, ParsedText parsed)
         {
             foreach (string obstruction in obstructions.Keys)
             {
@@ -172,7 +173,7 @@ namespace Adventure.Classes
             }
             return input;
         }
-        private static string ParseCommand(string input, Parsed parsed)
+        private static string ParseCommand(string input, ParsedText parsed)
         {
             foreach (string command in commands.Keys)
             {
@@ -186,7 +187,7 @@ namespace Adventure.Classes
             }
             return input;
         }
-        private static string ParseItem(string input, Parsed parsed, int itemNr)
+        private static string ParseItem(string input, ParsedText parsed, int itemNr)
         {
             foreach (string item in items.Keys)
             {
@@ -207,7 +208,7 @@ namespace Adventure.Classes
             }
             return input;
         }
-        private static string ParseContainer(string input, Parsed parsed)
+        private static string ParseContainer(string input, ParsedText parsed)
         {
             foreach (string container in containers.Keys)
             {
@@ -221,22 +222,5 @@ namespace Adventure.Classes
             }
             return input;
         }
-    }
-
-    public class Parsed
-    {
-        public Items ItemOne { get; set; } = Items.Unknown;
-        public Items ItemTwo { get; set; } = Items.Unknown;
-        public Commands Command { get; set; } = Commands.Unknown;
-        public Obstructions Obstruction { get; set; } = Obstructions.Unknown;
-        public Directions Direction { get; set; } = Directions.Unknown;
-        public Containers Container { get; set; } = Containers.Unknown;
-        public string Remaining { get; set; } = string.Empty;
-        public string ItemOneText { get; set; } = "";
-        public string ItemTwoText { get; set; } = "";
-        public string CommandText { get; set; } = "";
-        public string ObstructionText { get; set; } = "";
-        public string DirectionText { get; set; } = "";
-        public string ContainerText { get; set; } = "";
     }
 }
