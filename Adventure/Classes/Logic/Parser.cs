@@ -7,6 +7,10 @@ namespace Adventure.Classes
     {
         private readonly static Dictionary<string, Directions> directions = new()
         {
+            {"north door", Directions.North },
+            {"south door", Directions.South },
+            {"east door", Directions.East },
+            {"west door", Directions.West },
             {"north", Directions.North },
             {"south", Directions.South },
             {"east", Directions.East },
@@ -149,9 +153,9 @@ namespace Adventure.Classes
         {
             foreach (string direction in directions.Keys)
             {
-                if (input.StartsWith(direction))
+                if (input.EndsWith(direction))
                 {
-                    input = ConsumeTextAtStart(input, direction);
+                    input = ConsumeTextAtEnd(input, direction);
                     parsed.Direction = Direction(direction);
                     parsed.DirectionText = direction;
                     return input;

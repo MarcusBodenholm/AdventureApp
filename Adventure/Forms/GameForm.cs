@@ -25,6 +25,14 @@ namespace Adventure
         {
             InitializeComponent();
             GameLogic = new GameLogic();
+            foreach (System.Windows.Forms.Control control in this.Controls)
+            {
+                Button? button = control as Button;
+                if (button != null)
+                {
+                    button.BackColor = Color.Black;
+                }
+            }
             UpdateState();
             string[] gameStartText = GameLogic.GameStart();
             foreach (var text in gameStartText)
@@ -38,8 +46,34 @@ namespace Adventure
         }
         public void UpdateLog(string message)
         {
-            gameLog.Items.Add(message);
-            gameLog.TopIndex = gameLog.Items.Count - 1;
+            //gameLog.Items.Add(message);
+            //gameLog.TopIndex = gameLog.Items.Count - 1;
+            if (richGameLog.Text.Length > 0)
+            {
+                richGameLog.Text += $"\n{message}";
+            }
+            else
+            {
+                richGameLog.Text += message;
+            }
+            richGameLog.SelectionStart = richGameLog.Text.Length;
+            richGameLog.ScrollToCaret();
+            int lineCounter = 0;
+            foreach (string line in richGameLog.Lines)
+            {
+                int idx = richGameLog.GetFirstCharIndexFromLine(lineCounter);
+                if (line.Contains("Player"))
+                {
+                    richGameLog.Select(idx, line.Length);
+                    richGameLog.SelectionColor = Color.Red;
+                }
+                else
+                {
+                    richGameLog.Select(idx, line.Length);
+                    richGameLog.SelectionColor = Color.Green;
+                }
+                lineCounter++;
+            }
         }
         public void ClearLog()
         {

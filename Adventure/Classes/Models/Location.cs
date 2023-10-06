@@ -75,7 +75,7 @@ namespace Adventure.Classes.Models
                     }
                     count++;
                 }
-                output += " " + containerInfo + " here.";
+                output += " \n" + containerInfo + " here.";
             }
             return output;
         }

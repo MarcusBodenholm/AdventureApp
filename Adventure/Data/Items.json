@@ -4,25 +4,25 @@
     "Name": "Corkscrew",
     "Article": "A",
     "Description": "This is a corkscrew.",
-    "UsableOn": "Bottle",
+    "UsableOn": 2,
     "Type": "corkscrew",
-    "SpecialItem": -1
+    "SpecialItem": 3
   },
   {
     "ID": 2,
     "Name": "Bottle",
     "Article": "A",
     "Description": "This is a bottle.",
-    "UsableOn": "Bottle",
+    "UsableOn": -1,
     "Type": "Bottle",
-    "SpecialItem": 3
+    "SpecialItem": -1
   },
   {
     "ID": 3,
     "Name": "Opened bottle",
     "Article": "An",
     "Description": "This is an opened bottle.",
-    "UsableOn": "",
+    "UsableOn": -1,
     "Type": "Opened bottle",
     "SpecialItem": -1
   },
@@ -31,7 +31,7 @@
     "Name": "Shovel",
     "Article": "A",
     "Description": "This is a shovel.",
-    "UsableOn": "",
+    "UsableOn": -1,
     "Type": "Shovel",
     "SpecialItem": -1
   },
@@ -40,7 +40,7 @@
     "Name": "Key",
     "Article": "A",
     "Description": "This is a key.",
-    "UsableOn": "",
+    "UsableOn": -1,
     "Type": "Key",
     "SpecialItem": -1
   }

@@ -81,7 +81,7 @@ namespace Adventure.Classes.Data
                     newItem.Name = item.Name;
                     newItem.Description = item.Description;
                     newItem.Article = item.Article;
-                    newItem.UsableOn = Parser.Item(item.UsableOn);
+                    newItem.UsableOn = item.UsableOn;
                     newItem.Type = Parser.Item(item.Type);
                     newItem.SpecialItem = item.SpecialItem;
                     AllItems.Add(newItem);

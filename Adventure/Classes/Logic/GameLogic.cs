@@ -27,8 +27,10 @@ namespace Adventure.Classes.Logic
                 {Commands.Use, UseItemOnX }
             };
             ParsedText parsedText = Parser.ParseText(text.ToLower());
-            MessageBox.Show($"{parsedText.Command}, {parsedText.Direction}, {parsedText.ItemOne}, {parsedText.ItemTwo}, {parsedText.Obstruction}, {parsedText.Remaining}");
+            if (GameState.ConversationMode)
+            {
 
+            }
             if (methods.ContainsKey(parsedText.Command))
             {
                 return methods[parsedText.Command](parsedText);
@@ -61,7 +63,7 @@ namespace Adventure.Classes.Logic
                 return output;
             }
             if (isRemainingZero && parsed.HasOnly("command")) return GameState.InspectLocation();
-            if (parsed.Direction == Directions.Unknown) return "Not a valid direction";
+            if (parsed.Direction == Directions.Unknown && isRemainingZero) return "Not a valid direction";
             return "Command was not recognized.";
             
         }
@@ -76,13 +78,14 @@ namespace Adventure.Classes.Logic
             {
                 return GameState.PickUpItemFromContainer(parsed);
             }
-            return GameState.PickUpItem(parsed);
+            if (parsed.ItemOne != Items.Unknown &&parsed.Remaining.Length == 0) return GameState.PickUpItem(parsed);
+            return "Command was not recognized.";
         }
         private string UseItemOnX(ParsedText parsed)
         {
             if (parsed.ItemOne == Items.Unknown &&
-                (parsed.Obstruction == Obstructions.Unknown || parsed.ItemTwo == Items.Unknown)
-                && !parsed.Remaining.Contains("on") && parsed.Remaining.Length != 2)
+                (parsed.Obstruction == Obstructions.Unknown || parsed.ItemTwo == Items.Unknown ||
+                parsed.Direction != Directions.Unknown) && !parsed.Remaining.Contains("on") && parsed.Remaining.Length != 2)
             {
                 return "Command was not recognized.";
             }
@@ -94,6 +97,10 @@ namespace Adventure.Classes.Logic
             if (parsed.Obstruction != Obstructions.Unknown)
             {
                 return GameState.ClearObstruction(parsed);
+            }
+            if (parsed.ItemOne != Items.Unknown && parsed.Direction != Directions.Unknown)
+            {
+                return GameState.UnlockDoor(parsed);
             }
             return "Command was not recognized.";
         }
@@ -107,10 +114,6 @@ namespace Adventure.Classes.Logic
             return output;
 
         }
-        //private string InspectLocation(ParsedText parsed)
-        //{
-        //    return GameState.InspectLocation();
-        //}
         private string MoveCharacter(ParsedText parsed)
         {
             if (parsed.Direction == Directions.Unknown)

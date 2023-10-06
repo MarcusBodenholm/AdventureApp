@@ -21,10 +21,9 @@ namespace Adventure.Classes.Models
         }
         public string Unlock(Item item)
         {
-            if (IsLocked == false) return "This door is not locked.";
-            if (UnlockedBy != item.ID) return $"This {item.Name.ToLower()} cannot unlock this door.";
             IsLocked = false;
-            return $"You unlocked the door using {item}";
+            return $"You unlocked the door using {item}." +
+                   $"\nThe {item.Name.ToLower()} was lost in the process.";
         }
     }
 }

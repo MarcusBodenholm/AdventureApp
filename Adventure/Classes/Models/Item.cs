@@ -5,10 +5,10 @@ namespace Adventure.Classes.Models
 {
     public class Item
     {
-        public int ID { get; set; }
+        public int ID { get; set; } = -1;
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public Items UsableOn { get; set; } = Items.Unknown;
+        public int UsableOn { get; set; } = -1;
         public Items Type { get; set; } = Items.Unknown;
         public int SpecialItem { get; set; } = -1;
         public string Article { get; set; } = string.Empty;
@@ -19,8 +19,9 @@ namespace Adventure.Classes.Models
         public string Inspect()
         {
             Item? specialItem = Data.Data.GetItem(SpecialItem);
-            string usableOn = UsableOn == Items.Unknown || specialItem == null ? "" : $"This item can be used on {UsableOn} to gain {specialItem.Name}";
-            return $"{Description} {usableOn}";
+            Item? usableOn = Data.Data.GetItem(UsableOn);
+            string usableOnText = UsableOn == -1 || specialItem == null ? "" : $"This item can be used on {usableOn} to gain {specialItem}.";
+            return $"{Description} {usableOnText}";
         }
     }
 }

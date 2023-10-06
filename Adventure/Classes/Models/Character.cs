@@ -34,7 +34,7 @@ namespace Adventure.Classes.Models
             {
                 if (count == 0)
                 {
-                    output += item.Name;
+                    output += $"{item.Article} {item.Name.ToLower()}{(Items.Count == 0 ? "." : "")}";
                 }
                 else if (count == Items.Count - 1)
                 {
@@ -43,7 +43,7 @@ namespace Adventure.Classes.Models
 
                 else
                 {
-                    output += ", " + item.Name;
+                    output += ", " + item.ToString();
                 }
                 count++;
             }

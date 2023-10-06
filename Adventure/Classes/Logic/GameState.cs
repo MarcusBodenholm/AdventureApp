@@ -4,9 +4,11 @@
     {
         private Character PC { get; set; } = new Character();
         private Location CurrentLocation { get; set; } = new Location();
+        public bool ConversationMode { get; set; } = false;
         public GameState()
         {
             CurrentLocation = Data.Data.GetLocation(1);
+
 
         }
         public (bool, string) CheckDirection(ParsedText parsed)
@@ -20,7 +22,7 @@
             if (hasObstruction)
             {
                 Obstruction? obstruction = CurrentLocation.Exits[parsed.Direction].Obstruction;
-                string output = $"{obstruction.Article} {obstruction.Name.ToLower()} blocks the exit.";
+                string output = $"{obstruction.Article} {obstruction.Name.ToLower()} blocks the door.";
                 return (false, output);
             }
             if (CurrentLocation.Exits[parsed.Direction].IsLocked)
@@ -39,7 +41,7 @@
             Location? newLocation = Data.Data.GetLocation(CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction]);
             if (newLocation == null) return "Something went wrong.";
             CurrentLocation = newLocation;
-            return $"You move to the {parsed.DirectionText.ToLower()}. You are now in {CurrentLocation.Name.ToLower()}.";
+            return $"You move to the {parsed.DirectionText.ToLower()}. You are now in {CurrentLocation}.";
         }
         public string DropItem(ParsedText parsed)
         {
@@ -73,11 +75,11 @@
             Item? itemTwo = PC.GetItem(parsed.ItemTwo);
             if (itemTwo == null) return $"You do not have {parsed.ItemTwoText}.";
 
-            if (itemOne.UsableOn != parsed.ItemTwo || itemTwo.SpecialItem == -1)
+            if (itemOne.UsableOn != itemTwo.ID || itemOne.SpecialItem == -1)
             {
                 return $"Nothing happens when you use {parsed.ItemOneText} on {parsed.ItemTwoText}.";
             }
-            Item? newItem = Data.Data.GetItem(itemTwo.SpecialItem);
+            Item? newItem = Data.Data.GetItem(itemOne.SpecialItem);
             if (newItem == null) return "Something went wrong.";
             PC.AddItem(newItem);
             PC.RemoveItem(itemOne);
@@ -102,12 +104,12 @@
         public string PickUpItemFromContainer(ParsedText parsed)
         {
             Container? container = CurrentLocation.GetContainer(parsed.Container);
-            if (container == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.Name.ToLower()}";
+            if (container == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.Name.ToLower()}.";
             Item? itemToPickUp = container.GetItem(parsed.ItemOne);
-            if (itemToPickUp == null) return $"There is no {parsed.ItemOneText} in {parsed.ContainerText}";
+            if (itemToPickUp == null) return $"There is no {parsed.ItemOneText} in {parsed.ContainerText}.";
             PC.AddItem(itemToPickUp);
             container.RemoveItem(itemToPickUp);
-            return $"You pick up {itemToPickUp} from {parsed.ContainerText}";
+            return $"You pick up {itemToPickUp} from {parsed.ContainerText}.";
         }
         public string ExamineItem(ParsedText parsed)
         {
@@ -118,7 +120,7 @@
                 InspectedItem = CurrentLocation.GetItem(parsed.ItemOne);
                 if (InspectedItem == null)
                 {
-                    return $"There's no {parsed.ItemOneText} in neither your inventory nor the {CurrentLocation.Name.ToLower()}";
+                    return $"There's no {parsed.ItemOneText} in neither your inventory nor the {CurrentLocation.Name.ToLower()}.";
                 }
                 return InspectedItem.Inspect();
 
@@ -136,7 +138,7 @@
             Item? item = PC.GetItem(parsed.ItemOne);
             if (item == null)
             {
-                return $"You do not have {parsed.ItemOneText}";
+                return $"You do not have {parsed.ItemOneText}.";
             }
             Exit? exit = null;
             Obstruction? obstruction = null;
@@ -151,17 +153,18 @@
             }
             if (obstruction == null)
             {
-                return $"There is no {parsed.ObstructionText} in the {CurrentLocation.Name.ToLower()}";
+                return $"There is no {parsed.ObstructionText} in the {CurrentLocation.Name.ToLower()}.";
             }
             if (obstruction != null && exit != null && obstruction.ClearedBy == item.Type)
             {
                 exit.Obstruction = null;
                 PC.Items.Remove(item);
-                return $"You use your {item.Name.ToLower()} to clear the {obstruction.Name.ToLower()}";
+                return $"You use your {item.Name.ToLower()} to clear the {obstruction.Name.ToLower()}." +
+                       $"\nThe {item.Name.ToLower()} was lost in the process.";
             }
             if (item.Type != obstruction.ClearedBy)
             {
-                return $"You cannot clear a {parsed.ObstructionText} with {item.Name}";
+                return $"You cannot clear a {parsed.ObstructionText} with {item.Name}.";
             }
             return "Something went wrong";
 
@@ -182,6 +185,23 @@
         {
             return CurrentLocation.Name;
         }
+        public string UnlockDoor(ParsedText parsed)
+        {
+            Item? item = PC.GetItem(parsed.ItemOne);
+            if (item == null) return $"You do not have {parsed.ItemOneText}.";
+            if (parsed.ItemOne != Enums.Items.Key) return $"Nothing happens when you use {parsed.ItemOneText} on the door.";
+            Exit? exit = CurrentLocation.Exits[parsed.Direction];
+            if (exit == null) return $"There is no door to the {parsed.DirectionText}";
+            if (exit.IsLocked == false) return "The door is not locked.";
+            if (exit.UnlockedBy != item.ID) return $"The {parsed.ItemOneText} cannot unlock this door.";
+            if (exit.Obstruction != null)
+            {
+                return $"{exit.Obstruction.Article} {exit.Obstruction.Name.ToLower()} blocks the door."; ;
+            }
+            string output = exit.Unlock(item);
+            PC.RemoveItem(item);
+            return output;
 
+        }
     }
 }

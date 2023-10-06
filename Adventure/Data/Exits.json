@@ -1,8 +1,8 @@
 [
   {
     "ID": 1,
-    "IsLocked": false,
-    "UnlockedBy": -1,
+    "IsLocked": true,
+    "UnlockedBy": 5,
     "Directions": [ "North", "South" ],
     "LocationIDs": [ 2,1 ],
     "ObstructionID": 1
