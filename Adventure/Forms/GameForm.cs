@@ -83,6 +83,7 @@ namespace Adventure
         {
             Button button = (Button)sender;
             HandleInput($"Go {button.Text}");
+            textInput.Focus();
         }
         private void UpdateState()
         {
@@ -115,6 +116,7 @@ namespace Adventure
         private void buttonLook_Click(object sender, EventArgs e)
         {
             HandleInput("look");
+            textInput.Focus();
         }
         private string PromptUser(string question, string title)
         {
@@ -125,6 +127,7 @@ namespace Adventure
         private void buttonPickup_Click(object sender, EventArgs e)
         {
             HandleInput($"take {PromptUser("Which item do you want to take?", "Item")}");
+            textInput.Focus();
         }
 
         private void buttonDropitem_Click(object sender, EventArgs e)
@@ -133,6 +136,7 @@ namespace Adventure
             {
                 HandleInput($"drop {listPlayerItems.SelectedItem}");
             }
+            textInput.Focus();
         }
         private void buttonExamineitem_Click(object sender, EventArgs e)
         {
@@ -140,6 +144,7 @@ namespace Adventure
             {
                 HandleInput($"examine {listPlayerItems.SelectedItem}");
             }
+            textInput.Focus();
 
         }
 
@@ -149,6 +154,17 @@ namespace Adventure
             {
                 HandleInput($"use {listPlayerItems.SelectedItem} on {PromptUser("What do you want to use it on?", "Use on")}");
             }
+            textInput.Focus();
+        }
+
+        private void richGameLog_SelectionChanged(object sender, EventArgs e)
+        {
+            textInput.Focus();
+        }
+
+        private void richGameLog_Click(object sender, EventArgs e)
+        {
+            textInput.Focus();
         }
 
         //private ItemBase XMLTEST(string id)

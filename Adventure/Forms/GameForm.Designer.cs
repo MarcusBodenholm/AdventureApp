@@ -63,7 +63,7 @@
             groupBoxPlayer.Controls.Add(buttonNorth);
             groupBoxPlayer.Controls.Add(buttonEast);
             groupBoxPlayer.Controls.Add(buttonWest);
-            groupBoxPlayer.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
+            groupBoxPlayer.Font = new Font("Courier New", 17.25F, FontStyle.Bold, GraphicsUnit.Point);
             groupBoxPlayer.ForeColor = Color.Green;
             groupBoxPlayer.Location = new Point(10, 9);
             groupBoxPlayer.Margin = new Padding(3, 2, 3, 2);
@@ -77,11 +77,11 @@
             // labelInventory
             // 
             labelInventory.AutoSize = true;
-            labelInventory.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            labelInventory.Font = new Font("Courier New", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             labelInventory.Location = new Point(632, 16);
             labelInventory.Margin = new Padding(0, 0, 3, 0);
             labelInventory.Name = "labelInventory";
-            labelInventory.Size = new Size(100, 25);
+            labelInventory.Size = new Size(109, 22);
             labelInventory.TabIndex = 11;
             labelInventory.Text = "Inventory";
             // 
@@ -91,7 +91,7 @@
             buttonUseItemOn.FlatAppearance.MouseDownBackColor = Color.White;
             buttonUseItemOn.FlatAppearance.MouseOverBackColor = Color.White;
             buttonUseItemOn.FlatStyle = FlatStyle.Flat;
-            buttonUseItemOn.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonUseItemOn.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             buttonUseItemOn.Location = new Point(539, 124);
             buttonUseItemOn.Name = "buttonUseItemOn";
             buttonUseItemOn.Size = new Size(87, 28);
@@ -106,7 +106,7 @@
             buttonExamineitem.FlatAppearance.MouseDownBackColor = Color.White;
             buttonExamineitem.FlatAppearance.MouseOverBackColor = Color.White;
             buttonExamineitem.FlatStyle = FlatStyle.Flat;
-            buttonExamineitem.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonExamineitem.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             buttonExamineitem.Location = new Point(539, 90);
             buttonExamineitem.Name = "buttonExamineitem";
             buttonExamineitem.Size = new Size(87, 28);
@@ -121,7 +121,7 @@
             buttonDropitem.FlatAppearance.MouseDownBackColor = Color.White;
             buttonDropitem.FlatAppearance.MouseOverBackColor = Color.White;
             buttonDropitem.FlatStyle = FlatStyle.Flat;
-            buttonDropitem.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonDropitem.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             buttonDropitem.Location = new Point(539, 56);
             buttonDropitem.Name = "buttonDropitem";
             buttonDropitem.Size = new Size(87, 28);
@@ -136,7 +136,7 @@
             buttonPickup.FlatAppearance.MouseDownBackColor = Color.White;
             buttonPickup.FlatAppearance.MouseOverBackColor = Color.White;
             buttonPickup.FlatStyle = FlatStyle.Flat;
-            buttonPickup.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonPickup.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             buttonPickup.Location = new Point(539, 22);
             buttonPickup.Name = "buttonPickup";
             buttonPickup.Size = new Size(87, 28);
@@ -151,7 +151,7 @@
             buttonLook.FlatAppearance.MouseDownBackColor = Color.White;
             buttonLook.FlatAppearance.MouseOverBackColor = Color.White;
             buttonLook.FlatStyle = FlatStyle.Flat;
-            buttonLook.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonLook.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point);
             buttonLook.Location = new Point(66, 115);
             buttonLook.Name = "buttonLook";
             buttonLook.Size = new Size(45, 22);
@@ -163,19 +163,19 @@
             // currentLocation
             // 
             currentLocation.AutoSize = true;
-            currentLocation.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            currentLocation.Location = new Point(86, 29);
+            currentLocation.Font = new Font("Courier New", 12F, FontStyle.Italic, GraphicsUnit.Point);
+            currentLocation.Location = new Point(106, 32);
             currentLocation.Name = "currentLocation";
-            currentLocation.Size = new Size(0, 21);
+            currentLocation.Size = new Size(0, 19);
             currentLocation.TabIndex = 5;
             // 
             // labelLocation
             // 
             labelLocation.AutoSize = true;
-            labelLocation.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            labelLocation.Location = new Point(9, 29);
+            labelLocation.Font = new Font("Courier New", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            labelLocation.Location = new Point(13, 32);
             labelLocation.Name = "labelLocation";
-            labelLocation.Size = new Size(80, 21);
+            labelLocation.Size = new Size(98, 18);
             labelLocation.TabIndex = 3;
             labelLocation.Text = "Location:";
             // 
@@ -185,7 +185,7 @@
             buttonSouth.FlatAppearance.MouseDownBackColor = Color.White;
             buttonSouth.FlatAppearance.MouseOverBackColor = Color.White;
             buttonSouth.FlatStyle = FlatStyle.Flat;
-            buttonSouth.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonSouth.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             buttonSouth.Location = new Point(77, 142);
             buttonSouth.Margin = new Padding(3, 2, 3, 2);
             buttonSouth.Name = "buttonSouth";
@@ -215,7 +215,7 @@
             buttonNorth.FlatAppearance.MouseDownBackColor = Color.White;
             buttonNorth.FlatAppearance.MouseOverBackColor = Color.White;
             buttonNorth.FlatStyle = FlatStyle.Flat;
-            buttonNorth.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonNorth.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             buttonNorth.Location = new Point(77, 88);
             buttonNorth.Margin = new Padding(3, 2, 3, 2);
             buttonNorth.Name = "buttonNorth";
@@ -231,7 +231,7 @@
             buttonEast.FlatAppearance.MouseDownBackColor = Color.White;
             buttonEast.FlatAppearance.MouseOverBackColor = Color.White;
             buttonEast.FlatStyle = FlatStyle.Flat;
-            buttonEast.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonEast.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             buttonEast.Location = new Point(117, 115);
             buttonEast.Margin = new Padding(3, 2, 3, 2);
             buttonEast.Name = "buttonEast";
@@ -247,7 +247,7 @@
             buttonWest.FlatAppearance.MouseDownBackColor = Color.White;
             buttonWest.FlatAppearance.MouseOverBackColor = Color.White;
             buttonWest.FlatStyle = FlatStyle.Flat;
-            buttonWest.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonWest.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             buttonWest.Location = new Point(38, 115);
             buttonWest.Margin = new Padding(3, 2, 3, 2);
             buttonWest.Name = "buttonWest";
@@ -282,6 +282,7 @@
             richGameLog.TabIndex = 11;
             richGameLog.TabStop = false;
             richGameLog.Text = "";
+            richGameLog.SelectionChanged += richGameLog_SelectionChanged;
             // 
             // GameForm
             // 
