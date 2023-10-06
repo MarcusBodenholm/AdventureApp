@@ -3,7 +3,7 @@ using System.Security.Permissions;
 
 namespace Adventure.Classes
 {
-    public static class Parser
+    public static class EnumParser
     {
         private readonly static Dictionary<string, Directions> directions = new()
         {
