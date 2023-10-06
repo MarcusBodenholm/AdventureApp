@@ -1,4 +1,5 @@
 ﻿using Adventure.Enums;
+using Adventure.Classes.Data;
 
 namespace Adventure.Classes.Models
 {
@@ -9,7 +10,7 @@ namespace Adventure.Classes.Models
         public string Description { get; set; } = string.Empty;
         public Items UsableOn { get; set; } = Items.Unknown;
         public Items Type { get; set; } = Items.Unknown;
-        public Item? SpecialItem { get; set; }
+        public int SpecialItem { get; set; } = -1;
         public string Article { get; set; } = string.Empty;
         public override string ToString()
         {
@@ -17,7 +18,8 @@ namespace Adventure.Classes.Models
         }
         public string Inspect()
         {
-            string usableOn = UsableOn == Items.Unknown || SpecialItem == null ? "" : $"This item can be used on {UsableOn} to gain {SpecialItem.Name}";
+            Item? specialItem = Data.Data.GetItem(SpecialItem);
+            string usableOn = UsableOn == Items.Unknown || specialItem == null ? "" : $"This item can be used on {UsableOn} to gain {specialItem.Name}";
             return $"{Description} {usableOn}";
         }
     }

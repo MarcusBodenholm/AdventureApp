@@ -4,9 +4,10 @@
     {
         private Character PC { get; set; } = new Character();
         private Location CurrentLocation { get; set; } = new Location();
-        public void SetStartingLocation(Location location)
+        public GameState()
         {
-            CurrentLocation = location;
+            CurrentLocation = Data.Data.GetLocation(1);
+
         }
         public (bool, string) CheckDirection(ParsedText parsed)
         {
@@ -26,7 +27,7 @@
             {
                 return (false, $"The door is locked.");
             }
-            return (true, CurrentLocation.Exits[parsed.Direction].Inspect());
+            return (true, CurrentLocation.Exits[parsed.Direction].Inspect(parsed.Direction));
         }
         public string MoveToLocation(ParsedText parsed)
         {
@@ -35,7 +36,9 @@
             {
                 return output;
             }
-            CurrentLocation = CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction];
+            Location? newLocation = Data.Data.GetLocation(CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction]);
+            if (newLocation == null) return "Something went wrong.";
+            CurrentLocation = newLocation;
             return $"You move to the {parsed.DirectionText.ToLower()}. You are now in {CurrentLocation.Name.ToLower()}.";
         }
         public string DropItem(ParsedText parsed)
@@ -49,11 +52,19 @@
             }
             return $"You do not have {parsed.ItemOneText}.";
         }
-        public string InspectDirection(ParsedText parsed)
+        public string InspectItemInContainer(ParsedText parsed)
         {
-            (bool check, string message) = CheckDirection(parsed);
-            if (message == $"There is no path to the {parsed.DirectionText}") return "Not a valid direction.";
-            return CurrentLocation.Exits[parsed.Direction].Inspect();
+            Container? container = CurrentLocation.GetContainer(parsed.Container);
+            if (container == null)
+            {
+                return $"There is no {parsed.ContainerText} in the {CurrentLocation.Name.ToLower()}.";
+            }
+            Item? item = container.GetItem(parsed.ItemOne);
+            if (item == null)
+            {
+                return $"There is no {parsed.ItemOneText} in the {container.Name.ToLower()}.";
+            }
+            return item.Inspect();
         }
         public string UseItemOnItem(ParsedText parsed)
         {
@@ -62,11 +73,12 @@
             Item? itemTwo = PC.GetItem(parsed.ItemTwo);
             if (itemTwo == null) return $"You do not have {parsed.ItemTwoText}.";
 
-            if (itemOne.UsableOn != parsed.ItemTwo || itemOne.SpecialItem == null)
+            if (itemOne.UsableOn != parsed.ItemTwo || itemTwo.SpecialItem == -1)
             {
                 return $"Nothing happens when you use {parsed.ItemOneText} on {parsed.ItemTwoText}.";
             }
-            Item newItem = itemOne.SpecialItem;
+            Item? newItem = Data.Data.GetItem(itemTwo.SpecialItem);
+            if (newItem == null) return "Something went wrong.";
             PC.AddItem(newItem);
             PC.RemoveItem(itemOne);
             PC.RemoveItem(itemTwo);
@@ -141,13 +153,13 @@
             {
                 return $"There is no {parsed.ObstructionText} in the {CurrentLocation.Name.ToLower()}";
             }
-            if (obstruction != null && exit != null && obstruction.ClearedBy.ToLower() == item.Name.ToLower())
+            if (obstruction != null && exit != null && obstruction.ClearedBy == item.Type)
             {
                 exit.Obstruction = null;
                 PC.Items.Remove(item);
                 return $"You use your {item.Name.ToLower()} to clear the {obstruction.Name.ToLower()}";
             }
-            if (item.Name.ToLower() != obstruction.ClearedBy.ToLower())
+            if (item.Type != obstruction.ClearedBy)
             {
                 return $"You cannot clear a {parsed.ObstructionText} with {item.Name}";
             }

@@ -1,0 +1,25 @@
+[
+  {
+    "ID": 1,
+    "Name": "Kitchen",
+    "Article": "A",
+    "Description": "This is a kitchen.",
+    "IsEndPoint": false,
+    "ContainerIDs": [1],
+    "Directions": [ "North" ],
+    "ExitIDs": [ 1 ],
+    "ItemIDs": [ 1,4 ]
+  },
+  {
+    "ID": 2,
+    "Name": "Bedroom",
+    "Article": "A",
+    "Description": "This is a bedroom.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "South" ],
+    "ExitIDs": [ 1 ],
+    "ItemIDs": [ 2 ]
+
+  }
+]

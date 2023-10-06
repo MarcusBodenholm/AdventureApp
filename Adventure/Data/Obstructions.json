@@ -1,0 +1,10 @@
+[
+  {
+    "ID": 1,
+    "Name": "Boulder",
+    "Description": "This is a boulder.",
+    "Article": "A",
+    "Type": "boulder",
+    "ClearedBy": "Shovel"
+  }
+]

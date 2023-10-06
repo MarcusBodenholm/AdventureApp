@@ -4,12 +4,12 @@ namespace Adventure.Classes.Models
 {
     public class Obstruction
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string ClearedBy { get; set; }
-        public string Article { get; set; }
-        public Obstructions Type { get; set; }
+        public int ID { get; set; } = -1;
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public Items ClearedBy { get; set; } = Items.Unknown;
+        public string Article { get; set; } = string.Empty;
+        public Obstructions Type { get; set; } = Obstructions.Unknown;
         public override string ToString()
         {
             return $"{Article.ToLower()} {Name.ToLower()}";

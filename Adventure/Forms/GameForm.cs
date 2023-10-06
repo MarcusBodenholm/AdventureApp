@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Microsoft.VisualBasic;
+using Adventure.Classes.Data;
 
 namespace Adventure
 {
@@ -24,7 +25,6 @@ namespace Adventure
         {
             InitializeComponent();
             GameLogic = new GameLogic();
-            GameLogic.HardCodeGameStart();
             UpdateState();
             string[] gameStartText = GameLogic.GameStart();
             foreach (var text in gameStartText)

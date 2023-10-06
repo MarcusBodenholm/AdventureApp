@@ -1,0 +1,10 @@
+[
+  {
+    "ID": 1,
+    "Name": "Cupboard",
+    "Article": "A",
+    "Description": "This is a cupboard",
+    "Type": "cupboard",
+    "ItemIDs": [5]
+  }
+]

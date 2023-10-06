@@ -57,7 +57,7 @@ namespace Adventure.Classes.Models
             }
             if (Containers.Count > 0)
             {
-                string containerInfo = $"In the {Name.ToLower()} there's ";
+                string containerInfo = $"You see ";
                 int count = 0;
                 foreach (var container in Containers)
                 {
@@ -75,7 +75,7 @@ namespace Adventure.Classes.Models
                     }
                     count++;
                 }
-                output += " " + containerInfo;
+                output += " " + containerInfo + " here.";
             }
             return output;
         }

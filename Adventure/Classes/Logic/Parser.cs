@@ -24,6 +24,7 @@ namespace Adventure.Classes
             {"look at", Commands.Inspect },
             {"pick up", Commands.Take },
             {"throw away", Commands.Drop },
+            {"grab", Commands.Take },
             {"use", Commands.Use },
             {"take", Commands.Take},
             {"drop", Commands.Drop },
@@ -61,7 +62,7 @@ namespace Adventure.Classes
         {
             {"cupboard", Containers.Cupboard },
         };
-        private static Containers Container(string input)
+        public static Containers Container(string input)
         {
             string text = input.ToLower();
             if (containers.ContainsKey(text))
@@ -73,7 +74,7 @@ namespace Adventure.Classes
                 return Containers.Unknown;
             }
         }
-        private static Directions Direction(string input)
+        public static Directions Direction(string input)
         {
             string text = input.ToLower();
 
@@ -86,7 +87,7 @@ namespace Adventure.Classes
                 return Directions.Unknown;
             }
         }
-        private static Commands Command(string input)
+        public static Commands Command(string input)
         {
             string text = input.ToLower();
 
@@ -100,8 +101,9 @@ namespace Adventure.Classes
                 return Commands.Unknown;
             }
         }
-        private static Items Item(string text)
+        public static Items Item(string input)
         {
+            string text = input.ToLower();
             if (items.ContainsKey(text))
             {
                 return items[text];
@@ -111,7 +113,7 @@ namespace Adventure.Classes
                 return Items.Unknown;
             }
         }
-        private static Obstructions Obstruction(string text)
+        public static Obstructions Obstruction(string text)
         {
             if (obstructions.ContainsKey(text))
             {
