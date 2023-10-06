@@ -77,7 +77,7 @@ namespace Adventure
         }
         public void ClearLog()
         {
-            gameLog.Items.Clear();
+            richGameLog.Text = "";
         }
         private void DirectionButton_Click(object sender, EventArgs e)
         {
@@ -191,4 +191,5 @@ namespace Adventure
 
         //}
     }
+
 }

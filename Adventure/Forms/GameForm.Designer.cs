@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            groupBox1 = new GroupBox();
+            groupBoxPlayer = new GroupBox();
+            labelInventory = new Label();
             buttonUseItemOn = new Button();
             buttonExamineitem = new Button();
             buttonDropitem = new Button();
@@ -36,101 +37,127 @@
             buttonLook = new Button();
             currentLocation = new Label();
             labelLocation = new Label();
-            button4 = new Button();
+            buttonSouth = new Button();
             listPlayerItems = new ListBox();
-            button3 = new Button();
-            button2 = new Button();
-            button1 = new Button();
-            gameLog = new ListBox();
+            buttonNorth = new Button();
+            buttonEast = new Button();
+            buttonWest = new Button();
             textInput = new TextBox();
             richGameLog = new RichTextBox();
-            groupBox1.SuspendLayout();
+            groupBoxPlayer.SuspendLayout();
             SuspendLayout();
             // 
-            // groupBox1
+            // groupBoxPlayer
             // 
-            groupBox1.BackColor = SystemColors.ActiveCaptionText;
-            groupBox1.Controls.Add(buttonUseItemOn);
-            groupBox1.Controls.Add(buttonExamineitem);
-            groupBox1.Controls.Add(buttonDropitem);
-            groupBox1.Controls.Add(buttonPickup);
-            groupBox1.Controls.Add(buttonLook);
-            groupBox1.Controls.Add(currentLocation);
-            groupBox1.Controls.Add(labelLocation);
-            groupBox1.Controls.Add(button4);
-            groupBox1.Controls.Add(listPlayerItems);
-            groupBox1.Controls.Add(button3);
-            groupBox1.Controls.Add(button2);
-            groupBox1.Controls.Add(button1);
-            groupBox1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
-            groupBox1.ForeColor = Color.Green;
-            groupBox1.Location = new Point(10, 9);
-            groupBox1.Margin = new Padding(3, 2, 3, 2);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 2, 3, 2);
-            groupBox1.Size = new Size(870, 195);
-            groupBox1.TabIndex = 0;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Player";
+            groupBoxPlayer.BackColor = SystemColors.ActiveCaptionText;
+            groupBoxPlayer.Controls.Add(labelInventory);
+            groupBoxPlayer.Controls.Add(buttonUseItemOn);
+            groupBoxPlayer.Controls.Add(buttonExamineitem);
+            groupBoxPlayer.Controls.Add(buttonDropitem);
+            groupBoxPlayer.Controls.Add(buttonPickup);
+            groupBoxPlayer.Controls.Add(buttonLook);
+            groupBoxPlayer.Controls.Add(currentLocation);
+            groupBoxPlayer.Controls.Add(labelLocation);
+            groupBoxPlayer.Controls.Add(buttonSouth);
+            groupBoxPlayer.Controls.Add(listPlayerItems);
+            groupBoxPlayer.Controls.Add(buttonNorth);
+            groupBoxPlayer.Controls.Add(buttonEast);
+            groupBoxPlayer.Controls.Add(buttonWest);
+            groupBoxPlayer.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
+            groupBoxPlayer.ForeColor = Color.Green;
+            groupBoxPlayer.Location = new Point(10, 9);
+            groupBoxPlayer.Margin = new Padding(3, 2, 3, 2);
+            groupBoxPlayer.Name = "groupBoxPlayer";
+            groupBoxPlayer.Padding = new Padding(3, 2, 3, 2);
+            groupBoxPlayer.Size = new Size(870, 195);
+            groupBoxPlayer.TabIndex = 0;
+            groupBoxPlayer.TabStop = false;
+            groupBoxPlayer.Text = "Player";
+            // 
+            // labelInventory
+            // 
+            labelInventory.AutoSize = true;
+            labelInventory.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            labelInventory.Location = new Point(632, 16);
+            labelInventory.Margin = new Padding(0, 0, 3, 0);
+            labelInventory.Name = "labelInventory";
+            labelInventory.Size = new Size(100, 25);
+            labelInventory.TabIndex = 11;
+            labelInventory.Text = "Inventory";
             // 
             // buttonUseItemOn
             // 
             buttonUseItemOn.FlatAppearance.BorderColor = Color.Green;
-            buttonUseItemOn.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonUseItemOn.FlatAppearance.MouseDownBackColor = Color.White;
+            buttonUseItemOn.FlatAppearance.MouseOverBackColor = Color.White;
+            buttonUseItemOn.FlatStyle = FlatStyle.Flat;
+            buttonUseItemOn.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
             buttonUseItemOn.Location = new Point(539, 124);
             buttonUseItemOn.Name = "buttonUseItemOn";
             buttonUseItemOn.Size = new Size(87, 28);
             buttonUseItemOn.TabIndex = 10;
             buttonUseItemOn.Text = "Use item on";
-            buttonUseItemOn.UseVisualStyleBackColor = true;
+            buttonUseItemOn.UseVisualStyleBackColor = false;
             buttonUseItemOn.Click += buttonUseItemOn_Click;
             // 
             // buttonExamineitem
             // 
             buttonExamineitem.FlatAppearance.BorderColor = Color.Green;
-            buttonExamineitem.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonExamineitem.FlatAppearance.MouseDownBackColor = Color.White;
+            buttonExamineitem.FlatAppearance.MouseOverBackColor = Color.White;
+            buttonExamineitem.FlatStyle = FlatStyle.Flat;
+            buttonExamineitem.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
             buttonExamineitem.Location = new Point(539, 90);
             buttonExamineitem.Name = "buttonExamineitem";
             buttonExamineitem.Size = new Size(87, 28);
             buttonExamineitem.TabIndex = 9;
             buttonExamineitem.Text = "Examine item";
-            buttonExamineitem.UseVisualStyleBackColor = true;
+            buttonExamineitem.UseVisualStyleBackColor = false;
             buttonExamineitem.Click += buttonExamineitem_Click;
             // 
             // buttonDropitem
             // 
             buttonDropitem.FlatAppearance.BorderColor = Color.Green;
-            buttonDropitem.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonDropitem.FlatAppearance.MouseDownBackColor = Color.White;
+            buttonDropitem.FlatAppearance.MouseOverBackColor = Color.White;
+            buttonDropitem.FlatStyle = FlatStyle.Flat;
+            buttonDropitem.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
             buttonDropitem.Location = new Point(539, 56);
             buttonDropitem.Name = "buttonDropitem";
             buttonDropitem.Size = new Size(87, 28);
             buttonDropitem.TabIndex = 8;
             buttonDropitem.Text = "Drop item";
-            buttonDropitem.UseVisualStyleBackColor = true;
+            buttonDropitem.UseVisualStyleBackColor = false;
             buttonDropitem.Click += buttonDropitem_Click;
             // 
             // buttonPickup
             // 
             buttonPickup.FlatAppearance.BorderColor = Color.Green;
-            buttonPickup.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonPickup.FlatAppearance.MouseDownBackColor = Color.White;
+            buttonPickup.FlatAppearance.MouseOverBackColor = Color.White;
+            buttonPickup.FlatStyle = FlatStyle.Flat;
+            buttonPickup.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
             buttonPickup.Location = new Point(539, 22);
             buttonPickup.Name = "buttonPickup";
             buttonPickup.Size = new Size(87, 28);
             buttonPickup.TabIndex = 7;
             buttonPickup.Text = "Pick up item";
-            buttonPickup.UseVisualStyleBackColor = true;
+            buttonPickup.UseVisualStyleBackColor = false;
             buttonPickup.Click += buttonPickup_Click;
             // 
             // buttonLook
             // 
             buttonLook.FlatAppearance.BorderColor = Color.Green;
-            buttonLook.Font = new Font("Segoe UI", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonLook.FlatAppearance.MouseDownBackColor = Color.White;
+            buttonLook.FlatAppearance.MouseOverBackColor = Color.White;
+            buttonLook.FlatStyle = FlatStyle.Flat;
+            buttonLook.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
             buttonLook.Location = new Point(66, 115);
             buttonLook.Name = "buttonLook";
             buttonLook.Size = new Size(45, 22);
             buttonLook.TabIndex = 6;
             buttonLook.Text = "Look";
-            buttonLook.UseVisualStyleBackColor = true;
+            buttonLook.UseVisualStyleBackColor = false;
             buttonLook.Click += buttonLook_Click;
             // 
             // currentLocation
@@ -145,114 +172,115 @@
             // labelLocation
             // 
             labelLocation.AutoSize = true;
-            labelLocation.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            labelLocation.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
             labelLocation.Location = new Point(9, 29);
             labelLocation.Name = "labelLocation";
-            labelLocation.Size = new Size(72, 21);
+            labelLocation.Size = new Size(80, 21);
             labelLocation.TabIndex = 3;
             labelLocation.Text = "Location:";
             // 
-            // button4
+            // buttonSouth
             // 
-            button4.FlatAppearance.BorderColor = Color.Green;
-            button4.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button4.Location = new Point(77, 142);
-            button4.Margin = new Padding(3, 2, 3, 2);
-            button4.Name = "button4";
-            button4.Size = new Size(22, 22);
-            button4.TabIndex = 4;
-            button4.Text = "South";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += DirectionButton_Click;
+            buttonSouth.FlatAppearance.BorderColor = Color.Green;
+            buttonSouth.FlatAppearance.MouseDownBackColor = Color.White;
+            buttonSouth.FlatAppearance.MouseOverBackColor = Color.White;
+            buttonSouth.FlatStyle = FlatStyle.Flat;
+            buttonSouth.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonSouth.Location = new Point(77, 142);
+            buttonSouth.Margin = new Padding(3, 2, 3, 2);
+            buttonSouth.Name = "buttonSouth";
+            buttonSouth.Size = new Size(22, 22);
+            buttonSouth.TabIndex = 4;
+            buttonSouth.Text = "South";
+            buttonSouth.UseVisualStyleBackColor = false;
+            buttonSouth.Click += DirectionButton_Click;
             // 
             // listPlayerItems
             // 
             listPlayerItems.BackColor = SystemColors.InactiveCaptionText;
             listPlayerItems.BorderStyle = BorderStyle.None;
-            listPlayerItems.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            listPlayerItems.Font = new Font("Courier New", 9.75F, FontStyle.Italic, GraphicsUnit.Point);
             listPlayerItems.ForeColor = Color.Green;
             listPlayerItems.FormattingEnabled = true;
-            listPlayerItems.ItemHeight = 21;
-            listPlayerItems.Location = new Point(632, 19);
+            listPlayerItems.ItemHeight = 17;
+            listPlayerItems.Location = new Point(637, 43);
             listPlayerItems.Margin = new Padding(3, 2, 3, 2);
             listPlayerItems.Name = "listPlayerItems";
-            listPlayerItems.Size = new Size(232, 168);
+            listPlayerItems.Size = new Size(227, 136);
             listPlayerItems.TabIndex = 0;
             // 
-            // button3
+            // buttonNorth
             // 
-            button3.FlatAppearance.BorderColor = Color.Green;
-            button3.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button3.Location = new Point(77, 88);
-            button3.Margin = new Padding(3, 2, 3, 2);
-            button3.Name = "button3";
-            button3.Size = new Size(22, 22);
-            button3.TabIndex = 3;
-            button3.Text = "North";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += DirectionButton_Click;
+            buttonNorth.FlatAppearance.BorderColor = Color.Green;
+            buttonNorth.FlatAppearance.MouseDownBackColor = Color.White;
+            buttonNorth.FlatAppearance.MouseOverBackColor = Color.White;
+            buttonNorth.FlatStyle = FlatStyle.Flat;
+            buttonNorth.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonNorth.Location = new Point(77, 88);
+            buttonNorth.Margin = new Padding(3, 2, 3, 2);
+            buttonNorth.Name = "buttonNorth";
+            buttonNorth.Size = new Size(22, 22);
+            buttonNorth.TabIndex = 3;
+            buttonNorth.Text = "North";
+            buttonNorth.UseVisualStyleBackColor = false;
+            buttonNorth.Click += DirectionButton_Click;
             // 
-            // button2
+            // buttonEast
             // 
-            button2.FlatAppearance.BorderColor = Color.Green;
-            button2.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(117, 115);
-            button2.Margin = new Padding(3, 2, 3, 2);
-            button2.Name = "button2";
-            button2.Size = new Size(22, 22);
-            button2.TabIndex = 2;
-            button2.Text = "East";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += DirectionButton_Click;
+            buttonEast.FlatAppearance.BorderColor = Color.Green;
+            buttonEast.FlatAppearance.MouseDownBackColor = Color.White;
+            buttonEast.FlatAppearance.MouseOverBackColor = Color.White;
+            buttonEast.FlatStyle = FlatStyle.Flat;
+            buttonEast.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonEast.Location = new Point(117, 115);
+            buttonEast.Margin = new Padding(3, 2, 3, 2);
+            buttonEast.Name = "buttonEast";
+            buttonEast.Size = new Size(22, 22);
+            buttonEast.TabIndex = 2;
+            buttonEast.Text = "East";
+            buttonEast.UseVisualStyleBackColor = false;
+            buttonEast.Click += DirectionButton_Click;
             // 
-            // button1
+            // buttonWest
             // 
-            button1.FlatAppearance.BorderColor = Color.Green;
-            button1.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(38, 115);
-            button1.Margin = new Padding(3, 2, 3, 2);
-            button1.Name = "button1";
-            button1.Size = new Size(22, 22);
-            button1.TabIndex = 1;
-            button1.Text = "West";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += DirectionButton_Click;
-            // 
-            // gameLog
-            // 
-            gameLog.FormattingEnabled = true;
-            gameLog.HorizontalExtent = 500;
-            gameLog.HorizontalScrollbar = true;
-            gameLog.ItemHeight = 15;
-            gameLog.Location = new Point(10, 208);
-            gameLog.Margin = new Padding(3, 2, 3, 2);
-            gameLog.Name = "gameLog";
-            gameLog.SelectionMode = SelectionMode.None;
-            gameLog.Size = new Size(870, 169);
-            gameLog.TabIndex = 1;
+            buttonWest.FlatAppearance.BorderColor = Color.Green;
+            buttonWest.FlatAppearance.MouseDownBackColor = Color.White;
+            buttonWest.FlatAppearance.MouseOverBackColor = Color.White;
+            buttonWest.FlatStyle = FlatStyle.Flat;
+            buttonWest.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonWest.Location = new Point(38, 115);
+            buttonWest.Margin = new Padding(3, 2, 3, 2);
+            buttonWest.Name = "buttonWest";
+            buttonWest.Size = new Size(22, 22);
+            buttonWest.TabIndex = 1;
+            buttonWest.Text = "West";
+            buttonWest.UseVisualStyleBackColor = false;
+            buttonWest.Click += DirectionButton_Click;
             // 
             // textInput
             // 
             textInput.BackColor = SystemColors.InactiveCaptionText;
             textInput.BorderStyle = BorderStyle.FixedSingle;
+            textInput.Font = new Font("Courier New", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textInput.ForeColor = Color.Red;
             textInput.Location = new Point(10, 381);
             textInput.Margin = new Padding(3, 2, 3, 2);
             textInput.Name = "textInput";
-            textInput.Size = new Size(870, 23);
+            textInput.Size = new Size(870, 22);
             textInput.TabIndex = 0;
             textInput.KeyDown += textInput_KeyDown;
             // 
             // richGameLog
             // 
             richGameLog.BackColor = SystemColors.ActiveCaptionText;
-            richGameLog.BorderStyle = BorderStyle.None;
+            richGameLog.DetectUrls = false;
             richGameLog.Font = new Font("Courier New", 9F, FontStyle.Regular, GraphicsUnit.Point);
             richGameLog.Location = new Point(9, 208);
             richGameLog.Name = "richGameLog";
             richGameLog.ReadOnly = true;
             richGameLog.Size = new Size(871, 169);
             richGameLog.TabIndex = 11;
+            richGameLog.TabStop = false;
             richGameLog.Text = "";
             // 
             // GameForm
@@ -263,27 +291,25 @@
             ClientSize = new Size(892, 415);
             Controls.Add(richGameLog);
             Controls.Add(textInput);
-            Controls.Add(gameLog);
-            Controls.Add(groupBox1);
+            Controls.Add(groupBoxPlayer);
             Margin = new Padding(3, 2, 3, 2);
             Name = "GameForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Text Adventure Game";
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            groupBoxPlayer.ResumeLayout(false);
+            groupBoxPlayer.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private GroupBox groupBox1;
+        private GroupBox groupBoxPlayer;
         private ListBox listPlayerItems;
-        private Button button1;
-        private Button button2;
-        private Button button3;
-        private Button button4;
-        private ListBox gameLog;
+        private Button buttonWest;
+        private Button buttonEast;
+        private Button buttonNorth;
+        private Button buttonSouth;
         private TextBox textInput;
         private Label currentLocation;
         private Label labelLocation;
@@ -293,5 +319,6 @@
         private Button buttonExamineitem;
         private Button buttonUseItemOn;
         private RichTextBox richGameLog;
+        private Label labelInventory;
     }
 }

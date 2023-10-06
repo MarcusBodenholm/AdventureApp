@@ -109,7 +109,7 @@
             if (itemToPickUp == null) return $"There is no {parsed.ItemOneText} in {parsed.ContainerText}.";
             PC.AddItem(itemToPickUp);
             container.RemoveItem(itemToPickUp);
-            return $"You pick up {itemToPickUp} from {parsed.ContainerText}.";
+            return $"You pick up {itemToPickUp} from the {parsed.ContainerText}.";
         }
         public string ExamineItem(ParsedText parsed)
         {
