@@ -14,6 +14,13 @@ namespace Adventure.Classes.Data
         private static List<Container> AllContainers { get; set; } = new();
         private static List<Exit> AllExits { get; set; } = new();
         private static List<Obstruction> AllObstructions { get; set;} = new();
+        private static string GetDirectoryPath()
+        {
+            string testPath = Environment.CurrentDirectory;
+            int idx = testPath.IndexOf("bin");
+            return testPath.Substring(0, idx);
+
+        }
         private static readonly JsonSerializerOptions _options = new()
         {
             PropertyNameCaseInsensitive = true,
@@ -62,7 +69,7 @@ namespace Adventure.Classes.Data
         }
         private static void LoadItemsFromJson()
         {
-            string filePath = @"C:\Users\marcu\Source\Repos\Shedcape\AdventureApp\Adventure\Data\Items.json";
+            string filePath = @$"{GetDirectoryPath()}\Data\Items.json";
             var json = File.ReadAllText(filePath);
             List<JsonItem>? results = JsonSerializer.Deserialize<List<JsonItem>>(json, _options);
             if (results != null)
@@ -83,7 +90,7 @@ namespace Adventure.Classes.Data
         }
         private static void LoadLocationsFromJson()
         {
-            string filePath = @"C:\Users\marcu\Source\Repos\Shedcape\AdventureApp\Adventure\Data\Locations.json";
+            string filePath = @$"{GetDirectoryPath()}\Data\Locations.json";
             var json = File.ReadAllText(filePath);
             List<JsonLocation>? results = JsonSerializer.Deserialize<List< JsonLocation>>(json, _options);
             if (results != null)
@@ -136,7 +143,7 @@ namespace Adventure.Classes.Data
         }
         private static void LoadAllExits()
         {
-            string filePath = @"C:\Users\marcu\Source\Repos\Shedcape\AdventureApp\Adventure\Data\Exits.json";
+            string filePath = @$"{GetDirectoryPath()}\Data\Exits.json";
             var json = File.ReadAllText(filePath);
             List<JsonExit>? exits = JsonSerializer.Deserialize<List<JsonExit>>(json, _options);
             if (exits != null)
@@ -163,7 +170,7 @@ namespace Adventure.Classes.Data
         }
         private static void LoadAllContainers()
         {
-            string filePath = @"C:\Users\marcu\Source\Repos\Shedcape\AdventureApp\Adventure\Data\Containers.json";
+            string filePath = @$"{GetDirectoryPath()}\Data\Containers.json";
             var json = File.ReadAllText(filePath);
             List<JsonContainer>? containers = JsonSerializer.Deserialize<List<JsonContainer>>(json, _options);
             if (containers != null)
@@ -193,7 +200,7 @@ namespace Adventure.Classes.Data
         }
         private static void LoadAllObstructions()
         {
-            string filePath = @"C:\Users\marcu\Source\Repos\Shedcape\AdventureApp\Adventure\Data\Obstructions.json";
+            string filePath = @$"{GetDirectoryPath()}\Data\Obstructions.json";
             var json = File.ReadAllText(filePath);
             List<JsonObstruction>? obstructions = JsonSerializer.Deserialize<List<JsonObstruction>>(json, _options);
             if (obstructions != null)
