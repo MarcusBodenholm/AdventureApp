@@ -114,7 +114,7 @@ namespace Adventure.Classes.Data
                             }
                         }
                     }
-                    if (location.Directions != null)
+                    if (location.Directions != null && location.ExitIDs != null)
                     {
                         for (int i = 0; i < location.Directions.Length; i++)
                         {

@@ -1,24 +1,178 @@
 [
   {
     "ID": 1,
+    "Name": "Basement",
+    "Article": "A",
+    "Description": "This is the start.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "North" ],
+    "ExitIDs": [1],
+    "ItemIDs": null
+  },
+  {
+    "ID": 2,
+    "Name": "Hallway",
+    "Article": "A",
+    "Description": "This is a hallway.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "North", "East", "South" ],
+    "ExitIDs": [3,2,1],
+    "ItemIDs": null
+  },
+  {
+    "ID": 3,
+    "Name": "Study",
+    "Article": "A",
+    "Description": "This is a study.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "North", "West" ],
+    "ExitIDs": [16,2],
+    "ItemIDs": null
+  },
+  {
+    "ID": 4,
     "Name": "Kitchen",
     "Article": "A",
     "Description": "This is a kitchen.",
     "IsEndPoint": false,
-    "ContainerIDs": [1],
-    "Directions": [ "North" ],
-    "ExitIDs": [ 1 ],
-    "ItemIDs": [ 1,4 ]
+    "ContainerIDs": null,
+    "Directions": [ "North", "South", "East", "West" ],
+    "ExitIDs": [7,3,5,4],
+    "ItemIDs": null
   },
   {
-    "ID": 2,
+    "ID": 5,
+    "Name": "Storage Room",
+    "Article": "A",
+    "Description": "This is a storage room.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "East" ],
+    "ExitIDs": [4],
+    "ItemIDs": null
+  },
+  {
+    "ID": 6,
+    "Name": "Dining Room",
+    "Article": "A",
+    "Description": "This is a dining room.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "North", "South", "East", "West" ],
+    "ExitIDs": [8,16,6,5],
+    "ItemIDs": null
+  },
+  {
+    "ID": 7,
+    "Name": "Bathroom",
+    "Article": "A",
+    "Description": "This is a bathroom.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "West" ],
+    "ExitIDs": [6],
+    "ItemIDs": null
+  },
+  {
+    "ID": 8,
+    "Name": "Entry hallway",
+    "Article": "A",
+    "Description": "This is a hallway.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "North", "South", "East", "West" ],
+    "ExitIDs": [10,7,9,12],
+    "ItemIDs": null
+  },
+  {
+    "ID": 9,
+    "Name": "Living Room",
+    "Article": "A",
+    "Description": "This is a living room.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "South", "West" ],
+    "ExitIDs": [8,9],
+    "ItemIDs": null
+  },
+  {
+    "ID": 10,
+    "Name": "Foyer",
+    "Article": "A",
+    "Description": "This is a foyer.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "South", "West" ],
+    "ExitIDs": [10,11],
+    "ItemIDs": null
+  },
+  {
+    "ID": 11,
+    "Name": "Clothing Storage",
+    "Article": "A",
+    "Description": "This is a clothing storage.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "East" ],
+    "ExitIDs": [11],
+    "ItemIDs": null
+  },
+  {
+    "ID": 12,
+    "Name": "Upper hallway",
+    "Article": "A",
+    "Description": "This is a hallway.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "South", "East", "West", "North" ],
+    "ExitIDs": [12,13,14,15],
+    "ItemIDs": null
+  },
+  {
+    "ID": 13,
     "Name": "Bedroom",
     "Article": "A",
     "Description": "This is a bedroom.",
     "IsEndPoint": false,
     "ContainerIDs": null,
+    "Directions": [ "West" ],
+    "ExitIDs": [13],
+    "ItemIDs": null
+  },
+  {
+    "ID": 14,
+    "Name": "Guest bedroom",
+    "Article": "A",
+    "Description": "This is a guest bedroom.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
+    "Directions": [ "East" ],
+    "ExitIDs": [14],
+    "ItemIDs": null
+  },
+  {
+    "ID": 15,
+    "Name": "Master bedroom",
+    "Article": "A",
+    "Description": "This is the master bedroom.",
+    "IsEndPoint": false,
+    "ContainerIDs": null,
     "Directions": [ "South" ],
-    "ExitIDs": [ 1 ],
-    "ItemIDs": [ 2 ]
+    "ExitIDs": [15],
+    "ItemIDs": null
+  },
+  {
+    "ID": 99,
+    "Name": "Outside",
+    "Article": "The",
+    "Description": "You have managed to escape the house, congratulations!",
+    "IsEndPoint": true,
+    "ContainerIDs": null,
+    "Directions": null,
+    "ExitIDs": null,
+    "ItemIDs": null
   }
 ]
