@@ -1,13 +1,12 @@
 ﻿using Adventure.Enums;
 using System.Collections.Specialized;
-using Adventure.Enums;
 
 namespace Adventure.Classes.Models
 {
 
     public class Character
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public List<Item> Items { get; set; } = new List<Item>();
         public void AddItem(Item item)
         {

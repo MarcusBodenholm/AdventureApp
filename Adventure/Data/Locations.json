@@ -3,7 +3,7 @@
     "ID": 1,
     "Name": "Basement",
     "Article": "A",
-    "Description": "This is the start.",
+    "Description": "You look around and see a damp basement. There's not much of use to be found here, as everything appears to be either junk or too old. To the north you notice stairs leading up.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "North" ],

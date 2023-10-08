@@ -27,7 +27,7 @@ namespace Adventure
             GameLogic = new GameLogic();
             UpdateState();
             string[] gameStartText = GameLogic.GameStart();
-            foreach (var text in gameStartText)
+            foreach (string text in gameStartText)
             {
                 UpdateLog(text);
             }
@@ -44,22 +44,22 @@ namespace Adventure
             }
             richGameLog.SelectionStart = richGameLog.Text.Length;
             richGameLog.ScrollToCaret();
-            int lineCounter = 0;
-            foreach (string line in richGameLog.Lines)
-            {
-                int idx = richGameLog.GetFirstCharIndexFromLine(lineCounter);
-                if (line.Contains("Player"))
-                {
-                    richGameLog.Select(idx, line.Length);
-                    richGameLog.SelectionColor = Color.Red;
-                }
-                else
-                {
-                    richGameLog.Select(idx, line.Length);
-                    richGameLog.SelectionColor = Color.Green;
-                }
-                lineCounter++;
-            }
+            //int lineCounter = 0;
+            //foreach (string line in richGameLog.Lines)
+            //{
+            //    int idx = richGameLog.GetFirstCharIndexFromLine(lineCounter);
+            //    if (line.Contains("Player"))
+            //    {
+            //        richGameLog.Select(idx, line.Length);
+            //        richGameLog.SelectionColor = Color.Red;
+            //    }
+            //    else
+            //    {
+            //        richGameLog.Select(idx, line.Length);
+            //        richGameLog.SelectionColor = Color.Green;
+            //    }
+            //    lineCounter++;
+            //}
         }
         public void ClearLog()
         {

@@ -132,11 +132,9 @@ namespace Adventure.Classes.Logic
         }
         public string[] GameStart()
         {
-            string[] output = new string[]
-            {
-                "You awake with no memory of where you are or how you got here",
-                $"{GameState.InspectLocation()}"
-            };
+            string[] output = new string[] { $"You awake with no memory of where you are, nor how you got here.",
+                            $"All you know is that you need to get out of here, and get back home. ",
+                            $"{GameState.InspectLocation()}" };
             return output;
         }
     }

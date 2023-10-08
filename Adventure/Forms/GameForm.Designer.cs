@@ -274,7 +274,8 @@
             richGameLog.BackColor = SystemColors.ActiveCaptionText;
             richGameLog.DetectUrls = false;
             richGameLog.Font = new Font("Courier New", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            richGameLog.Location = new Point(9, 208);
+            richGameLog.ForeColor = Color.Green;
+            richGameLog.Location = new Point(9, 209);
             richGameLog.Name = "richGameLog";
             richGameLog.ReadOnly = true;
             richGameLog.Size = new Size(871, 169);

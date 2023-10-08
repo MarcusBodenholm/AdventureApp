@@ -49,11 +49,11 @@ namespace Adventure.Classes.Models
             string output = Description;
             if (Items.Count == 0)
             {
-                output += " There are no items here.";
+                output += "\nThere are no items here.";
             }
             else
             {
-                output += $" You see the following items in the room: {ListItems()}.";
+                output += $"\nYou see the following items in the room: {ListItems()}.";
             }
             if (Containers.Count > 0)
             {

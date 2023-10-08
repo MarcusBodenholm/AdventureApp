@@ -7,6 +7,7 @@ namespace Adventure.Classes.Models
         public int ID { get; set; }
         public bool IsLocked { get; set; } = false;
         public int UnlockedBy { get; set; } = 1;
+        public string Description { get; set; } = string.Empty;
         public Dictionary<Directions, int> Locations { get; set; } = new();
         public Obstruction? Obstruction { get; set; }
         public string Inspect(Directions direction)

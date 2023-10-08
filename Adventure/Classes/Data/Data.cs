@@ -154,6 +154,7 @@ namespace Adventure.Classes.Data
                     newExit.ID = exit.ID;
                     newExit.IsLocked = exit.IsLocked;
                     newExit.UnlockedBy = exit.UnlockedBy;
+                    newExit.Description = exit.Description;
                     int obstructionID = exit.ObstructionID == null ? -1 : (int)exit.ObstructionID;
                     newExit.Obstruction = GetObstruction(obstructionID);
                     if (exit.Directions != null && exit.LocationIDs != null)

@@ -7,7 +7,9 @@
         public bool ConversationMode { get; set; } = false;
         public GameState()
         {
-            CurrentLocation = Data.Data.GetLocation(1);
+            Location? location = Data.Data.GetLocation(1);
+            if (location == null) throw new ArgumentNullException();
+            CurrentLocation = location;
         }
         public (bool, string) CheckDirection(ParsedText parsed)
         {
@@ -16,10 +18,9 @@
             {
                 return (false, $"There is no door to the {parsed.DirectionText.ToLower()}.");
             }
-            bool hasObstruction = CurrentLocation.Exits[parsed.Direction].Obstruction != null;
-            if (hasObstruction)
+            Obstruction? obstruction = CurrentLocation.Exits[parsed.Direction].Obstruction;
+            if (obstruction != null)
             {
-                Obstruction? obstruction = CurrentLocation.Exits[parsed.Direction].Obstruction;
                 string output = $"{obstruction.Article} {obstruction.Name.ToLower()} blocks the door.";
                 return (false, output);
             }
@@ -36,10 +37,13 @@
             {
                 return output;
             }
+            Exit? exit = CurrentLocation.Exits[parsed.Direction];
             Location? newLocation = Data.Data.GetLocation(CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction]);
             if (newLocation == null) return "Something went wrong.";
             CurrentLocation = newLocation;
-            return $"You move to the {parsed.DirectionText.ToLower()}. You are now in {CurrentLocation}.";
+            string exitMessage = exit.Description == "door" ? $"You go through door to the {parsed.DirectionText.ToLower()}"
+                                                            : $"You take the stairs to the {parsed.DirectionText.ToLower()}";
+            return $"{exitMessage}. You are now in {CurrentLocation}. \n{CurrentLocation.Description}";
         }
         public string DropItem(ParsedText parsed)
         {
