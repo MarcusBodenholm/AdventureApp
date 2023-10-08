@@ -4,6 +4,16 @@
     {
         Kitchen,
         Bedroom,
-        Bathroom
+        Bathroom,
+        LivingRoom,
+        Storageroom,
+        Hallway,
+        UpperHallWay,
+        Study,
+        DiningRoom,
+        ClothingStorage,
+        EntryHallway,
+        GuestBedroom,
+        MasterBedroom
     }
 }
