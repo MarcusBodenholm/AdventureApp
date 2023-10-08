@@ -8,8 +8,6 @@
         public GameState()
         {
             CurrentLocation = Data.Data.GetLocation(1);
-
-
         }
         public (bool, string) CheckDirection(ParsedText parsed)
         {

@@ -38,6 +38,15 @@ namespace Adventure.Classes
             {"inventory", Commands.Inventory },
             {"inspect", Commands.Inspect },
             {"check", Commands.Check },
+            {"translocate", Commands.Move },
+            {"advance", Commands.Move },
+            {"manoeuver", Commands.Move },
+            {"run", Commands.Move },
+            {"crawl", Commands.Move },
+            {"teleport", Commands.Move },
+            {"reposition", Commands.Move },
+            {"jog", Commands.Move },
+            {"sprint", Commands.Move },
             {"look", Commands.Inspect },
             {"trip", Commands.Move },
             {"fall", Commands.Move },
@@ -49,6 +58,7 @@ namespace Adventure.Classes
             {"discard", Commands.Drop },
             {"get", Commands.Take },
             {"examine", Commands.Inspect },
+            {"study", Commands.Inspect },
         };
 
         private readonly static Dictionary<string, Items> items = new()
@@ -159,7 +169,6 @@ namespace Adventure.Classes
                     parsed.Direction = Direction(direction);
                     parsed.DirectionText = direction;
                     return input;
-
                 }
             }
             return input;

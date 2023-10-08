@@ -260,13 +260,12 @@
             // textInput
             // 
             textInput.BackColor = SystemColors.InactiveCaptionText;
-            textInput.BorderStyle = BorderStyle.FixedSingle;
             textInput.Font = new Font("Courier New", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textInput.ForeColor = Color.Red;
-            textInput.Location = new Point(10, 381);
+            textInput.Location = new Point(9, 381);
             textInput.Margin = new Padding(3, 2, 3, 2);
             textInput.Name = "textInput";
-            textInput.Size = new Size(870, 22);
+            textInput.Size = new Size(871, 22);
             textInput.TabIndex = 0;
             textInput.KeyDown += textInput_KeyDown;
             // 
