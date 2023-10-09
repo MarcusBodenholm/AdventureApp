@@ -5,6 +5,7 @@
         Unknown,
         Cupboard,
         ShoeBox,
-        KitchenCounter
+        KitchenCounter,
+        Desk
     }
 }

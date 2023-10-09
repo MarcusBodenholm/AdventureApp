@@ -138,6 +138,67 @@
     "Type": "green key",
     "SpecialItem": -1,
     "Persistent": false
+  },
+  {
+    "ID": 14,
+    "Name": "Carving knife",
+    "Article": "A",
+    "Description": "A well-used carving knife perfect for carving wood.",
+    "UsableOn": 15,
+    "Type": "carving knife",
+    "SpecialItem": 17,
+    "Persistent": false
+  },
+  {
+    "ID": 15,
+    "Name": "Wood",
+    "Article": "A",
+    "Description": "A lump of malleable wood.",
+    "UsableOn": -1,
+    "Type": "wood",
+    "SpecialItem": -1,
+    "Persistent": false
+  },
+  {
+    "ID": 16,
+    "Name": "Paint",
+    "Article": "A",
+    "Description": "A bucket of the finest purple paint.",
+    "UsableOn": 17,
+    "Type": "paint",
+    "SpecialItem": 18,
+    "Persistent": false
+  },
+  {
+    "ID": 17,
+    "Name": "Figurine",
+    "Article": "A",
+    "Description": "A figurine carved in wood resembling a goat.",
+    "UsableOn": -1,
+    "Type": "figurine",
+    "SpecialItem": -1,
+    "Persistent": false
+  },
+  {
+    "ID": 18,
+    "Name": "Painted figurine",
+    "Article": "A",
+    "Description": "A figurine carved in wood resembling a goat that has been dipped in purple paint.",
+    "UsableOn": -1,
+    "Type": "painted figurine",
+    "SpecialItem": -1,
+    "Persistent": false
+  },
+  {
+    "ID": 19,
+    "Name": "Diary",
+    "Article": "A",
+    "Description": "A diary with only one readable entry. \n\"Today I was reminded of a moment from my youth. My father had just gotten me a pet goat. I decided his name would be Sven, and he was my life-long companion. I still visit his grave occasionally.\".",
+    "UsableOn": -1,
+    "Type": "diary",
+    "SpecialItem": -1,
+    "Persistent": false
   }
+
 
 ]

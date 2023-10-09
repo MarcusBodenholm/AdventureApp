@@ -65,6 +65,7 @@ namespace Adventure.Classes
 
         private readonly static Dictionary<string, Items> items = new()
         {
+            {"painted figurine", Items.PaintedFigurine },
             {"second key fragment", Items.SecondKeyFragment },
             {"green key", Items.GreenKey },
             {"lump of dirt", Items.DirtLump },
@@ -84,12 +85,18 @@ namespace Adventure.Classes
             {"instructions", Items.Note },
             {"pickaxe", Items.Pickaxe },
             {"crowbar", Items.Crowbar },
+            {"carving knife", Items.CarvingKnife },
+            {"wood", Items.Wood },
+            {"paint", Items.Paint },
+            {"figurine", Items.Figurine },
+            {"diary", Items.Diary }
         };
         private readonly static Dictionary<string, Containers> containers = new()
         {
             {"cupboard", Containers.Cupboard },
             {"small box", Containers.ShoeBox },
-            {"kitchen counter", Containers.KitchenCounter }
+            {"kitchen counter", Containers.KitchenCounter },
+            {"desk", Containers.Desk }
         };
         public static Containers Container(string input)
         {

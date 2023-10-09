@@ -22,5 +22,13 @@
     "Description": "A dirty kitchen counter.",
     "Type": "kitchen counter",
     "ItemIDs": [ 12 ]
+  },
+  {
+    "ID": 4,
+    "Name": "Desk",
+    "Article": "A",
+    "Description": "A desk covered with papers of all kinds.",
+    "Type": "desk",
+    "ItemIDs": [ 19 ]
   }
 ]

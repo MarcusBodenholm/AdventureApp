@@ -19,6 +19,12 @@
         KeyFragment,
         SecondKeyFragment,
         DirtLump,
-        GreenKey
+        GreenKey,
+        CarvingKnife,
+        Wood,
+        Paint,
+        Figurine,
+        PaintedFigurine,
+        Diary
     }
 }

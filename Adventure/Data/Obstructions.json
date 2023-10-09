@@ -10,7 +10,7 @@
   {
     "ID": 2,
     "Name": "Barricade",
-    "Description": "The windows have been barricaded with planks.",
+    "Description": "The door has been barricaded with planks.",
     "Article": "A",
     "Type": "barricade",
     "ClearedBy": "crowbar"

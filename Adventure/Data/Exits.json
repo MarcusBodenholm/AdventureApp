@@ -150,7 +150,7 @@
     "Description": "door",
     "Directions": [ "North", "South" ],
     "LocationIDs": [ 6, 3 ],
-    "ObstructionID": null
+    "ObstructionID": 2
   },
   {
     "ID": 17,
