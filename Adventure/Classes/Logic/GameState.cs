@@ -5,9 +5,10 @@
         private Character PC { get; set; } = new Character();
         private Location CurrentLocation { get; set; } = new Location();
         public bool ConversationMode { get; set; } = false;
+        public bool IsWon { get; set; } = false;
         public GameState()
         {
-            Location? location = Data.Data.GetLocation(1);
+            Location? location = Data.Data.GetLocation(0);
             if (location == null) throw new ArgumentNullException();
             CurrentLocation = location;
         }
@@ -40,7 +41,20 @@
             Exit? exit = CurrentLocation.Exits[parsed.Direction];
             Location? newLocation = Data.Data.GetLocation(CurrentLocation.Exits[parsed.Direction].Locations[parsed.Direction]);
             if (newLocation == null) return "Something went wrong.";
+            if (newLocation.IsEndPoint) IsWon = true;
             CurrentLocation = newLocation;
+            if (CurrentLocation.HasNotEntered && CurrentLocation.Event != null)
+            {
+                Event? e = CurrentLocation.Event;
+                if (e != null)
+                {
+                    if (e.Obstruction == null) return "Something went wrong";
+                    int obstructId = (int)e.Obstruction;
+                    CurrentLocation.Exits[e.Direction].Obstruction = Data.Data.GetObstruction(obstructId);
+                    return $"As you enter {CurrentLocation}, to the {e.Direction.ToString().ToLower()} {e.EventText}";
+                }
+            }
+            CurrentLocation.HasNotEntered = false;
             string exitMessage = exit.Description == "door" ? $"You go through door to the {parsed.DirectionText.ToLower()}"
                                                             : $"You take the stairs to the {parsed.DirectionText.ToLower()}";
             return $"{exitMessage}. You are now in {CurrentLocation}. \n{CurrentLocation.Description}";
@@ -52,7 +66,7 @@
             {
                 CurrentLocation.Items.Add(itemToDrop);
                 PC.Items.Remove(itemToDrop);
-                return $"You drop {itemToDrop} on the ground.";
+                return $"You drop the {itemToDrop.Name.ToLower()} on the ground.";
             }
             return $"You do not have {parsed.ItemOneText}.";
         }
@@ -96,7 +110,7 @@
             {
                 PC.AddItem(itemToPickup);
                 CurrentLocation.RemoveItem(itemToPickup);
-                return $"You pick up {itemToPickup}.";
+                return $"You pick up the {itemToPickup.Name.ToLower()}.";
             }
             else
             {
@@ -108,10 +122,10 @@
             Container? container = CurrentLocation.GetContainer(parsed.Container);
             if (container == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.Name.ToLower()}.";
             Item? itemToPickUp = container.GetItem(parsed.ItemOne);
-            if (itemToPickUp == null) return $"There is no {parsed.ItemOneText} in {parsed.ContainerText}.";
+            if (itemToPickUp == null) return $"There is no {parsed.ItemOneText} in the {parsed.ContainerText}.";
             PC.AddItem(itemToPickUp);
             container.RemoveItem(itemToPickUp);
-            return $"You pick up {itemToPickUp} from the {parsed.ContainerText}.";
+            return $"You pick up the {itemToPickUp.Name.ToLower()} from the {parsed.ContainerText}.";
         }
         public string ExamineItem(ParsedText parsed)
         {
@@ -160,9 +174,14 @@
             if (obstruction != null && exit != null && obstruction.ClearedBy == item.Type)
             {
                 exit.Obstruction = null;
-                PC.Items.Remove(item);
-                return $"You use your {item.Name.ToLower()} to clear the {obstruction.Name.ToLower()}." +
-                       $"\nThe {item.Name.ToLower()} was lost in the process.";
+                if (item.Persistent == false)
+                {
+                    PC.Items.Remove(item);
+                }
+                string output = $"You use your {item.Name.ToLower()} to clear the {obstruction.Name.ToLower()}.";
+                output += item.Persistent == false ? $"\nThe {item.Name.ToLower()} was lost in the process." : "";
+                return output;
+                       
             }
             if (item.Type != obstruction.ClearedBy)
             {
@@ -191,9 +210,9 @@
         {
             Item? item = PC.GetItem(parsed.ItemOne);
             if (item == null) return $"You do not have {parsed.ItemOneText}.";
-            if (parsed.ItemOne != Enums.Items.Key) return $"Nothing happens when you use {parsed.ItemOneText} on the door.";
             Exit? exit = CurrentLocation.Exits[parsed.Direction];
             if (exit == null) return $"There is no door to the {parsed.DirectionText}";
+            //if (parsed.ItemOne != Enums.Items.Key) return $"Nothing happens when you use {parsed.ItemOneText} on the door.";
             if (exit.IsLocked == false) return "The door is not locked.";
             if (exit.UnlockedBy != item.ID) return $"The {parsed.ItemOneText} cannot unlock this door.";
             if (exit.Obstruction != null)
@@ -204,6 +223,10 @@
             PC.RemoveItem(item);
             return output;
 
+        }
+        public void TriggerEnd()
+        {
+            MessageBox.Show("Congratulations on escaping the house!");
         }
     }
 }

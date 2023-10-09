@@ -1,25 +1,39 @@
 [
   {
+    "ID": 0,
+    "Name": "Small room",
+    "Article": "A",
+    "Description": "The room you woke up in is very sparse. The bed here is broken, and there's only a single door to the east with no windows.",
+    "IsEndPoint": false,
+    "ContainerIDs": [1],
+    "Directions": [ "East" ],
+    "ExitIDs": [ 0 ],
+    "ItemIDs": [0],
+    "EventID": null
+  },
+  {
     "ID": 1,
     "Name": "Basement",
     "Article": "A",
-    "Description": "You look around and see a damp basement. There's not much of use to be found here, as everything appears to be either junk or too old. To the north you notice stairs leading up.",
+    "Description": "An old damp basement strewn about with junk. To the north is a set of stairs leading up.\nTo the south is a heavy security door marked with a purple triangle.",
     "IsEndPoint": false,
     "ContainerIDs": null,
-    "Directions": [ "North" ],
-    "ExitIDs": [1],
-    "ItemIDs": null
+    "Directions": [ "North", "West", "South" ],
+    "ExitIDs": [ 1, 0, 17 ],
+    "ItemIDs": [6],
+    "EventID": null
   },
   {
     "ID": 2,
     "Name": "Hallway",
     "Article": "A",
-    "Description": "This is a hallway.",
+    "Description": "A well-kempt and lit hallway. You see stairs leading down to the south, and doors leading east and north.",
     "IsEndPoint": false,
-    "ContainerIDs": null,
+    "ContainerIDs": [2],
     "Directions": [ "North", "East", "South" ],
-    "ExitIDs": [3,2,1],
-    "ItemIDs": null
+    "ExitIDs": [ 3, 2, 1 ],
+    "ItemIDs": null,
+    "EventID": 1
   },
   {
     "ID": 3,
@@ -29,140 +43,152 @@
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "North", "West" ],
-    "ExitIDs": [16,2],
-    "ItemIDs": null
+    "ExitIDs": [ 16, 2 ],
+    "ItemIDs": null,
+    "EventID": null
   },
   {
     "ID": 4,
     "Name": "Kitchen",
     "Article": "A",
-    "Description": "This is a kitchen.",
+    "Description": "A large, now abandoned, kitchen. You see doors leading in all directions. ",
     "IsEndPoint": false,
-    "ContainerIDs": null,
+    "ContainerIDs": [3],
     "Directions": [ "North", "South", "East", "West" ],
-    "ExitIDs": [7,3,5,4],
-    "ItemIDs": null
+    "ExitIDs": [ 7, 3, 5, 4 ],
+    "ItemIDs": [2],
+    "EventID": 2
   },
   {
     "ID": 5,
     "Name": "Storage Room",
     "Article": "A",
-    "Description": "This is a storage room.",
+    "Description": "This small room has been used to store a variety of goods for use in the kitchen.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "East" ],
-    "ExitIDs": [4],
-    "ItemIDs": null
+    "ExitIDs": [ 4 ],
+    "ItemIDs": [11],
+    "EventID": null
   },
   {
     "ID": 6,
     "Name": "Dining Room",
     "Article": "A",
-    "Description": "This is a dining room.",
+    "Description": "This is a dining room. You see doors leading in all directions.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "North", "South", "East", "West" ],
-    "ExitIDs": [8,16,6,5],
-    "ItemIDs": null
+    "ExitIDs": [ 8, 16, 6, 5 ],
+    "ItemIDs": null,
+    "EventID": null
   },
   {
     "ID": 7,
     "Name": "Bathroom",
     "Article": "A",
-    "Description": "This is a bathroom.",
+    "Description": "This is a bathroom. You see a door to the west.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "West" ],
-    "ExitIDs": [6],
-    "ItemIDs": null
+    "ExitIDs": [ 6 ],
+    "ItemIDs": null,
+    "EventID": null
   },
   {
     "ID": 8,
     "Name": "Entry hallway",
     "Article": "A",
-    "Description": "This is a hallway.",
+    "Description": "This is a hallway. You see doors leading to the north, south and east. \nTo the west you see a staircase that's blocked by a lock with a green symbol on it.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "North", "South", "East", "West" ],
-    "ExitIDs": [10,7,9,12],
-    "ItemIDs": null
+    "ExitIDs": [ 10, 7, 9, 12 ],
+    "ItemIDs": null,
+    "EventID": null
   },
   {
     "ID": 9,
     "Name": "Living Room",
     "Article": "A",
-    "Description": "This is a living room.",
+    "Description": "This is a living room. You see doors to the south and the west.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "South", "West" ],
-    "ExitIDs": [8,9],
-    "ItemIDs": null
+    "ExitIDs": [ 8, 9 ],
+    "ItemIDs": null,
+    "EventID": null
   },
   {
     "ID": 10,
     "Name": "Foyer",
     "Article": "A",
-    "Description": "This is a foyer.",
+    "Description": "This is a foyer. You see doors to the south and the west.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "South", "West" ],
-    "ExitIDs": [10,11],
+    "ExitIDs": [ 10, 11 ],
     "ItemIDs": null
   },
   {
     "ID": 11,
     "Name": "Clothing Storage",
     "Article": "A",
-    "Description": "This is a clothing storage.",
+    "Description": "This is a clothing storage. You see a door to the east.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "East" ],
-    "ExitIDs": [11],
-    "ItemIDs": null
+    "ExitIDs": [ 11 ],
+    "ItemIDs": null,
+    "EventID": null
   },
   {
     "ID": 12,
     "Name": "Upper hallway",
     "Article": "A",
-    "Description": "This is a hallway.",
+    "Description": "This is a hallway. You see doors leading in all directions.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "South", "East", "West", "North" ],
-    "ExitIDs": [12,13,14,15],
-    "ItemIDs": null
+    "ExitIDs": [ 12, 13, 14, 15 ],
+    "ItemIDs": null,
+    "EventID": null
   },
   {
     "ID": 13,
     "Name": "Bedroom",
     "Article": "A",
-    "Description": "This is a bedroom.",
+    "Description": "This is a bedroom. You see a door to the west.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "West" ],
-    "ExitIDs": [13],
-    "ItemIDs": null
+    "ExitIDs": [ 13 ],
+    "ItemIDs": null,
+    "EventID": null
   },
   {
     "ID": 14,
     "Name": "Guest bedroom",
     "Article": "A",
-    "Description": "This is a guest bedroom.",
+    "Description": "This is a guest bedroom. You see a door to the east.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "East" ],
-    "ExitIDs": [14],
-    "ItemIDs": null
+    "ExitIDs": [ 14 ],
+    "ItemIDs": null,
+    "EventID": null
   },
   {
     "ID": 15,
     "Name": "Master bedroom",
     "Article": "A",
-    "Description": "This is the master bedroom.",
+    "Description": "This is the master bedroom. You see a door to the south.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "South" ],
-    "ExitIDs": [15],
-    "ItemIDs": null
+    "ExitIDs": [ 15 ],
+    "ItemIDs": null,
+    "EventID": null
   },
   {
     "ID": 99,
@@ -173,6 +199,7 @@
     "ContainerIDs": null,
     "Directions": null,
     "ExitIDs": null,
-    "ItemIDs": null
+    "ItemIDs": null,
+    "EventID": null
   }
 ]

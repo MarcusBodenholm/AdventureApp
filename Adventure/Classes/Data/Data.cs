@@ -14,6 +14,7 @@ namespace Adventure.Classes.Data
         private static List<Container> AllContainers { get; set; } = new();
         private static List<Exit> AllExits { get; set; } = new();
         private static List<Obstruction> AllObstructions { get; set;} = new();
+        private static List<Event> AllEvents { get; set; } = new();
         private static string GetDirectoryPath()
         {
             string testPath = Environment.CurrentDirectory;
@@ -59,12 +60,17 @@ namespace Adventure.Classes.Data
         {
             return AllObstructions.Find(obs => obs.Type == type);
         }
+        public static Event? GetEvent(int id)
+        {
+            return AllEvents.Find(e => e.ID == id);
+        }
         public static void LoadAllData()
         {
             LoadItemsFromJson();
             LoadAllContainers();
             LoadAllObstructions();
             LoadAllExits();
+            LoadAllEvents();
             LoadLocationsFromJson();
         }
         private static void LoadItemsFromJson()
@@ -84,6 +90,7 @@ namespace Adventure.Classes.Data
                     newItem.UsableOn = item.UsableOn;
                     newItem.Type = Parser.Item(item.Type);
                     newItem.SpecialItem = item.SpecialItem;
+                    newItem.Persistent = item.Persistent;
                     AllItems.Add(newItem);
                 }
             }
@@ -103,6 +110,10 @@ namespace Adventure.Classes.Data
                     newLocation.Description = location.Description;
                     newLocation.Article = location.Article;
                     newLocation.IsEndPoint = location.IsEndPoint;
+                    if (location.EventID != null)
+                    {
+                        newLocation.Event = GetEvent((int)location.EventID);
+                    }
                     if (location.ContainerIDs != null)
                     {
                         foreach (int id in location.ContainerIDs)
@@ -217,6 +228,26 @@ namespace Adventure.Classes.Data
                     newObstruction.Type = Parser.Obstruction(obstruction.Type);
                     AllObstructions.Add(newObstruction);
                 }
+            }
+        }
+        private static void LoadAllEvents()
+        {
+            string filePath = @$"{GetDirectoryPath()}\Data\Events.json";
+            var json = File.ReadAllText(filePath);
+            List<JsonEvent>? events = JsonSerializer.Deserialize<List<JsonEvent>>(json, _options);
+            if (events != null)
+            {
+                foreach (var e in events)
+                {
+                    Event newEvent = new();
+                    newEvent.EventText = e.EventText;
+                    newEvent.ID = e.ID;
+                    newEvent.Obstruction = e.Obstruction;
+                    newEvent.Name = e.Name;
+                    newEvent.Direction = Parser.Direction(e.Direction);
+                    AllEvents.Add(newEvent);
+                }
+
             }
         }
     }
