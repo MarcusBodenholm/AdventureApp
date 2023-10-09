@@ -80,6 +80,11 @@ namespace Adventure
             {
                 listPlayerItems.Items.Add(item);
             }
+            if (GameState.IsWon)
+            {
+                GameState.TriggerEnd();
+                this.Close();
+            }
         }
         private void HandleInput(string text)
         {

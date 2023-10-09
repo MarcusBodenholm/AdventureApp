@@ -1,9 +1,18 @@
 [
   {
+    "ID": 0,
+    "IsLocked": true,
+    "UnlockedBy": 5,
+    "Description": "door",
+    "Directions": [ "West", "East" ],
+    "LocationIDs": [ 0, 1 ],
+    "ObstructionID": null
+  },
+  {
     "ID": 1,
     "IsLocked": false,
     "UnlockedBy": -1,
-    "Description": "stairs",
+    "Description": "stairway",
     "Directions": [ "North", "South" ],
     "LocationIDs": [ 2, 1 ],
     "ObstructionID": null
@@ -100,8 +109,9 @@
   },
   {
     "ID": 12,
-    "IsLocked": false,
-    "UnlockedBy": -1,
+    "IsLocked": true,
+    "UnlockedBy": 13,
+    "Description": "stairway",
     "Directions": [ "South", "West" ],
     "LocationIDs": [ 8, 12 ],
     "ObstructionID": null
@@ -110,7 +120,7 @@
     "ID": 13,
     "IsLocked": false,
     "UnlockedBy": -1,
-    "Description": "stairs",
+    "Description": "door",
     "Directions": [ "East", "West" ],
     "LocationIDs": [ 13, 12 ],
     "ObstructionID": null
@@ -141,7 +151,15 @@
     "Directions": [ "North", "South" ],
     "LocationIDs": [ 6, 3 ],
     "ObstructionID": null
+  },
+  {
+    "ID": 17,
+    "IsLocked": true,
+    "UnlockedBy": -1,
+    "Description": "door",
+    "Directions": [ "South" ],
+    "LocationIDs": [ 99 ],
+    "ObstructionID": null
   }
-
 
 ]

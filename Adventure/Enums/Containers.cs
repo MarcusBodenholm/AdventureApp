@@ -3,6 +3,8 @@
     public enum Containers
     {
         Unknown,
-        Cupboard
+        Cupboard,
+        ShoeBox,
+        KitchenCounter
     }
 }

@@ -4,6 +4,7 @@
     {
         Unknown,
         Fire,
-        Boulder
+        Boulder,
+        Barricade
     }
 }

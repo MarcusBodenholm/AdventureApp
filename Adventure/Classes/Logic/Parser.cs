@@ -20,7 +20,8 @@ namespace Adventure.Classes
         private readonly static Dictionary<string, Obstructions> obstructions = new()
         {
             {"fire", Obstructions.Fire },
-            {"boulder", Obstructions.Boulder}
+            {"boulder", Obstructions.Boulder},
+            {"barricade", Obstructions.Barricade }
         };
         private readonly static Dictionary<string, Commands> commands = new()
         {
@@ -59,22 +60,36 @@ namespace Adventure.Classes
             {"get", Commands.Take },
             {"examine", Commands.Inspect },
             {"study", Commands.Inspect },
+            {"read", Commands.Inspect }
         };
 
         private readonly static Dictionary<string, Items> items = new()
         {
+            {"second key fragment", Items.SecondKeyFragment },
+            {"green key", Items.GreenKey },
+            {"lump of dirt", Items.DirtLump },
+            {"key fragment", Items.KeyFragment },
+            {"wine bottle", Items.WineBottle },
+            {"purple key", Items.PurpleKey },
             {"fire extinguisher", Items.Extinguisher },
+            {"opened wine bottle", Items.OpenedWineBottle },
+            {"small key", Items.SmallKey },
             {"corkscrew", Items.Corkscrew },
             {"opened bottle", Items.OpenedBottle },
             {"bottle", Items.Bottle },
             {"extinguisher", Items.Extinguisher },
             {"shovel", Items.Shovel },
-            {"key", Items.Key }
-
+            {"key", Items.Key },
+            {"note", Items.Note },
+            {"instructions", Items.Note },
+            {"pickaxe", Items.Pickaxe },
+            {"crowbar", Items.Crowbar },
         };
         private readonly static Dictionary<string, Containers> containers = new()
         {
             {"cupboard", Containers.Cupboard },
+            {"small box", Containers.ShoeBox },
+            {"kitchen counter", Containers.KitchenCounter }
         };
         public static Containers Container(string input)
         {

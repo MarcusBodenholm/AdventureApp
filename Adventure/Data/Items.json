@@ -1,30 +1,43 @@
 [
   {
+    "ID": 0,
+    "Name": "Note",
+    "Article": "A",
+    "Description": "You see a small crumbled up note. On it is written \"I have hidden a key in the cupboard. Make your way out of here!\".",
+    "UsableOn": -1,
+    "Type": "note",
+    "SpecialItem": -1,
+    "Persistent": false
+  },
+  {
     "ID": 1,
     "Name": "Corkscrew",
     "Article": "A",
-    "Description": "This is a corkscrew.",
+    "Description": "A one-time use corkscrew for opening bottles.",
     "UsableOn": 2,
     "Type": "corkscrew",
-    "SpecialItem": 3
+    "SpecialItem": 3,
+    "Persistent": false
   },
   {
     "ID": 2,
-    "Name": "Bottle",
+    "Name": "Bottle of wine",
     "Article": "A",
-    "Description": "This is a bottle.",
+    "Description": "A bottle of exquisite wine, unfortunately not to your taste.",
     "UsableOn": -1,
-    "Type": "Bottle",
-    "SpecialItem": -1
+    "Type": "wine bottle",
+    "SpecialItem": -1,
+    "Persistent": false
   },
   {
     "ID": 3,
-    "Name": "Opened bottle",
+    "Name": "Opened wine bottle",
     "Article": "An",
-    "Description": "This is an opened bottle.",
-    "UsableOn": -1,
-    "Type": "Opened bottle",
-    "SpecialItem": -1
+    "Description": "An opened bottle of wine. Not to your taste, but could be used to wash something.",
+    "UsableOn": 12,
+    "Type": "opened wine bottle",
+    "SpecialItem": 13,
+    "Persistent": false
   },
   {
     "ID": 4,
@@ -32,16 +45,99 @@
     "Article": "A",
     "Description": "This is a shovel.",
     "UsableOn": -1,
-    "Type": "Shovel",
-    "SpecialItem": -1
+    "Type": "shovel",
+    "SpecialItem": -1,
+    "Persistent": true
   },
   {
     "ID": 5,
-    "Name": "Key",
+    "Name": "Small key",
     "Article": "A",
-    "Description": "This is a key.",
+    "Description": "A small key with ample rust on it. Should still work.",
     "UsableOn": -1,
-    "Type": "Key",
-    "SpecialItem": -1
+    "Type": "small key",
+    "SpecialItem": -1,
+    "Persistent": false
+  },
+  {
+    "ID": 6,
+    "Name": "Pickaxe",
+    "Article": "A",
+    "Description": "A sturdy pickaxe looking capable of clearing boulders.",
+    "UsableOn": -1,
+    "Type": "pickaxe",
+    "SpecialItem": -1,
+    "Persistent": true
+  },
+  {
+    "ID": 7,
+    "Name": "Purple key",
+    "Article": "A",
+    "Description": "A beautiful purple key with a triangle engraving.",
+    "UsableOn": -1,
+    "Type": "purple key",
+    "SpecialItem": -1,
+    "Persistent": true
+  },
+  {
+    "ID": 8,
+    "Name": "Crowbar",
+    "Article": "A",
+    "Description": "A sturdy crowbar, useful for removing planks.",
+    "UsableOn": -1,
+    "Type": "crowbar",
+    "SpecialItem": -1,
+    "Persistent": true
+  },
+  {
+    "ID": 9,
+    "Name": "Key fragment",
+    "Article": "A",
+    "Description": "One half of what seems to be a beautiful purple key.",
+    "UsableOn": 10,
+    "Type": "key fragment",
+    "SpecialItem": 7,
+    "Persistent": false
+  },
+  {
+    "ID": 10,
+    "Name": "Second key fragment",
+    "Article": "A",
+    "Description": "One half of what seems to be a beautiful purple key.",
+    "UsableOn": 9,
+    "Type": "second key fragment",
+    "SpecialItem": 7,
+    "Persistent": false
+  },
+  {
+    "ID": 11,
+    "Name": "Fire extinguisher",
+    "Article": "A",
+    "Description": "A small fire extinguisher.",
+    "UsableOn": 9,
+    "Type": "fire extinguisher",
+    "SpecialItem": 7,
+    "Persistent": false
+  },
+  {
+    "ID": 12,
+    "Name": "Lump of dirt",
+    "Article": "A",
+    "Description": "A lump of dirt. There seems to be something inside it.",
+    "UsableOn": -1,
+    "Type": "lump of dirt",
+    "SpecialItem": -1,
+    "Persistent": false
+  },
+  {
+    "ID": 13,
+    "Name": "Green key",
+    "Article": "A",
+    "Description": "A green key.",
+    "UsableOn": -1,
+    "Type": "green key",
+    "SpecialItem": -1,
+    "Persistent": false
   }
+
 ]

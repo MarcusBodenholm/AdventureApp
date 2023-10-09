@@ -4,10 +4,21 @@
     {
         Unknown,
         Key,
+        SmallKey,
         Corkscrew,
         Bottle,
         OpenedBottle,
         Extinguisher,
-        Shovel
+        Shovel,
+        Note,
+        Pickaxe,
+        PurpleKey,
+        WineBottle,
+        OpenedWineBottle,
+        Crowbar,
+        KeyFragment,
+        SecondKeyFragment,
+        DirtLump,
+        GreenKey
     }
 }

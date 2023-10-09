@@ -2,13 +2,6 @@
 
 namespace Adventure.Classes.Models
 {
-    public interface IInventory
-    {
-        public void RemoveItem(Item item);
-        public void AddItem(Item item);
-        public Item? GetItem(Items itemType);
-        public bool HasItem(Items itemType);
-    }
 
     public class Location : IInventory
     {
@@ -17,12 +10,14 @@ namespace Adventure.Classes.Models
         public string Description { get; set; } = string.Empty;
         public List<Container> Containers { get; set; } = new();
         public Dictionary<Directions, Exit> Exits { get; set; } = new();
-        public string Article { get; set; }
+        public string Article { get; set; } = string.Empty;
         public bool IsEndPoint { get; set; } = false;
         public List<Item> Items { get; set; } = new List<Item>();
+        public bool HasNotEntered { get; set; } = true;
+        public Event? Event { get; set; } = null;
         public override string ToString()
         {
-            return $"{Article.ToLower()} {Name}".ToLower();
+            return $"the {Name}".ToLower();
         }
         public void RemoveItem(Item item)
         {
@@ -75,7 +70,7 @@ namespace Adventure.Classes.Models
                     }
                     count++;
                 }
-                output += " \n" + containerInfo + " here.";
+                output += " \n" + containerInfo + ".";
             }
             return output;
         }

@@ -12,11 +12,11 @@ namespace Adventure.Classes.Models
         public Obstruction? Obstruction { get; set; }
         public string Inspect(Directions direction)
         {
-            string output = "You see a door. ";
+            string output = $"You see a {Description}. ";
             string obstruction = Obstruction == null ? "" : $"There is {Obstruction} in the way. ";
             Location otherSide = Data.Data.GetLocation(Locations[direction]);
             if (otherSide == null) return $"Something went wrong with {Locations[direction]}";
-            string locked = IsLocked ? "The door is locked. " : "The door is not locked. ";
+            string locked = IsLocked ? $"The {Description} is locked. " : $"The {Description} is not locked. ";
             locked += IsLocked ? "" : $"On the other side is {otherSide}";
             return output + (obstruction == "" ? locked : obstruction);
         }
