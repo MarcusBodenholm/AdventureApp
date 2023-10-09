@@ -25,6 +25,8 @@
         Paint,
         Figurine,
         PaintedFigurine,
-        Diary
+        Diary,
+        Handle,
+        FireExtinguisherTank
     }
 }

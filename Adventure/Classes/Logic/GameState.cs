@@ -50,6 +50,7 @@
                 {
                     if (e.Obstruction == null) return "Something went wrong";
                     int obstructId = (int)e.Obstruction;
+                    CurrentLocation.HasNotEntered = false;
                     CurrentLocation.Exits[e.Direction].Obstruction = Data.Data.GetObstruction(obstructId);
                     return $"As you enter {CurrentLocation}, to the {e.Direction.ToString().ToLower()} {e.EventText}";
                 }

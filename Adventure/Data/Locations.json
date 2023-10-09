@@ -32,7 +32,7 @@
     "ContainerIDs": [2],
     "Directions": [ "North", "East", "South" ],
     "ExitIDs": [ 3, 2, 1 ],
-    "ItemIDs": null,
+    "ItemIDs": [21],
     "EventID": 1
   },
   {
@@ -68,7 +68,7 @@
     "ContainerIDs": null,
     "Directions": [ "East" ],
     "ExitIDs": [ 4 ],
-    "ItemIDs": [11],
+    "ItemIDs": [20],
     "EventID": null
   },
   {
@@ -81,7 +81,7 @@
     "Directions": [ "North", "South", "East", "West" ],
     "ExitIDs": [ 8, 16, 6, 5 ],
     "ItemIDs": null,
-    "EventID": null
+    "EventID": 1
   },
   {
     "ID": 7,

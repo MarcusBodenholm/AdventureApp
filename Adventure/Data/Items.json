@@ -114,9 +114,9 @@
     "Name": "Fire extinguisher",
     "Article": "A",
     "Description": "A small fire extinguisher.",
-    "UsableOn": 9,
+    "UsableOn": -1,
     "Type": "fire extinguisher",
-    "SpecialItem": 7,
+    "SpecialItem": -1,
     "Persistent": false
   },
   {
@@ -197,6 +197,26 @@
     "UsableOn": -1,
     "Type": "diary",
     "SpecialItem": -1,
+    "Persistent": false
+  },
+  {
+    "ID": 20,
+    "Name": "Fire extinguisher tank",
+    "Article": "A",
+    "Description": "The tank for a fire extinguisher.",
+    "UsableOn": 21,
+    "Type": "fire extinguisher tank",
+    "SpecialItem": 11,
+    "Persistent": false
+  },
+  {
+    "ID": 21,
+    "Name": "Handle",
+    "Article": "A",
+    "Description": "A handle for a fire extinguisher.",
+    "UsableOn": 20,
+    "Type": "handle",
+    "SpecialItem": 11,
     "Persistent": false
   }
 
