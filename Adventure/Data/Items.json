@@ -193,7 +193,7 @@
     "ID": 19,
     "Name": "Diary",
     "Article": "A",
-    "Description": "A diary with only one readable entry. \n\"Today I was reminded of a moment from my youth. My father had just gotten me a pet goat. I decided his name would be Sven, and he was my life-long companion. One day I shall get a wooden figurine in purple, his favorite color.\".",
+    "Description": "A diary with only one readable entry. \n\"Today I was reminded of the basket I once had. My father had given me one, with a purple figurine goat and some purple flowers. Unfortunately I lost it, and I have been looking all over for a new one.\".",
     "UsableOn": -1,
     "Type": "diary",
     "SpecialItem": -1,
