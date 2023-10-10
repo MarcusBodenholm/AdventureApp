@@ -110,6 +110,7 @@ namespace Adventure.Classes.Data
                     newLocation.Description = location.Description;
                     newLocation.Article = location.Article;
                     newLocation.IsEndPoint = location.IsEndPoint;
+                    newLocation.NPC = location.NPC;
                     if (location.EventID != null)
                     {
                         newLocation.Event = GetEvent((int)location.EventID);

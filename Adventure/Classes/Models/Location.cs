@@ -15,6 +15,7 @@ namespace Adventure.Classes.Models
         public List<Item> Items { get; set; } = new List<Item>();
         public bool HasNotEntered { get; set; } = true;
         public Event? Event { get; set; } = null;
+        public bool NPC { get; set; } = false;
         public override string ToString()
         {
             return $"the {Name}".ToLower();

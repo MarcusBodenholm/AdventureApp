@@ -12,6 +12,7 @@
         public bool IsEndPoint { get; set; } = false;
         public int[]? ItemIDs { get; set; } = null;
         public int? EventID { get; set; } = null;
+        public bool NPC { get; set; } = true;
 
     }
 }

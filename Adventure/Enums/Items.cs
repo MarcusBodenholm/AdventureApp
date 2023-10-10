@@ -27,6 +27,10 @@
         PaintedFigurine,
         Diary,
         Handle,
-        FireExtinguisherTank
+        FireExtinguisherTank,
+        Basket,
+        Flowers,
+        BasketWithFigurine,
+        BasketsWithGifts
     }
 }

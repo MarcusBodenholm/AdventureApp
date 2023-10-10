@@ -4,6 +4,7 @@
     {
         private Character PC { get; set; } = new Character();
         private Location CurrentLocation { get; set; } = new Location();
+        private NPC NPC { get; set; } = new Rhys();
         public bool ConversationMode { get; set; } = false;
         public bool IsWon { get; set; } = false;
         public GameState()
@@ -11,6 +12,40 @@
             Location? location = Data.Data.GetLocation(0);
             if (location == null) throw new ArgumentNullException();
             CurrentLocation = location;
+        }
+        public string StartTalkingToNPC()
+        {
+            if (CurrentLocation.NPC != true) return "There is no one in this room.";
+            ConversationMode = true;
+            return $"{NPC.Name}: {NPC.Greeting} \nYou are now in conversation mode with {NPC.Name}. To stop write 'stop' or 'stop talking'.";
+        }
+        public string StopTalkingToNPC()
+        {
+            ConversationMode = false;
+            return $"{NPC.Name}: {NPC.Farewell}\nYou are no longer in conversation mode with {NPC.Name}";
+        }
+        public string TalkToNPC(string input)
+        {
+            string text = input.ToLower();
+            foreach (string topic in NPC.Conversations.Keys)
+            {
+                if (text.Contains(topic))
+                {
+                    return $"{NPC.Name}: {NPC.Conversations[topic]}";
+                }
+            }
+            return $"{NPC.Name}: Sadly I have no answers to that.";
+        }
+        public string GiftNPC(ParsedText parsed)
+        {
+            Item? item = PC.GetItem(parsed.ItemOne);
+            if (item == null) return $"You do not have {parsed.ItemOneText}";
+            (string message, int itemID) = NPC.ReceiveGift(item.ID);
+            Item? giftedItem = Data.Data.GetItem(itemID);
+            if (giftedItem == null) return $"Something went wrong with {itemID}.";
+            PC.RemoveItem(item);
+            PC.AddItem(giftedItem);
+            return message;
         }
         public (bool, string) CheckDirection(ParsedText parsed)
         {

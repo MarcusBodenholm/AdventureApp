@@ -11,6 +11,9 @@
         Inspect,
         Check, 
         Look,
-        Examine
+        Examine,
+        Give,
+        Talk,
+        Stop
     }
 }

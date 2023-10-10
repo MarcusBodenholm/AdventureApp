@@ -15,7 +15,7 @@
     "Description": "stairway",
     "Directions": [ "North", "South" ],
     "LocationIDs": [ 2, 1 ],
-    "ObstructionID": null
+    "ObstructionID": 3
   },
   {
     "ID": 2,
@@ -51,7 +51,7 @@
     "Description": "door",
     "Directions": [ "East", "West" ],
     "LocationIDs": [ 6, 4 ],
-    "ObstructionID": null
+    "ObstructionID": 2
   },
   {
     "ID": 6,
@@ -73,8 +73,8 @@
   },
   {
     "ID": 8,
-    "IsLocked": false,
-    "UnlockedBy": -1,
+    "IsLocked": true,
+    "UnlockedBy": 13,
     "Description": "door",
     "Directions": [ "North", "South" ],
     "LocationIDs": [ 9, 6 ],
@@ -87,7 +87,7 @@
     "Description": "door",
     "Directions": [ "East", "West" ],
     "LocationIDs": [ 9, 8 ],
-    "ObstructionID": null
+    "ObstructionID": 2
   },
   {
     "ID": 10,
@@ -155,7 +155,7 @@
   {
     "ID": 17,
     "IsLocked": true,
-    "UnlockedBy": -1,
+    "UnlockedBy": 7,
     "Description": "door",
     "Directions": [ "South" ],
     "LocationIDs": [ 99 ],

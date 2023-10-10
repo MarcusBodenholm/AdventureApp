@@ -24,6 +24,11 @@ namespace Adventure
                 richGameLog.AppendText(message, color, true);
                 return;
             }
+            if (message.Contains("Rhys"))
+            {
+                richGameLog.AppendText(message, Color.Purple, true);
+                return;
+            }
             if (richGameLog.Text.Length > 0)
             {
                 richGameLog.AppendText(message, color, true);

@@ -24,18 +24,51 @@ namespace Adventure.Classes.Logic
                 {Commands.Examine, InspectX },
                 {Commands.Inspect, InspectX },
                 {Commands.Take, TakeItem},
-                {Commands.Use, UseItemOnX }
+                {Commands.Use, UseItemOnX },
+                {Commands.Give, GiveToNPC },
             };
+            if (text.ToLower() == "help") return HelpText();
             ParsedText parsedText = Parser.ParseText(text.ToLower());
-            if (GameState.ConversationMode)
+            if (parsedText.Command == Commands.Stop && GameState.ConversationMode) return GameState.StopTalkingToNPC();
+            if (parsedText.Command == Commands.Give && GameState.ConversationMode) return GiveToNPC(parsedText);
+            if (GameState.ConversationMode) return GameState.TalkToNPC(text);
+            if (parsedText.NPC != NPCs.Unknown && parsedText.Command == Commands.Talk
+                && parsedText.RemainingContains("to"))
             {
-
+                if (GameState.ConversationMode)
+                {
+                    return GameState.TalkToNPC(text);
+                }
+                else
+                {
+                    return GameState.StartTalkingToNPC();
+                }
             }
             if (methods.ContainsKey(parsedText.Command))
             {
                 return methods[parsedText.Command](parsedText);
             }
             return "Command was not recognized.";
+        }
+        private string GiveToNPC(ParsedText parsed)
+        {
+            if (parsed.RemainingContains("to") && parsed.ItemOne != Items.Unknown && parsed.NPC != NPCs.Unknown)
+            {
+                return GameState.GiftNPC(parsed);
+            }
+            if (parsed.RemainingContains("to") == false)
+            {
+                return "The format is 'give item to NPC'.";
+            }
+            if (parsed.NPC == NPCs.Unknown)
+            {
+                return "You need to specify the name of the NPC.";
+            }
+            if (parsed.ItemOne == Items.Unknown)
+            {
+                return "You need to specify the item.";
+            }
+            return "Command was not recognized";
         }
         private string InspectX(ParsedText parsed)
         {
@@ -85,7 +118,7 @@ namespace Adventure.Classes.Logic
         {
             if (parsed.ItemOne == Items.Unknown &&
                 (parsed.Obstruction == Obstructions.Unknown || parsed.ItemTwo == Items.Unknown ||
-                parsed.Direction != Directions.Unknown) && !parsed.Remaining.Contains("on") && parsed.Remaining.Length != 2)
+                parsed.Direction != Directions.Unknown) && !parsed.Remaining.Contains("on in") && parsed.Remaining.Length != 2)
             {
                 return "Command was not recognized.";
             }
@@ -136,6 +169,23 @@ namespace Adventure.Classes.Logic
                             $"All you know is that you need to get out of here, and get back home. ",
                             $"{GameState.InspectLocation()}" };
             return output;
+        }
+        private string HelpText()
+        {
+            return $"Here are some helpful commands" +
+                   $"\n move 'direction' - moves in direction." +
+                   $"\n examine - examine the location." +
+                   $"\n examine 'item' - examine the item." +
+                   $"\n examine 'direction' - examines the direction." +
+                   $"\n examine 'container' - examines container." +
+                   $"\n take 'item' - take the item." +
+                   $"\n take 'item' from 'container' - takes item from container." +
+                   $"\n drop 'item' - drops the item." +
+                   $"\n use 'item' on 'item' - use an item on another item." +
+                   $"\n use 'item' on 'direction' - uses a key on a specific door." +
+                   $"\n use 'item' on 'obstacle' - uses an item on an obstacle." +
+                   $"\n talk to 'npc' - talks to an NPC." +
+                   $"\n give 'item' to 'npc' - gives item to NPC.";
         }
     }
 }

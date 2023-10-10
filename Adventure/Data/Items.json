@@ -21,7 +21,7 @@
   },
   {
     "ID": 2,
-    "Name": "Bottle of wine",
+    "Name": "Wine bottle",
     "Article": "A",
     "Description": "A bottle of exquisite wine, unfortunately not to your taste.",
     "UsableOn": -1,
@@ -152,7 +152,7 @@
   {
     "ID": 15,
     "Name": "Wood",
-    "Article": "A",
+    "Article": "Some",
     "Description": "A lump of malleable wood.",
     "UsableOn": -1,
     "Type": "wood",
@@ -184,16 +184,16 @@
     "Name": "Painted figurine",
     "Article": "A",
     "Description": "A figurine carved in wood resembling a goat that has been dipped in purple paint.",
-    "UsableOn": -1,
+    "UsableOn": 22,
     "Type": "painted figurine",
-    "SpecialItem": -1,
+    "SpecialItem": 23,
     "Persistent": false
   },
   {
     "ID": 19,
     "Name": "Diary",
     "Article": "A",
-    "Description": "A diary with only one readable entry. \n\"Today I was reminded of a moment from my youth. My father had just gotten me a pet goat. I decided his name would be Sven, and he was my life-long companion. I still visit his grave occasionally.\".",
+    "Description": "A diary with only one readable entry. \n\"Today I was reminded of a moment from my youth. My father had just gotten me a pet goat. I decided his name would be Sven, and he was my life-long companion. One day I shall get a wooden figurine in purple, his favorite color.\".",
     "UsableOn": -1,
     "Type": "diary",
     "SpecialItem": -1,
@@ -217,6 +217,46 @@
     "UsableOn": 20,
     "Type": "handle",
     "SpecialItem": 11,
+    "Persistent": false
+  },
+  {
+    "ID": 22,
+    "Name": "Basket",
+    "Article": "A",
+    "Description": "A basket useful for carrying things in.",
+    "UsableOn": -1,
+    "Type": "basket",
+    "SpecialItem": -1,
+    "Persistent": false
+  },
+  {
+    "ID": 23,
+    "Name": "Basket with figurine",
+    "Article": "A",
+    "Description": "A basket with a painted figurine in it.",
+    "UsableOn": -1,
+    "Type": "basket with figurine",
+    "SpecialItem": -1,
+    "Persistent": false
+  },
+  {
+    "ID": 24,
+    "Name": "Flowers",
+    "Article": "A",
+    "Description": "A bouquet of purple flowers.",
+    "UsableOn": 23,
+    "Type": "flowers",
+    "SpecialItem": 25,
+    "Persistent": false
+  },
+  {
+    "ID": 25,
+    "Name": "Basket of gifts",
+    "Article": "A",
+    "Description": "A basket with a bouquet of purple flowers and a painted figurine.",
+    "UsableOn": -1,
+    "Type": "basket of gifts",
+    "SpecialItem": -1,
     "Persistent": false
   }
 

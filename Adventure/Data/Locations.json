@@ -9,7 +9,8 @@
     "Directions": [ "East" ],
     "ExitIDs": [ 0 ],
     "ItemIDs": [0],
-    "EventID": null
+    "EventID": null,
+    "NPC": false
   },
   {
     "ID": 1,
@@ -20,8 +21,9 @@
     "ContainerIDs": null,
     "Directions": [ "North", "West", "South" ],
     "ExitIDs": [ 1, 0, 17 ],
-    "ItemIDs": [8],
-    "EventID": null
+    "ItemIDs": [11 ],
+    "EventID": 2,
+    "NPC": false
   },
   {
     "ID": 2,
@@ -29,11 +31,12 @@
     "Article": "A",
     "Description": "A well-kempt and lit hallway. You see stairs leading down to the south, and doors leading east and north.",
     "IsEndPoint": false,
-    "ContainerIDs": [2],
+    "ContainerIDs": [ 2 ],
     "Directions": [ "North", "East", "South" ],
     "ExitIDs": [ 3, 2, 1 ],
-    "ItemIDs": [21],
-    "EventID": 1
+    "ItemIDs": [ 21 ],
+    "EventID": 1,
+    "NPC": false
   },
   {
     "ID": 3,
@@ -41,11 +44,12 @@
     "Article": "A",
     "Description": "The air in this room reeks of the smell of mold and mildew from the myriad of books covering the bookshelves. You see doors leading to the north and to the west.",
     "IsEndPoint": false,
-    "ContainerIDs": [4],
+    "ContainerIDs": [ 4 ],
     "Directions": [ "North", "West" ],
     "ExitIDs": [ 16, 2 ],
     "ItemIDs": null,
-    "EventID": null
+    "EventID": null,
+    "NPC": false
   },
   {
     "ID": 4,
@@ -53,11 +57,12 @@
     "Article": "A",
     "Description": "A large, now abandoned, kitchen in complete disarray. You see doors leading in all directions. ",
     "IsEndPoint": false,
-    "ContainerIDs": [3],
+    "ContainerIDs": [ 3 ],
     "Directions": [ "North", "South", "East", "West" ],
     "ExitIDs": [ 7, 3, 5, 4 ],
-    "ItemIDs": [2],
-    "EventID": 2
+    "ItemIDs": [ 2 ],
+    "EventID": 2,
+    "NPC": false
   },
   {
     "ID": 5,
@@ -68,67 +73,73 @@
     "ContainerIDs": null,
     "Directions": [ "East" ],
     "ExitIDs": [ 4 ],
-    "ItemIDs": [20],
-    "EventID": null
+    "ItemIDs": [ 8,16 ],
+    "EventID": null,
+    "NPC": false
   },
   {
     "ID": 6,
     "Name": "Dining Room",
     "Article": "A",
-    "Description": "Before you is an elegant dining room, with two long tables prepared for a dinner worthy of high society. It does not appear as if anyone has used it in a long time. You see doors leading in all directions.",
+    "Description": "Before you is an elegant dining room, with two long tables prepared for a dinner worthy of high society. It does not appear as if anyone has used it in a long time. You see doors leading in all directions. The northern door is green.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "North", "South", "East", "West" ],
     "ExitIDs": [ 8, 16, 6, 5 ],
-    "ItemIDs": null,
-    "EventID": 1
+    "ItemIDs": [9,24],
+    "EventID": 1,
+    "NPC": false
   },
   {
     "ID": 7,
     "Name": "Bathroom",
     "Article": "A",
-    "Description": "This is a bathroom. You see a door to the west.",
+    "Description": "This is a bathroom that has not been properly cleaned in a long time. You see a door to the west.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "West" ],
     "ExitIDs": [ 6 ],
-    "ItemIDs": null,
-    "EventID": null
+    "ItemIDs": [20],
+    "EventID": null,
+    "NPC": false
   },
   {
     "ID": 8,
     "Name": "Entry hallway",
     "Article": "An",
-    "Description": "This is a hallway. You see doors leading to the north, south and east.",
+    "Description": "You are in a remarkably unremarkable hallway. You see doors leading to the north, south and east.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "North", "South", "East" ],
     "ExitIDs": [ 10, 7, 9 ],
-    "ItemIDs": null,
-    "EventID": null
+    "ItemIDs": [15, 22],
+    "EventID": null,
+    "NPC": false
   },
   {
     "ID": 9,
     "Name": "Living Room",
     "Article": "A",
-    "Description": "This is a living room. You see doors to the south and the west.",
+    "Description": "As you look around you find a well-lite and kept living room. In a corner you see an old man with a long beard. You see doors to the south and the west.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "South", "West" ],
     "ExitIDs": [ 8, 9 ],
-    "ItemIDs": null,
-    "EventID": null
+    "ItemIDs": [6],
+    "EventID": null,
+    "NPC": true
   },
   {
     "ID": 10,
     "Name": "Foyer",
     "Article": "A",
-    "Description": "This is a foyer. You see doors to the south and the west.",
+    "Description": "This foyer is in complete disrepair. Where the entrance to the building would be is a massive pile of rubble. You only see the door you came from.",
     "IsEndPoint": false,
     "ContainerIDs": null,
-    "Directions": [ "South", "West" ],
-    "ExitIDs": [ 10, 11 ],
-    "ItemIDs": null
+    "Directions": [ "South" ],
+    "ExitIDs": [ 10 ],
+    "ItemIDs": [14],
+    "NPC": false
   },
   {
     "ID": 11,
@@ -140,7 +151,8 @@
     "Directions": [ "East" ],
     "ExitIDs": [ 11 ],
     "ItemIDs": null,
-    "EventID": null
+    "EventID": null,
+    "NPC": false
   },
   {
     "ID": 12,
@@ -152,7 +164,8 @@
     "Directions": [ "South", "East", "West", "North" ],
     "ExitIDs": [ 12, 13, 14, 15 ],
     "ItemIDs": null,
-    "EventID": null
+    "EventID": null,
+    "NPC": false
   },
   {
     "ID": 13,
@@ -164,7 +177,8 @@
     "Directions": [ "West" ],
     "ExitIDs": [ 13 ],
     "ItemIDs": null,
-    "EventID": null
+    "EventID": null,
+    "NPC": false
   },
   {
     "ID": 14,
@@ -176,7 +190,8 @@
     "Directions": [ "East" ],
     "ExitIDs": [ 14 ],
     "ItemIDs": null,
-    "EventID": null
+    "EventID": null,
+    "NPC": false
   },
   {
     "ID": 15,
@@ -188,7 +203,8 @@
     "Directions": [ "South" ],
     "ExitIDs": [ 15 ],
     "ItemIDs": null,
-    "EventID": null
+    "EventID": null,
+    "NPC": false
   },
   {
     "ID": 99,
@@ -200,6 +216,7 @@
     "Directions": null,
     "ExitIDs": null,
     "ItemIDs": null,
-    "EventID": null
+    "EventID": null,
+    "NPC": false
   }
 ]

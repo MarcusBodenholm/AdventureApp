@@ -60,7 +60,14 @@ namespace Adventure.Classes
             {"get", Commands.Take },
             {"examine", Commands.Inspect },
             {"study", Commands.Inspect },
-            {"read", Commands.Inspect }
+            {"read", Commands.Inspect },
+            {"put", Commands.Use },
+            {"give", Commands.Give },
+            {"gift", Commands.Give },
+            {"talk", Commands.Talk },
+            {"speak", Commands.Talk },
+            {"stop talking", Commands.Stop },
+            {"stop", Commands.Stop }
         };
 
         private readonly static Dictionary<string, Items> items = new()
@@ -69,6 +76,8 @@ namespace Adventure.Classes
             {"fire extinguisher tank", Items.FireExtinguisherTank },
             {"second key fragment", Items.SecondKeyFragment },
             {"green key", Items.GreenKey },
+            {"basket with figurine", Items.BasketWithFigurine },
+            {"basket of gifts", Items.BasketsWithGifts },
             {"lump of dirt", Items.DirtLump },
             {"key fragment", Items.KeyFragment },
             {"wine bottle", Items.WineBottle },
@@ -92,14 +101,36 @@ namespace Adventure.Classes
             {"figurine", Items.Figurine },
             {"diary", Items.Diary },
             {"handle", Items.Handle },
+            {"flowers", Items.Flowers },
+            {"basket", Items.Basket },
         };
         private readonly static Dictionary<string, Containers> containers = new()
         {
             {"cupboard", Containers.Cupboard },
             {"small box", Containers.ShoeBox },
             {"kitchen counter", Containers.KitchenCounter },
-            {"desk", Containers.Desk }
+            {"counter", Containers.KitchenCounter },
+            {"desk", Containers.Desk },
+            {"box", Containers.ShoeBox }
         };
+        private readonly static Dictionary<string, NPCs> npcs = new()
+        {
+            {"rhys", NPCs.Rhys },
+            {"person", NPCs.Rhys },
+            {"old man", NPCs.Rhys }
+        };
+        public static NPCs NPC(string input)
+        {
+            string text = input.ToLower();
+            if (npcs.ContainsKey(text))
+            {
+                return npcs[text];
+            }
+            else
+            {
+                return NPCs.Rhys;
+            }
+        }
         public static Containers Container(string input)
         {
             string text = input.ToLower();
@@ -171,6 +202,7 @@ namespace Adventure.Classes
             input = ParseItem(input, parsed, 2);
             input = ParseObstruction(input, parsed);
             input = ParseContainer(input, parsed);
+            input = ParseNPC(input, parsed);
             parsed.Remaining = input.Replace(".", "");
             return parsed;
         }
@@ -256,6 +288,20 @@ namespace Adventure.Classes
                     input = ConsumeTextAtEnd(input, container);
                     parsed.Container = Container(container);
                     parsed.ContainerText = container;
+                    return input;
+                }
+            }
+            return input;
+        }
+        private static string ParseNPC(string input, ParsedText parsed)
+        {
+            foreach (string npc in npcs.Keys)
+            {
+                if (input.EndsWith(npc))
+                {
+                    input = ConsumeTextAtEnd(input, npc);
+                    parsed.NPC = NPC(npc);
+                    parsed.NPCText = npc;
                     return input;
                 }
             }

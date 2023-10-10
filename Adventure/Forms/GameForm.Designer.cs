@@ -44,7 +44,9 @@
             buttonWest = new Button();
             textInput = new TextBox();
             richGameLog = new RichTextBox();
+            panelTextBox = new Panel();
             groupBoxPlayer.SuspendLayout();
+            panelTextBox.SuspendLayout();
             SuspendLayout();
             // 
             // groupBoxPlayer
@@ -272,17 +274,27 @@
             // richGameLog
             // 
             richGameLog.BackColor = SystemColors.ActiveCaptionText;
+            richGameLog.BorderStyle = BorderStyle.None;
             richGameLog.DetectUrls = false;
-            richGameLog.Font = new Font("Courier New", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            richGameLog.Dock = DockStyle.Fill;
+            richGameLog.Font = new Font("Courier New", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             richGameLog.ForeColor = Color.Green;
-            richGameLog.Location = new Point(9, 209);
+            richGameLog.Location = new Point(0, 0);
             richGameLog.Name = "richGameLog";
             richGameLog.ReadOnly = true;
-            richGameLog.Size = new Size(871, 169);
+            richGameLog.Size = new Size(871, 167);
             richGameLog.TabIndex = 11;
             richGameLog.TabStop = false;
             richGameLog.Text = "";
             richGameLog.SelectionChanged += richGameLog_SelectionChanged;
+            // 
+            // panelTextBox
+            // 
+            panelTextBox.Controls.Add(richGameLog);
+            panelTextBox.Location = new Point(9, 209);
+            panelTextBox.Name = "panelTextBox";
+            panelTextBox.Size = new Size(871, 167);
+            panelTextBox.TabIndex = 1;
             // 
             // GameForm
             // 
@@ -290,7 +302,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
             ClientSize = new Size(892, 415);
-            Controls.Add(richGameLog);
+            Controls.Add(panelTextBox);
             Controls.Add(textInput);
             Controls.Add(groupBoxPlayer);
             Margin = new Padding(3, 2, 3, 2);
@@ -299,6 +311,7 @@
             Text = "Text Adventure Game";
             groupBoxPlayer.ResumeLayout(false);
             groupBoxPlayer.PerformLayout();
+            panelTextBox.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -321,5 +334,6 @@
         private Button buttonUseItemOn;
         private RichTextBox richGameLog;
         private Label labelInventory;
+        private Panel panelTextBox;
     }
 }

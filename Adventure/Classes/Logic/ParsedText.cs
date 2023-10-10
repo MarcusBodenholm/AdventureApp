@@ -10,6 +10,7 @@ namespace Adventure.Classes
         public Obstructions Obstruction { get; set; } = Obstructions.Unknown;
         public Directions Direction { get; set; } = Directions.Unknown;
         public Containers Container { get; set; } = Containers.Unknown;
+        public NPCs NPC { get; set; } = NPCs.Unknown;
         public string Remaining { get; set; } = string.Empty;
         public string ItemOneText { get; set; } = "";
         public string ItemTwoText { get; set; } = "";
@@ -17,6 +18,7 @@ namespace Adventure.Classes
         public string ObstructionText { get; set; } = "";
         public string DirectionText { get; set; } = "";
         public string ContainerText { get; set; } = "";
+        public string NPCText { get; set; } = "";
         public bool HasOnly(string text)
         {
             string skip = text.ToLower();
