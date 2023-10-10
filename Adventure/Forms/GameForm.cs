@@ -1,20 +1,6 @@
-﻿using Adventure.Classes.Logic;
+﻿using Adventure.Classes.Extensions;
+using Adventure.Classes.Logic;
 using Adventure.Classes.Models;
-using Adventure.Enums;
-using Microsoft.VisualBasic.ApplicationServices;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using Microsoft.VisualBasic;
-using Adventure.Classes.Data;
 
 namespace Adventure
 {
@@ -27,39 +13,27 @@ namespace Adventure
             GameLogic = new GameLogic();
             UpdateState();
             string[] gameStartText = GameLogic.GameStart();
-            foreach (string text in gameStartText)
-            {
-                UpdateLog(text);
-            }
+            UpdateLog(gameStartText[0], Color.Purple);
+            UpdateLog(gameStartText[1], Color.Purple);
+            UpdateLog(gameStartText[2], Color.Green);
         }
-        public void UpdateLog(string message)
+        public void UpdateLog(string message, Color color)
         {
+            if (message.Contains("Player"))
+            {
+                richGameLog.AppendText(message, color, true);
+                return;
+            }
             if (richGameLog.Text.Length > 0)
             {
-                richGameLog.Text += $"\n{message}";
+                richGameLog.AppendText(message, color, true);
             }
             else
             {
-                richGameLog.Text += message;
+                richGameLog.AppendText(message, color, false);
             }
             richGameLog.SelectionStart = richGameLog.Text.Length;
             richGameLog.ScrollToCaret();
-            //int lineCounter = 0;
-            //foreach (string line in richGameLog.Lines)
-            //{
-            //    int idx = richGameLog.GetFirstCharIndexFromLine(lineCounter);
-            //    if (line.Contains("Player"))
-            //    {
-            //        richGameLog.Select(idx, line.Length);
-            //        richGameLog.SelectionColor = Color.Red;
-            //    }
-            //    else
-            //    {
-            //        richGameLog.Select(idx, line.Length);
-            //        richGameLog.SelectionColor = Color.Green;
-            //    }
-            //    lineCounter++;
-            //}
         }
         public void ClearLog()
         {
@@ -89,8 +63,8 @@ namespace Adventure
         private void HandleInput(string text)
         {
             string message = GameLogic.DecisionTree(text);
-            UpdateLog($"Player: {text}");
-            UpdateLog(message);
+            UpdateLog($"Player: {text}", Color.Red);
+            UpdateLog(message, Color.Green);
             textInput.Text = "";
             UpdateState();
         }
