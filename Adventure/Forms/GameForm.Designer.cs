@@ -67,11 +67,9 @@
             groupBoxPlayer.Controls.Add(buttonWest);
             groupBoxPlayer.Font = new Font("Courier New", 17.25F, FontStyle.Bold, GraphicsUnit.Point);
             groupBoxPlayer.ForeColor = Color.Green;
-            groupBoxPlayer.Location = new Point(10, 9);
-            groupBoxPlayer.Margin = new Padding(3, 2, 3, 2);
+            groupBoxPlayer.Location = new Point(11, 12);
             groupBoxPlayer.Name = "groupBoxPlayer";
-            groupBoxPlayer.Padding = new Padding(3, 2, 3, 2);
-            groupBoxPlayer.Size = new Size(870, 195);
+            groupBoxPlayer.Size = new Size(994, 260);
             groupBoxPlayer.TabIndex = 0;
             groupBoxPlayer.TabStop = false;
             groupBoxPlayer.Text = "Player";
@@ -80,10 +78,10 @@
             // 
             labelInventory.AutoSize = true;
             labelInventory.Font = new Font("Courier New", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            labelInventory.Location = new Point(632, 16);
+            labelInventory.Location = new Point(722, 21);
             labelInventory.Margin = new Padding(0, 0, 3, 0);
             labelInventory.Name = "labelInventory";
-            labelInventory.Size = new Size(109, 22);
+            labelInventory.Size = new Size(138, 27);
             labelInventory.TabIndex = 11;
             labelInventory.Text = "Inventory";
             // 
@@ -94,9 +92,10 @@
             buttonUseItemOn.FlatAppearance.MouseOverBackColor = Color.White;
             buttonUseItemOn.FlatStyle = FlatStyle.Flat;
             buttonUseItemOn.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonUseItemOn.Location = new Point(539, 124);
+            buttonUseItemOn.Location = new Point(616, 165);
+            buttonUseItemOn.Margin = new Padding(3, 4, 3, 4);
             buttonUseItemOn.Name = "buttonUseItemOn";
-            buttonUseItemOn.Size = new Size(87, 28);
+            buttonUseItemOn.Size = new Size(99, 37);
             buttonUseItemOn.TabIndex = 10;
             buttonUseItemOn.Text = "Use item on";
             buttonUseItemOn.UseVisualStyleBackColor = false;
@@ -109,9 +108,10 @@
             buttonExamineitem.FlatAppearance.MouseOverBackColor = Color.White;
             buttonExamineitem.FlatStyle = FlatStyle.Flat;
             buttonExamineitem.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonExamineitem.Location = new Point(539, 90);
+            buttonExamineitem.Location = new Point(616, 120);
+            buttonExamineitem.Margin = new Padding(3, 4, 3, 4);
             buttonExamineitem.Name = "buttonExamineitem";
-            buttonExamineitem.Size = new Size(87, 28);
+            buttonExamineitem.Size = new Size(99, 37);
             buttonExamineitem.TabIndex = 9;
             buttonExamineitem.Text = "Examine item";
             buttonExamineitem.UseVisualStyleBackColor = false;
@@ -124,9 +124,10 @@
             buttonDropitem.FlatAppearance.MouseOverBackColor = Color.White;
             buttonDropitem.FlatStyle = FlatStyle.Flat;
             buttonDropitem.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonDropitem.Location = new Point(539, 56);
+            buttonDropitem.Location = new Point(616, 75);
+            buttonDropitem.Margin = new Padding(3, 4, 3, 4);
             buttonDropitem.Name = "buttonDropitem";
-            buttonDropitem.Size = new Size(87, 28);
+            buttonDropitem.Size = new Size(99, 37);
             buttonDropitem.TabIndex = 8;
             buttonDropitem.Text = "Drop item";
             buttonDropitem.UseVisualStyleBackColor = false;
@@ -139,9 +140,10 @@
             buttonPickup.FlatAppearance.MouseOverBackColor = Color.White;
             buttonPickup.FlatStyle = FlatStyle.Flat;
             buttonPickup.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonPickup.Location = new Point(539, 22);
+            buttonPickup.Location = new Point(616, 29);
+            buttonPickup.Margin = new Padding(3, 4, 3, 4);
             buttonPickup.Name = "buttonPickup";
-            buttonPickup.Size = new Size(87, 28);
+            buttonPickup.Size = new Size(99, 37);
             buttonPickup.TabIndex = 7;
             buttonPickup.Text = "Pick up item";
             buttonPickup.UseVisualStyleBackColor = false;
@@ -154,9 +156,10 @@
             buttonLook.FlatAppearance.MouseOverBackColor = Color.White;
             buttonLook.FlatStyle = FlatStyle.Flat;
             buttonLook.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonLook.Location = new Point(66, 115);
+            buttonLook.Location = new Point(75, 153);
+            buttonLook.Margin = new Padding(3, 4, 3, 4);
             buttonLook.Name = "buttonLook";
-            buttonLook.Size = new Size(45, 22);
+            buttonLook.Size = new Size(51, 29);
             buttonLook.TabIndex = 6;
             buttonLook.Text = "Look";
             buttonLook.UseVisualStyleBackColor = false;
@@ -166,18 +169,18 @@
             // 
             currentLocation.AutoSize = true;
             currentLocation.Font = new Font("Courier New", 12F, FontStyle.Italic, GraphicsUnit.Point);
-            currentLocation.Location = new Point(106, 32);
+            currentLocation.Location = new Point(121, 43);
             currentLocation.Name = "currentLocation";
-            currentLocation.Size = new Size(0, 19);
+            currentLocation.Size = new Size(0, 23);
             currentLocation.TabIndex = 5;
             // 
             // labelLocation
             // 
             labelLocation.AutoSize = true;
             labelLocation.Font = new Font("Courier New", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            labelLocation.Location = new Point(13, 32);
+            labelLocation.Location = new Point(15, 43);
             labelLocation.Name = "labelLocation";
-            labelLocation.Size = new Size(98, 18);
+            labelLocation.Size = new Size(118, 23);
             labelLocation.TabIndex = 3;
             labelLocation.Text = "Location:";
             // 
@@ -188,10 +191,9 @@
             buttonSouth.FlatAppearance.MouseOverBackColor = Color.White;
             buttonSouth.FlatStyle = FlatStyle.Flat;
             buttonSouth.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonSouth.Location = new Point(77, 142);
-            buttonSouth.Margin = new Padding(3, 2, 3, 2);
+            buttonSouth.Location = new Point(88, 189);
             buttonSouth.Name = "buttonSouth";
-            buttonSouth.Size = new Size(22, 22);
+            buttonSouth.Size = new Size(25, 29);
             buttonSouth.TabIndex = 4;
             buttonSouth.Text = "South";
             buttonSouth.UseVisualStyleBackColor = false;
@@ -204,11 +206,10 @@
             listPlayerItems.Font = new Font("Courier New", 9.75F, FontStyle.Italic, GraphicsUnit.Point);
             listPlayerItems.ForeColor = Color.Green;
             listPlayerItems.FormattingEnabled = true;
-            listPlayerItems.ItemHeight = 17;
-            listPlayerItems.Location = new Point(637, 43);
-            listPlayerItems.Margin = new Padding(3, 2, 3, 2);
+            listPlayerItems.ItemHeight = 19;
+            listPlayerItems.Location = new Point(728, 57);
             listPlayerItems.Name = "listPlayerItems";
-            listPlayerItems.Size = new Size(227, 136);
+            listPlayerItems.Size = new Size(259, 171);
             listPlayerItems.TabIndex = 0;
             // 
             // buttonNorth
@@ -218,10 +219,9 @@
             buttonNorth.FlatAppearance.MouseOverBackColor = Color.White;
             buttonNorth.FlatStyle = FlatStyle.Flat;
             buttonNorth.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonNorth.Location = new Point(77, 88);
-            buttonNorth.Margin = new Padding(3, 2, 3, 2);
+            buttonNorth.Location = new Point(88, 117);
             buttonNorth.Name = "buttonNorth";
-            buttonNorth.Size = new Size(22, 22);
+            buttonNorth.Size = new Size(25, 29);
             buttonNorth.TabIndex = 3;
             buttonNorth.Text = "North";
             buttonNorth.UseVisualStyleBackColor = false;
@@ -234,10 +234,9 @@
             buttonEast.FlatAppearance.MouseOverBackColor = Color.White;
             buttonEast.FlatStyle = FlatStyle.Flat;
             buttonEast.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonEast.Location = new Point(117, 115);
-            buttonEast.Margin = new Padding(3, 2, 3, 2);
+            buttonEast.Location = new Point(134, 153);
             buttonEast.Name = "buttonEast";
-            buttonEast.Size = new Size(22, 22);
+            buttonEast.Size = new Size(25, 29);
             buttonEast.TabIndex = 2;
             buttonEast.Text = "East";
             buttonEast.UseVisualStyleBackColor = false;
@@ -250,10 +249,9 @@
             buttonWest.FlatAppearance.MouseOverBackColor = Color.White;
             buttonWest.FlatStyle = FlatStyle.Flat;
             buttonWest.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonWest.Location = new Point(38, 115);
-            buttonWest.Margin = new Padding(3, 2, 3, 2);
+            buttonWest.Location = new Point(43, 153);
             buttonWest.Name = "buttonWest";
-            buttonWest.Size = new Size(22, 22);
+            buttonWest.Size = new Size(25, 29);
             buttonWest.TabIndex = 1;
             buttonWest.Text = "West";
             buttonWest.UseVisualStyleBackColor = false;
@@ -264,10 +262,9 @@
             textInput.BackColor = SystemColors.InactiveCaptionText;
             textInput.Font = new Font("Courier New", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             textInput.ForeColor = Color.Red;
-            textInput.Location = new Point(9, 381);
-            textInput.Margin = new Padding(3, 2, 3, 2);
+            textInput.Location = new Point(10, 508);
             textInput.Name = "textInput";
-            textInput.Size = new Size(871, 22);
+            textInput.Size = new Size(995, 26);
             textInput.TabIndex = 0;
             textInput.KeyDown += textInput_KeyDown;
             // 
@@ -280,9 +277,10 @@
             richGameLog.Font = new Font("Courier New", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             richGameLog.ForeColor = Color.Green;
             richGameLog.Location = new Point(0, 0);
+            richGameLog.Margin = new Padding(3, 4, 3, 4);
             richGameLog.Name = "richGameLog";
             richGameLog.ReadOnly = true;
-            richGameLog.Size = new Size(871, 167);
+            richGameLog.Size = new Size(995, 220);
             richGameLog.TabIndex = 11;
             richGameLog.TabStop = false;
             richGameLog.Text = "";
@@ -291,21 +289,22 @@
             // panelTextBox
             // 
             panelTextBox.Controls.Add(richGameLog);
-            panelTextBox.Location = new Point(9, 209);
+            panelTextBox.Location = new Point(10, 279);
+            panelTextBox.Margin = new Padding(3, 4, 3, 4);
             panelTextBox.Name = "panelTextBox";
-            panelTextBox.Size = new Size(871, 167);
+            panelTextBox.Padding = new Padding(0, 0, 0, 3);
+            panelTextBox.Size = new Size(995, 223);
             panelTextBox.TabIndex = 1;
             // 
             // GameForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
-            ClientSize = new Size(892, 415);
+            ClientSize = new Size(1019, 553);
             Controls.Add(panelTextBox);
             Controls.Add(textInput);
             Controls.Add(groupBoxPlayer);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "GameForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Text Adventure Game";
