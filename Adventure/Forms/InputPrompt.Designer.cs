@@ -35,27 +35,29 @@
             // labelQuestion
             // 
             labelQuestion.AutoSize = true;
-            labelQuestion.Location = new Point(12, 9);
+            labelQuestion.Location = new Point(14, 12);
             labelQuestion.Name = "labelQuestion";
-            labelQuestion.Size = new Size(73, 15);
+            labelQuestion.Size = new Size(91, 20);
             labelQuestion.TabIndex = 0;
             labelQuestion.Text = "Which item?";
             // 
             // textItem
             // 
-            textItem.Location = new Point(12, 27);
+            textItem.Location = new Point(14, 36);
+            textItem.Margin = new Padding(3, 4, 3, 4);
             textItem.Name = "textItem";
-            textItem.Size = new Size(173, 23);
+            textItem.Size = new Size(227, 27);
             textItem.TabIndex = 0;
             textItem.KeyDown += textItem_KeyDown_1;
             // 
             // InputPrompt
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(197, 59);
+            ClientSize = new Size(253, 79);
             Controls.Add(textItem);
             Controls.Add(labelQuestion);
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "InputPrompt";
             StartPosition = FormStartPosition.CenterParent;

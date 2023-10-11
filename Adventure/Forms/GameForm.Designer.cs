@@ -159,7 +159,7 @@
             buttonLook.Location = new Point(75, 153);
             buttonLook.Margin = new Padding(3, 4, 3, 4);
             buttonLook.Name = "buttonLook";
-            buttonLook.Size = new Size(51, 29);
+            buttonLook.Size = new Size(62, 29);
             buttonLook.TabIndex = 6;
             buttonLook.Text = "Look";
             buttonLook.UseVisualStyleBackColor = false;
@@ -191,7 +191,7 @@
             buttonSouth.FlatAppearance.MouseOverBackColor = Color.White;
             buttonSouth.FlatStyle = FlatStyle.Flat;
             buttonSouth.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonSouth.Location = new Point(88, 189);
+            buttonSouth.Location = new Point(91, 189);
             buttonSouth.Name = "buttonSouth";
             buttonSouth.Size = new Size(25, 29);
             buttonSouth.TabIndex = 4;
@@ -219,7 +219,7 @@
             buttonNorth.FlatAppearance.MouseOverBackColor = Color.White;
             buttonNorth.FlatStyle = FlatStyle.Flat;
             buttonNorth.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonNorth.Location = new Point(88, 117);
+            buttonNorth.Location = new Point(91, 117);
             buttonNorth.Name = "buttonNorth";
             buttonNorth.Size = new Size(25, 29);
             buttonNorth.TabIndex = 3;
@@ -234,7 +234,7 @@
             buttonEast.FlatAppearance.MouseOverBackColor = Color.White;
             buttonEast.FlatStyle = FlatStyle.Flat;
             buttonEast.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonEast.Location = new Point(134, 153);
+            buttonEast.Location = new Point(143, 153);
             buttonEast.Name = "buttonEast";
             buttonEast.Size = new Size(25, 29);
             buttonEast.TabIndex = 2;
@@ -260,11 +260,11 @@
             // textInput
             // 
             textInput.BackColor = SystemColors.InactiveCaptionText;
-            textInput.Font = new Font("Courier New", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            textInput.Font = new Font("Courier New", 12F, FontStyle.Regular, GraphicsUnit.Point);
             textInput.ForeColor = Color.Red;
-            textInput.Location = new Point(10, 508);
+            textInput.Location = new Point(10, 665);
             textInput.Name = "textInput";
-            textInput.Size = new Size(995, 26);
+            textInput.Size = new Size(995, 30);
             textInput.TabIndex = 0;
             textInput.KeyDown += textInput_KeyDown;
             // 
@@ -274,13 +274,13 @@
             richGameLog.BorderStyle = BorderStyle.None;
             richGameLog.DetectUrls = false;
             richGameLog.Dock = DockStyle.Fill;
-            richGameLog.Font = new Font("Courier New", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            richGameLog.Font = new Font("Courier New", 10.2F, FontStyle.Regular, GraphicsUnit.Point);
             richGameLog.ForeColor = Color.Green;
             richGameLog.Location = new Point(0, 0);
             richGameLog.Margin = new Padding(3, 4, 3, 4);
             richGameLog.Name = "richGameLog";
             richGameLog.ReadOnly = true;
-            richGameLog.Size = new Size(995, 220);
+            richGameLog.Size = new Size(995, 379);
             richGameLog.TabIndex = 11;
             richGameLog.TabStop = false;
             richGameLog.Text = "";
@@ -292,8 +292,7 @@
             panelTextBox.Location = new Point(10, 279);
             panelTextBox.Margin = new Padding(3, 4, 3, 4);
             panelTextBox.Name = "panelTextBox";
-            panelTextBox.Padding = new Padding(0, 0, 0, 3);
-            panelTextBox.Size = new Size(995, 223);
+            panelTextBox.Size = new Size(995, 379);
             panelTextBox.TabIndex = 1;
             // 
             // GameForm
@@ -301,7 +300,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
-            ClientSize = new Size(1019, 553);
+            ClientSize = new Size(1013, 707);
             Controls.Add(panelTextBox);
             Controls.Add(textInput);
             Controls.Add(groupBoxPlayer);

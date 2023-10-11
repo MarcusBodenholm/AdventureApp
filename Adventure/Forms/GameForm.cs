@@ -37,8 +37,8 @@ namespace Adventure
             {
                 richGameLog.AppendText(message, color, false);
             }
-            richGameLog.Focus();
             richGameLog.SelectionStart = richGameLog.Text.Length;
+            richGameLog.Focus();
             richGameLog.ScrollToCaret();
             textInput.Focus();
         }
