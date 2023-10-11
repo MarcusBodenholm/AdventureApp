@@ -22,14 +22,12 @@ namespace Adventure
             if (message.Contains("Player"))
             {
                 richGameLog.AppendText(message, color, true);
-                return;
             }
-            if (message.Contains("Rhys"))
+            else if (message.Contains("Rhys"))
             {
                 richGameLog.AppendText(message, Color.Purple, true);
-                return;
             }
-            if (richGameLog.Text.Length > 0)
+            else if (richGameLog.Text.Length > 0)
             {
                 richGameLog.AppendText(message, color, true);
             }
