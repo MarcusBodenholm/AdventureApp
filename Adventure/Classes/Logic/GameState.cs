@@ -41,6 +41,7 @@
             Item? item = PC.GetItem(parsed.ItemOne);
             if (item == null) return $"You do not have {parsed.ItemOneText}";
             (string message, int itemID) = NPC.ReceiveGift(item.ID);
+            if (itemID == -1) return message;
             Item? giftedItem = Data.Data.GetItem(itemID);
             if (giftedItem == null) return $"Something went wrong with {itemID}.";
             PC.RemoveItem(item);

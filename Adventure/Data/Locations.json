@@ -10,7 +10,7 @@
     "ExitIDs": [ 0 ],
     "ItemIDs": [0],
     "EventID": null,
-    "NPC": false
+    "NPC": true
   },
   {
     "ID": 1,
