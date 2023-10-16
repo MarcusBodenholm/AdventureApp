@@ -1,0 +1,16 @@
+[
+  {
+    "ID": 1,
+    "Name": "Trap",
+    "EventText": "a trap springs and a boulder falls in front of the exit.",
+    "Obstruction": 1,
+    "Direction": "South"
+  },
+  {
+    "ID": 2,
+    "Name": "Fire",
+    "EventText": "a fire suddenly breaks out.",
+    "Obstruction": 3,
+    "Direction": "North"
+  }
+]
