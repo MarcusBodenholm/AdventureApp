@@ -14,9 +14,10 @@ namespace AppLogic.Logic
             Data.LoadAllData();
             GameState = new GameState();
         }
-        public string DecisionTree(string text)
+        public Outcome DecisionTree(string text)
         {
-            Dictionary<Commands, Func<ParsedText, string>> methods = new()
+            Outcome outcome = new();
+            Dictionary<Commands, Func<ParsedText, Outcome, string>> methods = new()
             {
                 {Commands.Drop, DropItem },
                 {Commands.Inventory, ShowPlayerInventory},
@@ -32,16 +33,32 @@ namespace AppLogic.Logic
                 {Commands.Talk, StartTalkingToNPC }
             };
             ParsedText parsedText = Parser.ParseText(text.ToLower());
-            if (parsedText.Command == Commands.Stop && GameState.ConversationMode) return StopTalkingToNPC(parsedText);
-            if (parsedText.Command == Commands.Give && GameState.ConversationMode) return GiveToNPC(parsedText);
-            if (GameState.ConversationMode) return TalkToNPC(text);
-            if (methods.ContainsKey(parsedText.Command))
+            if (parsedText.Command == Commands.Stop && GameState.ConversationMode)
             {
-                return methods[parsedText.Command](parsedText);
+                outcome.Message = StopTalkingToNPC(parsedText, outcome);
+            } 
+            else if (parsedText.Command == Commands.Give && GameState.ConversationMode)
+            {
+                outcome.Message = GiveToNPC(parsedText, outcome);
             }
-            return "Command was not recognized.";
+            else if (GameState.ConversationMode)
+            {
+                outcome.Message = TalkToNPC(text, outcome);
+            }
+            else if (methods.ContainsKey(parsedText.Command))
+            {
+                outcome.Message = methods[parsedText.Command](parsedText, outcome);
+            }
+            else
+            {
+                outcome.Message = "Command was not recognized";
+            }
+            outcome.CurrentLocation = GameState.GetCurrentLocationInfo();
+            outcome.InventoryNames = GameState.GetPlayerItems();
+            outcome.HasWon = GameState.IsWon;
+            return outcome;
         }
-        private string StartTalkingToNPC(ParsedText parsed)
+        private string StartTalkingToNPC(ParsedText parsed, Outcome outcome)
         {
             if (GameState.ConversationMode) return $"You're already talking to someone.";
             if (parsed.NPC != NPCs.Unknown && parsed.Command == Commands.Talk
@@ -52,15 +69,15 @@ namespace AppLogic.Logic
             return "Command was not recognized.";
 
         }
-        private string TalkToNPC(string text)
+        private string TalkToNPC(string text, Outcome outcome)
         {
             return GameState.TalkToNPC(text);
         }
-        private string StopTalkingToNPC(ParsedText parsed)
+        private string StopTalkingToNPC(ParsedText parsed, Outcome outcome)
         {
             return GameState.StopTalkingToNPC();
         }
-        private string GiveToNPC(ParsedText parsed)
+        private string GiveToNPC(ParsedText parsed, Outcome outcome)
         {
             if (parsed.RemainingContains("to") && parsed.ItemOne != Items.Unknown && parsed.NPC != NPCs.Unknown)
             {
@@ -80,7 +97,7 @@ namespace AppLogic.Logic
             }
             return "Command was not recognized";
         }
-        private string InspectX(ParsedText parsed)
+        private string InspectX(ParsedText parsed, Outcome outcome)
         {
             bool isRemainingZero = parsed.Remaining.Length == 0;
             if (parsed.ItemOne != Items.Unknown && isRemainingZero
@@ -110,11 +127,11 @@ namespace AppLogic.Logic
             return "Command was not recognized.";
             
         }
-        private string DropItem(ParsedText parsed)
+        private string DropItem(ParsedText parsed, Outcome outcome)
         {
             return GameState.DropItem(parsed);
         }
-        private string TakeItem(ParsedText parsed)
+        private string TakeItem(ParsedText parsed, Outcome outcome)
         {
             if (parsed.Container != Containers.Unknown && parsed.Remaining.Contains("from")
                 && parsed.ItemOne != Items.Unknown && parsed.Remaining.Length == 4)
@@ -124,7 +141,7 @@ namespace AppLogic.Logic
             if (parsed.ItemOne != Items.Unknown &&parsed.Remaining.Length == 0) return GameState.PickUpItem(parsed);
             return "Command was not recognized.";
         }
-        private string UseItemOnX(ParsedText parsed)
+        private string UseItemOnX(ParsedText parsed, Outcome outcome)
         {
             if (parsed.ItemOne == Items.Unknown &&
                 (parsed.Obstruction == Obstructions.Unknown || parsed.ItemTwo == Items.Unknown ||
@@ -147,7 +164,7 @@ namespace AppLogic.Logic
             }
             return "Command was not recognized.";
         }
-        private string CheckDirection(ParsedText parsed)
+        private string CheckDirection(ParsedText parsed, Outcome outcome)
         {
             if (parsed.Direction == Directions.Unknown)
             {
@@ -157,7 +174,7 @@ namespace AppLogic.Logic
             return output;
 
         }
-        private string MoveCharacter(ParsedText parsed)
+        private string MoveCharacter(ParsedText parsed, Outcome outcome)
         {
             if (parsed.Direction == Directions.Unknown)
             {
@@ -165,13 +182,17 @@ namespace AppLogic.Logic
             }
             return GameState.MoveToLocation(parsed);
         }
-        private string ShowPlayerInventory(ParsedText parsed)
+        private string ShowPlayerInventory(ParsedText parsed, Outcome outcome)
         {
             return GameState.DisplayInventory();
         }
         public GameState UpdateState()
         {
             return GameState;
+        }
+        public Outcome StateAtGameStart()
+        {
+            return new Outcome() { CurrentLocation = GameState.GetCurrentLocationInfo(), InventoryNames = GameState.GetPlayerItems(), HasWon = false, Message = "" };
         }
         public string[] GameStart()
         {
@@ -180,7 +201,7 @@ namespace AppLogic.Logic
                             $"{GameState.InspectLocation()}" };
             return output;
         }
-        private string HelpText(ParsedText parsed)
+        private string HelpText(ParsedText parsed, Outcome outcome)
         {
             return $"Here are some helpful commands" +
                    $"\n move 'direction' - moves in direction." +
