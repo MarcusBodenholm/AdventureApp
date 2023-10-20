@@ -11,7 +11,7 @@ namespace Adventure
         {
             InitializeComponent();
             GameLogic = new GameLogic();
-            UpdateState();
+            UpdateState(GameLogic.StateAtGameStart());
             string[] gameStartText = GameLogic.GameStart();
             UpdateLog(gameStartText[0], Color.Purple);
             UpdateLog(gameStartText[1], Color.Purple);
@@ -50,35 +50,33 @@ namespace Adventure
             HandleInput($"Go {button.Text}");
             textInput.Focus();
         }
-        private void UpdateState()
+        private void UpdateState(Outcome outcome)
         {
-            GameState GameState = GameLogic.UpdateState();
-            currentLocation.Text = GameState.GetCurrentLocationInfo();
+            currentLocation.Text = outcome.CurrentLocation;
             listPlayerItems.Items.Clear();
-            foreach (var item in GameState.GetPlayerItems())
+            foreach (var item in outcome.InventoryNames)
             {
                 listPlayerItems.Items.Add(item);
             }
-            if (GameState.IsWon)
+            if (outcome.HasWon)
             {
-                GameState.TriggerEnd();
+                MessageBox.Show("You have successfully escaped the house! Congratulations!");
                 this.Close();
             }
         }
         private void HandleInput(string text)
         {
-            string message = GameLogic.DecisionTree(text);
+            Outcome outcome = GameLogic.DecisionTree(text);
             UpdateLog($"Player: {text}", Color.Red);
-            UpdateLog(message, Color.Green);
+            UpdateLog(outcome.Message, Color.Green);
             textInput.Text = "";
-            UpdateState();
+            UpdateState(outcome);
         }
         private void textInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 HandleInput(textInput.Text);
-                UpdateState();
                 e.SuppressKeyPress = true;
             }
         }
