@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adventure", "Adventure\Adventure.csproj", "{7028D3B5-9922-4A3E-84E4-99DECD93A928}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adventure", "Adventure\Adventure.csproj", "{7028D3B5-9922-4A3E-84E4-99DECD93A928}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppLogic", "AppLogic\AppLogic.csproj", "{DA3E4F8E-4F51-4FEA-B43B-472412CE7639}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7028D3B5-9922-4A3E-84E4-99DECD93A928}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7028D3B5-9922-4A3E-84E4-99DECD93A928}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7028D3B5-9922-4A3E-84E4-99DECD93A928}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA3E4F8E-4F51-4FEA-B43B-472412CE7639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA3E4F8E-4F51-4FEA-B43B-472412CE7639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA3E4F8E-4F51-4FEA-B43B-472412CE7639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA3E4F8E-4F51-4FEA-B43B-472412CE7639}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
