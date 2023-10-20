@@ -9,8 +9,6 @@
             box.SelectionLength = 0;
             box.SelectionColor = color;
             box.AppendText(output);
-            box.SelectionStart = box.TextLength;
-            box.ScrollToCaret();
         }
     }
 }

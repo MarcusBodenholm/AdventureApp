@@ -36,6 +36,11 @@
                 {"how did you get here", "I woke up here one day. For a while I tried to escape, but that was a long time ago now." },
                 {"did you kidnap me", "Heavens no. I would do no such thing. No, I am afraid we were both put here, somehow." },
                 {"did you take me here", "Heavens no. I would do no such thing. No, I am afraid we were both put here, somehow." },
+                {"hi", "Hello!" },
+                {"hello", "Hi there." },
+                {"where is a basket", "Sadly, I do not know where you can find a basket." },
+                {"where can i find a basket", "Sadly, I do not know where you can find a basket." },
+                {"where can i find a figurine", "Sadly, I do not know where you can find a figurine" }
             };
 
         }

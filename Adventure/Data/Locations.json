@@ -68,7 +68,7 @@
     "ID": 5,
     "Name": "Storage Room",
     "Article": "A",
-    "Description": "This small room has been used to store a variety of goods for use in the kitchen.",
+    "Description": "This small room has been used to store a variety of goods for use in the kitchen. The only door is to the east.",
     "IsEndPoint": false,
     "ContainerIDs": null,
     "Directions": [ "East" ],
