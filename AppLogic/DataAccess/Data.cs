@@ -18,9 +18,8 @@ namespace AppLogic.DataAccess
         private static List<Event> AllEvents { get; set; } = new();
         private static string GetDirectoryPath()
         {
-            string testPath = Environment.CurrentDirectory;
-            int idx = testPath.IndexOf("bin");
-            return testPath.Substring(0, idx);
+            string directoryPath = Environment.CurrentDirectory + @"\..\..\..\..\AppLogic\Data";
+            return directoryPath;
 
         }
         private static readonly JsonSerializerOptions _options = new()
@@ -76,7 +75,7 @@ namespace AppLogic.DataAccess
         }
         private static void LoadItemsFromJson()
         {
-            string filePath = @$"{GetDirectoryPath()}\Data\Items.json";
+            string filePath = @$"{GetDirectoryPath()}\Items.json";
             var json = File.ReadAllText(filePath);
             List<JsonItem>? results = JsonSerializer.Deserialize<List<JsonItem>>(json, _options);
             if (results != null)
@@ -98,7 +97,7 @@ namespace AppLogic.DataAccess
         }
         private static void LoadLocationsFromJson()
         {
-            string filePath = @$"{GetDirectoryPath()}\Data\Locations.json";
+            string filePath = @$"{GetDirectoryPath()}\Locations.json";
             var json = File.ReadAllText(filePath);
             List<JsonLocation>? results = JsonSerializer.Deserialize<List< JsonLocation>>(json, _options);
             if (results != null)
@@ -156,7 +155,7 @@ namespace AppLogic.DataAccess
         }
         private static void LoadAllExits()
         {
-            string filePath = @$"{GetDirectoryPath()}\Data\Exits.json";
+            string filePath = @$"{GetDirectoryPath()}\Exits.json";
             var json = File.ReadAllText(filePath);
             List<JsonExit>? exits = JsonSerializer.Deserialize<List<JsonExit>>(json, _options);
             if (exits != null)
@@ -184,7 +183,7 @@ namespace AppLogic.DataAccess
         }
         private static void LoadAllContainers()
         {
-            string filePath = @$"{GetDirectoryPath()}\Data\Containers.json";
+            string filePath = @$"{GetDirectoryPath()}\Containers.json";
             var json = File.ReadAllText(filePath);
             List<JsonContainer>? containers = JsonSerializer.Deserialize<List<JsonContainer>>(json, _options);
             if (containers != null)
@@ -214,7 +213,7 @@ namespace AppLogic.DataAccess
         }
         private static void LoadAllObstructions()
         {
-            string filePath = @$"{GetDirectoryPath()}\Data\Obstructions.json";
+            string filePath = @$"{GetDirectoryPath()}\Obstructions.json";
             var json = File.ReadAllText(filePath);
             List<JsonObstruction>? obstructions = JsonSerializer.Deserialize<List<JsonObstruction>>(json, _options);
             if (obstructions != null)
@@ -234,7 +233,7 @@ namespace AppLogic.DataAccess
         }
         private static void LoadAllEvents()
         {
-            string filePath = @$"{GetDirectoryPath()}\Data\Events.json";
+            string filePath = @$"{GetDirectoryPath()}\Events.json";
             var json = File.ReadAllText(filePath);
             List<JsonEvent>? events = JsonSerializer.Deserialize<List<JsonEvent>>(json, _options);
             if (events != null)

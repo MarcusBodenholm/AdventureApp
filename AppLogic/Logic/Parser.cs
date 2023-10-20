@@ -67,7 +67,8 @@ namespace AppLogic.Logic
             {"talk", Commands.Talk },
             {"speak", Commands.Talk },
             {"stop talking", Commands.Stop },
-            {"stop", Commands.Stop }
+            {"stop", Commands.Stop },
+            {"help", Commands.Help },
         };
 
         private readonly static Dictionary<string, Items> items = new()

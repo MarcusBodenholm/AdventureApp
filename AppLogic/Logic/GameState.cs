@@ -90,13 +90,13 @@ namespace AppLogic.Logic
                     int obstructId = (int)e.Obstruction;
                     CurrentLocation.HasNotEntered = false;
                     CurrentLocation.Exits[e.Direction].Obstruction = Data.GetObstruction(obstructId);
-                    return $"As you enter {CurrentLocation}, to the {e.Direction.ToString().ToLower()} {e.EventText}";
+                    return $"As you enter {CurrentLocation}, to the {e.Direction.ToString().ToLower()} {e.EventText}\n{InspectLocation()}";
                 }
             }
             CurrentLocation.HasNotEntered = false;
             string exitMessage = exit.Description == "door" ? $"You go through door to the {parsed.DirectionText.ToLower()}"
                                                             : $"You take the stairs to the {parsed.DirectionText.ToLower()}";
-            return $"{exitMessage}. You are now in {CurrentLocation}. \n{CurrentLocation.Description}";
+            return $"{exitMessage}. You are now in {CurrentLocation}. \n{InspectLocation()}";
         }
         public string DropItem(ParsedText parsed)
         {

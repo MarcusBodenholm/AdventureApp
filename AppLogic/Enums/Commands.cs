@@ -14,6 +14,7 @@
         Examine,
         Give,
         Talk,
-        Stop
+        Stop,
+        Help
     }
 }

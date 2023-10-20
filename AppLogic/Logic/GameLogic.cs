@@ -2,6 +2,7 @@
 using AppLogic.Enums;
 using AppLogic.DataAccess;
 using System.Reflection.Metadata.Ecma335;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AppLogic.Logic
 {
@@ -26,29 +27,38 @@ namespace AppLogic.Logic
                 {Commands.Take, TakeItem},
                 {Commands.Use, UseItemOnX },
                 {Commands.Give, GiveToNPC },
+                {Commands.Stop, StopTalkingToNPC },
+                {Commands.Help, HelpText },
+                {Commands.Talk, StartTalkingToNPC }
             };
-            if (text.ToLower() == "help") return HelpText();
             ParsedText parsedText = Parser.ParseText(text.ToLower());
-            if (parsedText.Command == Commands.Stop && GameState.ConversationMode) return GameState.StopTalkingToNPC();
+            if (parsedText.Command == Commands.Stop && GameState.ConversationMode) return StopTalkingToNPC(parsedText);
             if (parsedText.Command == Commands.Give && GameState.ConversationMode) return GiveToNPC(parsedText);
-            if (GameState.ConversationMode) return GameState.TalkToNPC(text);
-            if (parsedText.NPC != NPCs.Unknown && parsedText.Command == Commands.Talk
-                && parsedText.RemainingContains("to"))
-            {
-                if (GameState.ConversationMode)
-                {
-                    return GameState.TalkToNPC(text);
-                }
-                else
-                {
-                    return GameState.StartTalkingToNPC();
-                }
-            }
+            if (GameState.ConversationMode) return TalkToNPC(text);
             if (methods.ContainsKey(parsedText.Command))
             {
                 return methods[parsedText.Command](parsedText);
             }
             return "Command was not recognized.";
+        }
+        private string StartTalkingToNPC(ParsedText parsed)
+        {
+            if (GameState.ConversationMode) return $"You're already talking to someone.";
+            if (parsed.NPC != NPCs.Unknown && parsed.Command == Commands.Talk
+                && parsed.RemainingContains("to"))
+            {
+                return GameState.StartTalkingToNPC();
+            }
+            return "Command was not recognized.";
+
+        }
+        private string TalkToNPC(string text)
+        {
+            return GameState.TalkToNPC(text);
+        }
+        private string StopTalkingToNPC(ParsedText parsed)
+        {
+            return GameState.StopTalkingToNPC();
         }
         private string GiveToNPC(ParsedText parsed)
         {
@@ -170,7 +180,7 @@ namespace AppLogic.Logic
                             $"{GameState.InspectLocation()}" };
             return output;
         }
-        private string HelpText()
+        private string HelpText(ParsedText parsed)
         {
             return $"Here are some helpful commands" +
                    $"\n move 'direction' - moves in direction." +
