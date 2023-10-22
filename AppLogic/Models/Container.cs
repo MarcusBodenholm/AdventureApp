@@ -47,12 +47,18 @@ namespace AppLogic.Models
             {
                 if (count == 0)
                 {
-                    output += item.ToString();
+                    output += $"{item.Article} {item.Name.ToLower()}{(Items.Count == 0 ? "." : "")}";
                 }
+                else if (count == Items.Count - 1)
+                {
+                    output += $" & {item}.";
+                }
+
                 else
                 {
-                    output += $", {item}";
+                    output += ", " + item.ToString();
                 }
+                count++;
             }
             return output;
         }

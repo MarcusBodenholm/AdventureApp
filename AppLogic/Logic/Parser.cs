@@ -27,6 +27,7 @@ namespace AppLogic.Logic
         {
             {"a really long way to say take", Commands.Take },
             {"look at", Commands.Inspect },
+            {"put", Commands.Store },
             {"pick up", Commands.Take },
             {"throw away", Commands.Drop },
             {"grab", Commands.Take },
@@ -61,7 +62,6 @@ namespace AppLogic.Logic
             {"examine", Commands.Inspect },
             {"study", Commands.Inspect },
             {"read", Commands.Inspect },
-            {"put", Commands.Store },
             {"store", Commands.Store },
             {"give", Commands.Give },
             {"gift", Commands.Give },

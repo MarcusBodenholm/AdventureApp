@@ -30,7 +30,8 @@ namespace AppLogic.Logic
                 {Commands.Give, GiveToNPC },
                 {Commands.Stop, StopTalkingToNPC },
                 {Commands.Help, HelpText },
-                {Commands.Talk, StartTalkingToNPC }
+                {Commands.Talk, StartTalkingToNPC },
+                {Commands.Store, PutItemInContainer }
             };
             ParsedText parsedText = Parser.ParseText(text.ToLower());
             if (parsedText.Command == Commands.Stop && GameState.ConversationMode)
@@ -126,6 +127,13 @@ namespace AppLogic.Logic
             if (parsed.Direction == Directions.Unknown && isRemainingZero) return "Not a valid direction";
             return "Command was not recognized.";
             
+        }
+        private string PutItemInContainer(ParsedText parsed, Outcome outcome)
+        {
+            if (parsed.Container == Containers.Unknown) return "You need to specify the container.";
+            if (!parsed.RemainingContains("in")) return "The format is 'put item in container'.";
+            if (parsed.ItemOne == Items.Unknown) return "You need to specify the item.";
+            return GameState.PutItemInContainer(parsed);
         }
         private string DropItem(ParsedText parsed, Outcome outcome)
         {

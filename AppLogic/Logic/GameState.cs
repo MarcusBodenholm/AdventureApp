@@ -167,6 +167,16 @@ namespace AppLogic.Logic
             container.RemoveItem(itemToPickUp);
             return $"You pick up the {itemToPickUp.Name.ToLower()} from the {parsed.ContainerText}.";
         }
+        public string PutItemInContainer(ParsedText parsed)
+        {
+            Container? container = CurrentLocation.GetContainer(parsed.Container);
+            if (container == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.Name.ToLower()}.";
+            Item? ItemToPut = PC.GetItem(parsed.ItemOne);
+            if (ItemToPut == null) return $"There is no {parsed.ItemOneText} in the {parsed.ContainerText}.";
+            PC.RemoveItem(ItemToPut);
+            container.AddItem(ItemToPut);
+            return $"You have placed the {ItemToPut.Name.ToLower()} in the {parsed.ContainerText}.";
+        }
         public string ExamineItem(ParsedText parsed)
         {
             Item? InspectedItem = PC.GetItem(parsed.ItemOne);
