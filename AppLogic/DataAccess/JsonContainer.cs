@@ -8,5 +8,6 @@
         public int[]? ItemIDs { get; set; } = null;
         public string Article { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
+        public bool Liftable { get; set; } = false;
     }
 }

@@ -101,6 +101,8 @@ namespace AppLogic.Logic
         }
         public string DropItem(ParsedText parsed)
         {
+            Container? CarryingContainer = PC.GetContainer();
+            if (CarryingContainer != null) return $"You must drop the {CarryingContainer.Name.ToLower()} first.";
             Item? itemToDrop = PC.GetItem(parsed.ItemOne);
             if (itemToDrop != null)
             {
@@ -115,7 +117,7 @@ namespace AppLogic.Logic
             Container? container = CurrentLocation.GetContainer(parsed.Container);
             if (container == null)
             {
-                return $"There is no {parsed.ContainerText} in the {CurrentLocation.Name.ToLower()}.";
+                return $"There is no {parsed.ContainerText} in the {CurrentLocation.NameLower()}.";
             }
             Item? item = container.GetItem(parsed.ItemOne);
             if (item == null)
@@ -126,6 +128,8 @@ namespace AppLogic.Logic
         }
         public string UseItemOnItem(ParsedText parsed)
         {
+            Container? CarryingContainer = PC.GetContainer();
+            if (CarryingContainer != null) return $"You must drop the {CarryingContainer.Name.ToLower()} first.";
             Item? itemOne = PC.GetItem(parsed.ItemOne);
             if (itemOne == null) return $"You do not have {parsed.ItemOneText}.";
             Item? itemTwo = PC.GetItem(parsed.ItemTwo);
@@ -144,6 +148,8 @@ namespace AppLogic.Logic
         }
         public string PickUpItem(ParsedText parsed)
         {
+            Container? CarryingContainer = PC.GetContainer();
+            if (CarryingContainer != null) return $"You must drop the {CarryingContainer.Name.ToLower()} first.";
             if (parsed.ItemOne == Enums.Items.Unknown) return "You need to specify an item.";
             Item? itemToPickup = CurrentLocation.GetItem(parsed.ItemOne);
             if (itemToPickup != null)
@@ -159,8 +165,10 @@ namespace AppLogic.Logic
         }
         public string PickUpItemFromContainer(ParsedText parsed)
         {
+            Container? CarryingContainer = PC.GetContainer();
+            if (CarryingContainer != null) return $"You must drop the {CarryingContainer.Name.ToLower()} first.";
             Container? container = CurrentLocation.GetContainer(parsed.Container);
-            if (container == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.Name.ToLower()}.";
+            if (container == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.NameLower()}.";
             Item? itemToPickUp = container.GetItem(parsed.ItemOne);
             if (itemToPickUp == null) return $"There is no {parsed.ItemOneText} in the {parsed.ContainerText}.";
             PC.AddItem(itemToPickUp);
@@ -169,13 +177,35 @@ namespace AppLogic.Logic
         }
         public string PutItemInContainer(ParsedText parsed)
         {
+            Container? CarryingContainer = PC.GetContainer();
+            if (CarryingContainer != null) return $"You must drop the {CarryingContainer.Name.ToLower()} first.";
             Container? container = CurrentLocation.GetContainer(parsed.Container);
-            if (container == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.Name.ToLower()}.";
+            if (container == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.NameLower()}.";
             Item? ItemToPut = PC.GetItem(parsed.ItemOne);
             if (ItemToPut == null) return $"There is no {parsed.ItemOneText} in the {parsed.ContainerText}.";
             PC.RemoveItem(ItemToPut);
             container.AddItem(ItemToPut);
             return $"You have placed the {ItemToPut.Name.ToLower()} in the {parsed.ContainerText}.";
+        }
+        public string TakeContainer(ParsedText parsed)
+        {
+            Container? CarryingContainer = PC.GetContainer();
+            if (CarryingContainer != null) return $"You must drop the {CarryingContainer.Name.ToLower()} first.";
+            Container? container = CurrentLocation.GetContainer(parsed.Container);
+            if (container == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.NameLower()}.";
+            if (container.Liftable == false) return $"The {parsed.ContainerText} is too heavy and cumbersome to take.";
+            PC.TakeContainer(container);
+            CurrentLocation.RemoveContainer(container);
+            return $"You pick up {parsed.ContainerText} from {CurrentLocation.NameLower()}. Until you drop it, you are limited in what you can do.";
+        }
+        public string DropContainer(ParsedText parsed)
+        {
+            Container? container = PC.GetContainer();
+            if (container == null || parsed.Container == Enums.Containers.Unknown) return $"You are not carrying {parsed.ContainerText}.";
+            CurrentLocation.AddContainer(container);
+            PC.RemoveContainer();
+            return $"You drop the {parsed.ContainerText} in {CurrentLocation.NameLower()}";
+
         }
         public string ExamineItem(ParsedText parsed)
         {
@@ -197,18 +227,19 @@ namespace AppLogic.Logic
                     InspectedItem = container.GetItem(parsed.ItemOne);
                     if (InspectedItem != null) return InspectedItem.Inspect();
                 }
-                return $"There's no {parsed.ItemOneText} in neither your inventory nor the {CurrentLocation.Name.ToLower()}.";
+                return $"There's no {parsed.ItemOneText} in neither your inventory nor the {CurrentLocation.NameLower()}.";
             }
-            return $"There's no {parsed.ItemOneText} in neither your inventory nor the {CurrentLocation.Name.ToLower()}.";
+            return $"There's no {parsed.ItemOneText} in neither your inventory nor the {CurrentLocation.NameLower()}.";
         }
         public string ExamineContainer(ParsedText parsed)
         {
             Container? examinedContainer = CurrentLocation.GetContainer(parsed.Container);
-            if (examinedContainer == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.Name.ToLower()}.";
+            if (examinedContainer == null) return $"There is no {parsed.ContainerText} in {CurrentLocation.NameLower()}.";
             return examinedContainer.Inspect();
         }
         public string ClearObstruction(ParsedText parsed)
         {
+            if (PC.CarryingContainer != null) return $"You must drop the {PC.CarryingContainer.Name.ToLower()} first.";
             Item? item = PC.GetItem(parsed.ItemOne);
             if (item == null)
             {
@@ -227,7 +258,7 @@ namespace AppLogic.Logic
             }
             if (obstruction == null)
             {
-                return $"There is no {parsed.ObstructionText} in the {CurrentLocation.Name.ToLower()}.";
+                return $"There is no {parsed.ObstructionText} in the {CurrentLocation.NameLower()}.";
             }
             if (obstruction != null && exit != null && obstruction.ClearedBy == item.Type)
             {
@@ -266,6 +297,7 @@ namespace AppLogic.Logic
         }
         public string UnlockDoor(ParsedText parsed)
         {
+            if (PC.CarryingContainer != null) return $"You must drop the {PC.CarryingContainer.Name.ToLower()} first.";
             Item? item = PC.GetItem(parsed.ItemOne);
             if (item == null) return $"You do not have {parsed.ItemOneText}.";
             Exit? exit = CurrentLocation.Exits[parsed.Direction];
@@ -280,11 +312,6 @@ namespace AppLogic.Logic
             string output = exit.Unlock(item);
             PC.RemoveItem(item);
             return output;
-
-        }
-        public void TriggerEnd()
-        {
-            //MessageBox.Show("Congratulations on escaping the house!");
         }
     }
 }

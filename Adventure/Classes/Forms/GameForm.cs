@@ -15,7 +15,8 @@ namespace Adventure
             string[] gameStartText = GameLogic.GameStart();
             UpdateLog(gameStartText[0], Color.Purple);
             UpdateLog(gameStartText[1], Color.Purple);
-            UpdateLog(gameStartText[2], Color.Green);
+            UpdateLog(gameStartText[2], Color.Purple);
+            UpdateLog(gameStartText[3], Color.Green);
         }
         public void UpdateLog(string message, Color color)
         {

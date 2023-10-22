@@ -196,6 +196,7 @@ namespace AppLogic.DataAccess
                     newContainer.Article = container.Article;
                     newContainer.Description = container.Description;
                     newContainer.Type = Parser.Container(container.Type);
+                    newContainer.Liftable = container.Liftable;
                     if (container.ItemIDs != null)
                     {
                         foreach (var item in container.ItemIDs)

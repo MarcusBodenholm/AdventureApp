@@ -19,13 +19,13 @@ namespace AppLogic.Logic
             Outcome outcome = new();
             Dictionary<Commands, Func<ParsedText, Outcome, string>> methods = new()
             {
-                {Commands.Drop, DropItem },
+                {Commands.Drop, DropX },
                 {Commands.Inventory, ShowPlayerInventory},
                 {Commands.Move, MoveCharacter },
                 {Commands.Check, CheckDirection },
                 {Commands.Examine, InspectX },
                 {Commands.Inspect, InspectX },
-                {Commands.Take, TakeItem},
+                {Commands.Take, TakeX},
                 {Commands.Use, UseItemOnX },
                 {Commands.Give, GiveToNPC },
                 {Commands.Stop, StopTalkingToNPC },
@@ -135,11 +135,13 @@ namespace AppLogic.Logic
             if (parsed.ItemOne == Items.Unknown) return "You need to specify the item.";
             return GameState.PutItemInContainer(parsed);
         }
-        private string DropItem(ParsedText parsed, Outcome outcome)
+        private string DropX(ParsedText parsed, Outcome outcome)
         {
+            if (parsed.ItemOne != Items.Unknown) return GameState.DropItem(parsed);
+            if (parsed.Container != Containers.Unknown && parsed.HasOnly("container command")) return GameState.DropContainer(parsed);
             return GameState.DropItem(parsed);
         }
-        private string TakeItem(ParsedText parsed, Outcome outcome)
+        private string TakeX(ParsedText parsed, Outcome outcome)
         {
             if (parsed.Container != Containers.Unknown && parsed.Remaining.Contains("from")
                 && parsed.ItemOne != Items.Unknown && parsed.Remaining.Length == 4)
@@ -147,6 +149,7 @@ namespace AppLogic.Logic
                 return GameState.PickUpItemFromContainer(parsed);
             }
             if (parsed.ItemOne != Items.Unknown &&parsed.Remaining.Length == 0) return GameState.PickUpItem(parsed);
+            if (parsed.Container != Containers.Unknown && parsed.HasOnly("container command")) return GameState.TakeContainer(parsed);
             return "Command was not recognized.";
         }
         private string UseItemOnX(ParsedText parsed, Outcome outcome)
@@ -206,6 +209,7 @@ namespace AppLogic.Logic
         {
             string[] output = new string[] { $"You awake with no memory of where you are, nor how you got here.",
                             $"All you know is that you need to get out of here, and get back home. ",
+                            "You can write 'help' to get a list of useful commands.",
                             $"{GameState.InspectLocation()}" };
             return output;
         }

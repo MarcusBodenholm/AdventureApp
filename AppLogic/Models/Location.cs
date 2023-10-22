@@ -20,6 +20,10 @@ namespace AppLogic.Models
         {
             return $"the {Name}".ToLower();
         }
+        public string NameLower()
+        {
+            return Name.ToLower();
+        }
         public void RemoveItem(Item item)
         {
             Items.Remove(item);
@@ -39,6 +43,14 @@ namespace AppLogic.Models
         public Container? GetContainer(Containers containerType)
         {
             return Containers.Find(container => container.Type == containerType);
+        }
+        public void RemoveContainer(Container container)
+        {
+            Containers.Remove(container);
+        }
+        public void AddContainer(Container container)
+        {
+            Containers.Add(container);
         }
         public string Inspect()
         {

@@ -8,6 +8,7 @@ namespace AppLogic.Models
     {
         public string Name { get; set; } = string.Empty;
         public List<Item> Items { get; set; } = new List<Item>();
+        public Container? CarryingContainer { get; set; } = null;
         public void AddItem(Item item)
         {
             Items.Add(item);
@@ -23,6 +24,18 @@ namespace AppLogic.Models
         public Item? GetItem(Items itemType)
         {
             return Items.Find(item => item.Type == itemType);
+        }
+        public Container? GetContainer()
+        {
+            return CarryingContainer;
+        }
+        public void TakeContainer(Container container)
+        {
+            CarryingContainer = container;
+        }
+        public void RemoveContainer()
+        {
+            CarryingContainer = null;
         }
         public string DisplayInventory()
         {

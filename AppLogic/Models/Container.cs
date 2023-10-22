@@ -9,6 +9,7 @@ namespace AppLogic.Models
         public string Description { get; set; } = string.Empty;
         public List<Item> Items { get; set; } = new List<Item>();
         public string Article { get; set; } = string.Empty;
+        public bool Liftable { get; set; } = false;
         public Containers Type { get; set; } = Containers.Unknown;
         public override string ToString()
         {
