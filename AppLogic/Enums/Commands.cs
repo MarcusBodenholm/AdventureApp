@@ -15,6 +15,7 @@
         Give,
         Talk,
         Stop,
-        Help
+        Help,
+        Store
     }
 }

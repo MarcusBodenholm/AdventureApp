@@ -1,5 +1,6 @@
 ﻿using AppLogic.Models;
 using AppLogic.DataAccess;
+using System.Collections;
 
 namespace AppLogic.Logic
 {
@@ -173,14 +174,22 @@ namespace AppLogic.Logic
             if (InspectedItem == null)
             {
                 InspectedItem = CurrentLocation.GetItem(parsed.ItemOne);
-                if (InspectedItem == null)
+                if (InspectedItem != null)
                 {
-                    return $"There's no {parsed.ItemOneText} in neither your inventory nor the {CurrentLocation.Name.ToLower()}.";
+                    return InspectedItem.Inspect();
                 }
-                return InspectedItem.Inspect();
 
             }
-            return InspectedItem.Inspect();
+            if (InspectedItem == null && CurrentLocation.Containers.Count > 0)
+            {
+                foreach (var container in CurrentLocation.Containers)
+                {
+                    InspectedItem = container.GetItem(parsed.ItemOne);
+                    if (InspectedItem != null) return InspectedItem.Inspect();
+                }
+                return $"There's no {parsed.ItemOneText} in neither your inventory nor the {CurrentLocation.Name.ToLower()}.";
+            }
+            return $"There's no {parsed.ItemOneText} in neither your inventory nor the {CurrentLocation.Name.ToLower()}.";
         }
         public string ExamineContainer(ParsedText parsed)
         {
