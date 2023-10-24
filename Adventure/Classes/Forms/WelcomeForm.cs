@@ -16,5 +16,23 @@ namespace Adventure
         {
             InitializeComponent();
         }
+
+        private void buttonLoad_Click(object sender, EventArgs e)
+        {
+            GameForm gameForm = new GameForm("test");
+            this.Hide();
+            gameForm.ShowDialog();
+            gameForm.Close();
+            this.Show();
+        }
+
+        private void buttonPlay_Click(object sender, EventArgs e)
+        {
+            GameForm gameForm = new GameForm();
+            this.Hide();
+            gameForm.ShowDialog();
+            gameForm.Close();
+            this.Show();
+        }
     }
 }

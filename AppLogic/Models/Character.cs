@@ -9,6 +9,7 @@ namespace AppLogic.Models
         public string Name { get; set; } = string.Empty;
         public List<Item> Items { get; set; } = new List<Item>();
         public Container? CarryingContainer { get; set; } = null;
+        public int SaveLocationID { get; set; } = 0;
         public void AddItem(Item item)
         {
             Items.Add(item);

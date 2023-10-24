@@ -9,7 +9,7 @@ namespace AppLogic.Models
         public string Description { get; set; } = string.Empty;
         public int ClearedBy { get; set; } = -1;
         public string Article { get; set; } = string.Empty;
-        public Obstructions Type { get; set; } = Obstructions.Unknown;
+        public string Type { get; set; } = string.Empty;
         public override string ToString()
         {
             return $"{Article.ToLower()} {Name.ToLower()}";

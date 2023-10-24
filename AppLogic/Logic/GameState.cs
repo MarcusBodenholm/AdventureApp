@@ -11,9 +11,10 @@ namespace AppLogic.Logic
         private NPC NPC { get; set; } = new Rhys();
         public bool ConversationMode { get; set; } = false;
         public bool IsWon { get; set; } = false;
-        public GameState()
+        public GameState(Character pc)
         {
-            Location? location = Data.GetLocation(0);
+            PC = pc;
+            Location? location = Data.GetLocation(PC.SaveLocationID);
             if (location == null) throw new ArgumentNullException();
             CurrentLocation = location;
         }
@@ -313,9 +314,10 @@ namespace AppLogic.Logic
             PC.RemoveItem(item);
             return output;
         }
-        public void SaveCharacter()
+        public Character GetCharacter()
         {
-            Data.SaveCharacter(PC);
+            PC.SaveLocationID = CurrentLocation.ID;
+            return PC;
         }
     }
 }

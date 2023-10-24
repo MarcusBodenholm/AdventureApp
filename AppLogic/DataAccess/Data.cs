@@ -56,7 +56,7 @@ namespace AppLogic.DataAccess
             return AllObstructions.Find(obs => obs.ID == id);
         }
 
-        public static Obstruction? GetObstruction(Obstructions type)
+        public static Obstruction? GetObstruction(string type)
         {
             return AllObstructions.Find(obs => obs.Type == type);
         }
@@ -73,16 +73,61 @@ namespace AppLogic.DataAccess
             LoadEvents();
             LoadLocations();
 
-            SaveItems();
-            SaveLocations();
-            SaveExits();
-            SaveContainers();
         }
-        private static void LoadItems()
+        public static void SaveGame(string fileName, Character PC)
         {
-            string filePath = @$"{GetDirectoryPath()}\Items.json";
-            var json = File.ReadAllText(filePath);
+            string folderPath = $@"{GetDirectoryPath()}\SaveFiles\{fileName}\";
+            Directory.CreateDirectory(folderPath);
+            string itemsFilePath = @$"{folderPath}Items.json";
+            string itemsRelativePath = $@"\SaveFiles\{fileName}\Items.json";
+            string locationsFilePath = @$"{folderPath}Locations.json";
+            string locationsRelativePath = $@"\SaveFiles\{fileName}\Locations.json";
+            string containersFilePath = @$"{folderPath}Containers.json";
+            string containersRelativePath = $@"\SaveFiles\{fileName}\Containers.json";
+            string exitsFilePath = @$"{folderPath}Exits.json";
+            string exitsRelativePath = $@"\SaveFiles\{fileName}\Exits.json";
+            string eventsFilePath = @$"{folderPath}Events.json";
+            string eventsRelativePath = $@"\SaveFiles\{fileName}\Events.json";
+            string obstructionsFilePath = @$"{folderPath}Obstructions.json";
+            string obstructionsRelativePath = $@"\SaveFiles\{fileName}\Obstructions.json";
+            string characterFilePath = @$"{folderPath}Character.json";
+            string characterRelativePath = $@"\SaveFiles\{fileName}\Character.json";
+
+            SaveItems(itemsRelativePath);
+            SaveLocations(locationsRelativePath);
+            SaveContainers(containersRelativePath);
+            SaveCharacter(PC,characterRelativePath);
+            SaveEvents(eventsRelativePath);
+            SaveExits(exitsRelativePath);
+            SaveObstructions(obstructionsRelativePath);
+
+            string saveFilePath = $@"{GetDirectoryPath()}\SaveFiles\{fileName}.savedata";
+            File.Create(saveFilePath).Dispose();
+            string toSaveInSaveFile = @$"{itemsRelativePath}|||||{locationsRelativePath}|||||{containersRelativePath}" +
+                                      @$"|||||{exitsRelativePath}|||||{eventsRelativePath}|||||{obstructionsRelativePath}" +
+                                      @$"|||||{characterRelativePath}";
+            File.WriteAllText(saveFilePath,toSaveInSaveFile);
+            
+        }
+        public static Character LoadSave(string fileName)
+        {
+            string saveFilePath = $@"{GetDirectoryPath()}\SaveFiles\{fileName}.savedata";
+            string[] allPaths = File.ReadAllText(saveFilePath).Split("|||||");
+            LoadItems(allPaths[0]);
+            LoadContainers(allPaths[2]);
+            LoadObstructions(allPaths[5]);
+            LoadExits(allPaths[3]);
+            LoadEvents(allPaths[4]);
+            LoadLocations(allPaths[1]);
+            Character PC = LoadCharacter(allPaths[6]);
+            return PC;
+        }
+        private static void LoadItems(string filePath = @"\Items.json")
+        {
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
+            var json = File.ReadAllText(fullFilePath);
             List<JsonItem>? results = JsonSerializer.Deserialize<List<JsonItem>>(json, _options);
+            AllItems.Clear();
             if (results != null)
             {
                 foreach (var item in results)
@@ -100,9 +145,9 @@ namespace AppLogic.DataAccess
                 }
             }
         }
-        private static void SaveItems()
+        private static void SaveItems(string filePath = @"\SavedItems.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\SavedItems.json";
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
             List<JsonItem> toSave = new List<JsonItem>();
             foreach (Item item in AllItems)
             {
@@ -118,13 +163,14 @@ namespace AppLogic.DataAccess
                 toSave.Add(jsonItem);
             }
             string jsonText = JsonSerializer.Serialize(toSave, _options);
-            File.WriteAllText(filePath, jsonText);
+            File.WriteAllText(fullFilePath, jsonText);
         }
-        private static void LoadLocations()
+        private static void LoadLocations(string filePath = @"\Locations.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\Locations.json";
-            var json = File.ReadAllText(filePath);
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
+            var json = File.ReadAllText(fullFilePath);
             List<JsonLocation>? results = JsonSerializer.Deserialize<List< JsonLocation>>(json, _options);
+            AllLocations.Clear();
             if (results != null)
             {
                 foreach (var location in results)
@@ -178,9 +224,9 @@ namespace AppLogic.DataAccess
                 }
             }
         }
-        private static void SaveLocations()
+        private static void SaveLocations(string filePath = @"\SavedLocations.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\SavedLocations.json";
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
             List<JsonLocation> toSave = new List<JsonLocation>();
             foreach (Location location in AllLocations)
             {
@@ -224,13 +270,14 @@ namespace AppLogic.DataAccess
                 toSave.Add(jsonLocation);
             }
             string jsonText = JsonSerializer.Serialize(toSave, _options);
-            File.WriteAllText(filePath, jsonText);
+            File.WriteAllText(fullFilePath, jsonText);
         }
-        private static void LoadExits()
+        private static void LoadExits(string filePath = @"\Exits.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\Exits.json";
-            var json = File.ReadAllText(filePath);
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
+            var json = File.ReadAllText(fullFilePath);
             List<JsonExit>? exits = JsonSerializer.Deserialize<List<JsonExit>>(json, _options);
+            AllExits.Clear();
             if (exits != null)
             {
                 foreach (var exit in exits)
@@ -254,9 +301,9 @@ namespace AppLogic.DataAccess
                 }
             }
         }
-        private static void SaveExits()
+        private static void SaveExits(string filePath = @"\SavedExits.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\SavedExits.json";
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
             List<JsonExit> toSave = new List<JsonExit>();
             foreach (Exit exit in AllExits)
             {
@@ -288,13 +335,14 @@ namespace AppLogic.DataAccess
                 toSave.Add(exitJson);
             }
             string jsonText = JsonSerializer.Serialize(toSave, _options);
-            File.WriteAllText(filePath, jsonText);
+            File.WriteAllText(fullFilePath, jsonText);
         }
-        private static void LoadContainers()
+        private static void LoadContainers(string filePath = @"\Containers.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\Containers.json";
-            var json = File.ReadAllText(filePath);
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
+            var json = File.ReadAllText(fullFilePath);
             List<JsonContainer>? containers = JsonSerializer.Deserialize<List<JsonContainer>>(json, _options);
+            AllContainers.Clear();
             if (containers != null)
             {
                 foreach (var container in containers)
@@ -322,9 +370,9 @@ namespace AppLogic.DataAccess
             }
 
         }
-        private static void SaveContainers()
+        private static void SaveContainers(string filePath = @"\SavedContainers.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\SavedContainers.json";
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
             List<JsonContainer> toSave = new List<JsonContainer>();
             foreach (Container container in AllContainers)
             {
@@ -339,14 +387,15 @@ namespace AppLogic.DataAccess
                 toSave.Add(jsonContainer);
             }
             string jsonText = JsonSerializer.Serialize(toSave, _options);
-            File.WriteAllText(filePath, jsonText);
+            File.WriteAllText(fullFilePath, jsonText);
 
         }
-        private static void LoadObstructions()
+        private static void LoadObstructions(string filePath = @"\Obstructions.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\Obstructions.json";
-            var json = File.ReadAllText(filePath);
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
+            var json = File.ReadAllText(fullFilePath);
             List<JsonObstruction>? obstructions = JsonSerializer.Deserialize<List<JsonObstruction>>(json, _options);
+            AllObstructions.Clear();
             if (obstructions != null)
             {
                 foreach (var obstruction in obstructions)
@@ -357,14 +406,14 @@ namespace AppLogic.DataAccess
                     newObstruction.Description  = obstruction.Description;
                     newObstruction.Article = obstruction.Article;
                     newObstruction.ClearedBy = obstruction.ClearedBy;
-                    newObstruction.Type = Parser.Obstruction(obstruction.Type);
+                    newObstruction.Type = obstruction.Type;
                     AllObstructions.Add(newObstruction);
                 }
             }
         }
-        private static void SaveObstructions()
+        private static void SaveObstructions(string filePath = @"\SavedObstructions.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\SavedObstructions.json";
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
             List<JsonObstruction> toSave = new List<JsonObstruction>();
             foreach (Obstruction obs in AllObstructions)
             {
@@ -378,14 +427,15 @@ namespace AppLogic.DataAccess
                 toSave.Add(jsonObs);
             }
             string jsonText = JsonSerializer.Serialize(toSave, _options);
-            File.WriteAllText(filePath, jsonText);
+            File.WriteAllText(fullFilePath, jsonText);
 
         }
-        private static void LoadEvents()
+        private static void LoadEvents(string filePath = @"\Events.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\Events.json";
-            var json = File.ReadAllText(filePath);
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
+            var json = File.ReadAllText(fullFilePath);
             List<JsonEvent>? events = JsonSerializer.Deserialize<List<JsonEvent>>(json, _options);
+            AllEvents.Clear();
             if (events != null)
             {
                 foreach (var e in events)
@@ -401,9 +451,9 @@ namespace AppLogic.DataAccess
 
             }
         }
-        private static void SaveEvents()
+        private static void SaveEvents(string filePath = @"\SavedEvents.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\SavedObstructions.json";
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
             List<JsonEvent> toSave = new List<JsonEvent>();
             foreach (Event e in AllEvents)
             {
@@ -415,17 +465,18 @@ namespace AppLogic.DataAccess
                 jsonEvent.Direction = e.Direction.ToString();
             }
             string jsonText = JsonSerializer.Serialize(toSave, _options);
-            File.WriteAllText(filePath, jsonText);
+            File.WriteAllText(fullFilePath, jsonText);
 
         }
-        private static Character LoadCharacter()
+        private static Character LoadCharacter(string filePath = @"\SavedCharacter.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\SavedCharacter.json";
-            var json = File.ReadAllText(filePath);
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
+            var json = File.ReadAllText(fullFilePath);
             JsonCharacter jsonCharacter = JsonSerializer.Deserialize<JsonCharacter>(json);
             if (jsonCharacter == null) return new Character();
             Character PC = new Character();
             PC.Name = jsonCharacter.Name;
+            PC.SaveLocationID = jsonCharacter.SaveLocationID;
             if (jsonCharacter.ItemIDs != null)
             {
                 foreach (int id in jsonCharacter.ItemIDs)
@@ -445,11 +496,12 @@ namespace AppLogic.DataAccess
             }
             return PC;
         }
-        public static void SaveCharacter(Character PC)
+        public static void SaveCharacter(Character PC, string filePath = @"\SavedCharacter.json")
         {
-            string filePath = @$"{GetDirectoryPath()}\SavedCharacter.json";
+            string fullFilePath = @$"{GetDirectoryPath()}{filePath}";
             JsonCharacter jsonChar = new JsonCharacter();
             jsonChar.Name = PC.Name;
+            jsonChar.SaveLocationID = PC.SaveLocationID;
             jsonChar.ContainerID = PC.CarryingContainer == null ? null : PC.CarryingContainer.ID;
             if (PC.Items.Count > 0)
             {
@@ -457,7 +509,7 @@ namespace AppLogic.DataAccess
             }
             else jsonChar.ItemIDs = null;
             string jsonText = JsonSerializer.Serialize(jsonChar, _options);
-            File.WriteAllText(filePath, jsonText);
+            File.WriteAllText(fullFilePath, jsonText);
         }
     }
 }

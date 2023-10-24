@@ -17,11 +17,11 @@ namespace AppLogic.Logic
             {"west", Directions.West }
 
         };
-        private readonly static Dictionary<string, Obstructions> obstructions = new()
+        private readonly static Dictionary<string, string> obstructions = new()
         {
-            {"fire", Obstructions.Fire },
-            {"boulder", Obstructions.Boulder},
-            {"barricade", Obstructions.Barricade }
+            {"fire", "fire" },
+            {"boulder", "boulder"},
+            {"barricade", "barricade" }
         };
         private readonly static Dictionary<string, Commands> commands = new()
         {
@@ -201,7 +201,7 @@ namespace AppLogic.Logic
                 return string.Empty;
             }
         }
-        public static Obstructions Obstruction(string text)
+        public static string Obstruction(string text)
         {
             if (obstructions.ContainsKey(text))
             {
@@ -209,7 +209,7 @@ namespace AppLogic.Logic
             }
             else
             {
-                return Obstructions.Unknown;
+                return string.Empty;
             }
         }
         public static ParsedText ParseText(string input)

@@ -6,17 +6,22 @@ namespace Adventure
 {
     public partial class GameForm : Form
     {
-        public GameLogic GameLogic { get; set; }
-        public GameForm()
+        public GameLogic? GameLogic { get; set; }
+        public GameForm(string saveFile = "")
         {
             InitializeComponent();
-            GameLogic = new GameLogic();
+            GameLogic = new GameLogic(saveFile);
+            StartUpGame();
+        }
+        public void StartUpGame()
+        {
             UpdateState(GameLogic.StateAtGameStart());
             string[] gameStartText = GameLogic.GameStart();
             UpdateLog(gameStartText[0], Color.Purple);
             UpdateLog(gameStartText[1], Color.Purple);
             UpdateLog(gameStartText[2], Color.Purple);
             UpdateLog(gameStartText[3], Color.Green);
+
         }
         public void UpdateLog(string message, Color color)
         {
@@ -133,7 +138,22 @@ namespace Adventure
 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GameLogic.SaveGame();
+            //GameLogic.SaveGame("autosave");
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            InputPrompt input = new InputPrompt("Name the save file", "Name save file");
+            input.ShowDialog();
+            if (input.DialogResult == DialogResult.OK)
+            {
+                SaveGame(input.Input);
+            }
+            input.Dispose();
+        }
+        private void SaveGame(string saveFileName)
+        {
+            GameLogic.SaveGame(saveFileName);
         }
     }
 

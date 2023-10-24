@@ -9,10 +9,19 @@ namespace AppLogic.Logic
     public class GameLogic
     {
         private GameState GameState { get; set; }
-        public GameLogic()
+        public GameLogic(string saveFile = "")
         {
-            Data.LoadAllData();
-            GameState = new GameState();
+            if (saveFile == "")
+            {
+                Data.LoadAllData();
+                GameState = new GameState(new Character());
+
+            }
+            else
+            {
+                Character PC = Data.LoadSave(saveFile);
+                GameState = new GameState(PC);
+            }
         }
         public Outcome DecisionTree(string text)
         {
@@ -155,7 +164,7 @@ namespace AppLogic.Logic
         private string UseItemOnX(ParsedText parsed, Outcome outcome)
         {
             if (parsed.ItemOne == string.Empty &&
-                (parsed.Obstruction == Obstructions.Unknown || parsed.ItemTwo == string.Empty ||
+                (parsed.Obstruction == string.Empty || parsed.ItemTwo == string.Empty ||
                 parsed.Direction != Directions.Unknown) && !parsed.Remaining.Contains("on in") && parsed.Remaining.Length != 2)
             {
                 return "Command was not recognized.";
@@ -165,7 +174,7 @@ namespace AppLogic.Logic
             {
                 return GameState.UseItemOnItem(parsed);
             }
-            if (parsed.Obstruction != Obstructions.Unknown)
+            if (parsed.Obstruction != string.Empty)
             {
                 return GameState.ClearObstruction(parsed);
             }
@@ -230,9 +239,10 @@ namespace AppLogic.Logic
                    $"\n talk to 'npc' - talks to an NPC." +
                    $"\n give 'item' to 'npc' - gives item to NPC.";
         }
-        public void SaveGame()
+        public void SaveGame(string saveFileName)
         {
-            GameState.SaveCharacter();
+            Character PC = GameState.GetCharacter();
+            Data.SaveGame(saveFileName, PC);
         }
     }
 }
