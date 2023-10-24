@@ -32,15 +32,15 @@ namespace AppLogic.Models
         {
             Items.Add(item);
         }
-        public bool HasItem(Items itemType)
+        public bool HasItem(string itemType)
         {
             return Items.Any(item => item.Type == itemType);
         }
-        public Item? GetItem(Items itemType)
+        public Item? GetItem(string itemType)
         {
             return Items.Find(item => item.Type == itemType);
         }
-        public Container? GetContainer(Containers containerType)
+        public Container? GetContainer(string containerType)
         {
             return Containers.Find(container => container.Type == containerType);
         }

@@ -17,11 +17,11 @@ namespace AppLogic.Models
         {
             Items.Remove(item);
         }
-        public bool HasItem(Items itemType)
+        public bool HasItem(string itemType)
         {
             return Items.Any(item => item.Type == itemType);
         }
-        public Item? GetItem(Items itemType)
+        public Item? GetItem(string itemType)
         {
             return Items.Find(item => item.Type == itemType);
         }

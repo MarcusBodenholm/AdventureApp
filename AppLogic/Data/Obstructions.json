@@ -5,7 +5,7 @@
     "Description": "This is a boulder.",
     "Article": "A",
     "Type": "boulder",
-    "ClearedBy": "Pickaxe"
+    "ClearedBy": 6
   },
   {
     "ID": 2,
@@ -13,7 +13,7 @@
     "Description": "The door has been barricaded with planks.",
     "Article": "A",
     "Type": "barricade",
-    "ClearedBy": "crowbar"
+    "ClearedBy": 8
   },
   {
     "ID": 3,
@@ -21,6 +21,6 @@
     "Description": "A raging fire blocks the exit.",
     "Article": "A",
     "Type": "fire",
-    "ClearedBy": "extinguisher"
+    "ClearedBy": 11
   }
 ]

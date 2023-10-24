@@ -72,64 +72,64 @@ namespace AppLogic.Logic
             {"help", Commands.Help },
         };
 
-        private readonly static Dictionary<string, Items> items = new()
+        private readonly static Dictionary<string, string> items = new()
         {
-            {"painted figurine", Items.PaintedFigurine },
-            {"paintedfigurine", Items.PaintedFigurine },
-            {"fire extinguisher tank", Items.FireExtinguisherTank },
-            {"fireextinguishertank", Items.FireExtinguisherTank },
-            {"second key fragment", Items.SecondKeyFragment },
-            {"secondkeyfragment", Items.SecondKeyFragment },
-            {"green key", Items.GreenKey },
-            {"greenkey", Items.GreenKey },
-            {"basket with figurine", Items.BasketWithFigurine },
-            {"basketwithfigurine", Items.BasketWithFigurine },
-            {"basket of gifts", Items.BasketsWithGifts },
-            {"basketofgifts", Items.BasketsWithGifts },
-            {"lump of dirt", Items.DirtLump },
-            {"dirtlump", Items.DirtLump },
-            {"key fragment", Items.KeyFragment },
-            {"keyfragment", Items.KeyFragment },
-            {"wine bottle", Items.WineBottle },
-            {"winebottle", Items.WineBottle },
-            {"purple key", Items.PurpleKey },
-            {"purplekey", Items.PurpleKey },
-            {"fire extinguisher", Items.Extinguisher },
-            {"opened wine bottle", Items.OpenedWineBottle },
-            {"openedwinebottle", Items.OpenedWineBottle },
-            {"small key", Items.SmallKey },
-            {"smallkey", Items.SmallKey },
-            {"corkscrew", Items.Corkscrew },
-            {"opened bottle", Items.OpenedBottle },
-            {"openedbottle", Items.OpenedBottle },
-            {"bottle", Items.Bottle },
-            {"extinguisher", Items.Extinguisher },
-            {"shovel", Items.Shovel },
-            {"key", Items.Key },
-            {"note", Items.Note },
-            {"instructions", Items.Note },
-            {"pickaxe", Items.Pickaxe },
-            {"crowbar", Items.Crowbar },
-            {"carving knife", Items.CarvingKnife },
-            {"carvingknife", Items.CarvingKnife },
-            {"wood", Items.Wood },
-            {"paint", Items.Paint },
-            {"figurine", Items.Figurine },
-            {"diary", Items.Diary },
-            {"handle", Items.Handle },
-            {"flowers", Items.Flowers },
-            {"basket", Items.Basket },
+            {"painted figurine", "painted figurine" },
+            {"paintedfigurine",  "painted figurine" },
+            {"fire extinguisher tank", "fire extinguisher tank" },
+            {"fireextinguishertank", "fire extinguisher tank" },
+            {"second key fragment", "second key fragment" },
+            {"secondkeyfragment", "second key fragment" },
+            {"green key", "green key" },
+            {"greenkey", "green key" },
+            {"basket with figurine", "basket with figurine" },
+            {"basketwithfigurine", "basket with figurine" },
+            {"basket of gifts", "basket of gifts" },
+            {"basketofgifts", "basket of gifts" },
+            {"lump of dirt", "lump of dirt" },
+            {"dirtlump", "lump of dirt" },
+            {"key fragment", "key fragment" },
+            {"keyfragment", "key fragment" },
+            {"wine bottle", "wine bottle" },
+            {"winebottle", "wine bottle" },
+            {"purple key", "purple key" },
+            {"purplekey", "purple key" },
+            {"fire extinguisher", "fire extinguisher" },
+            {"opened wine bottle", "opened wine bottle" },
+            {"openedwinebottle", "opened wine bottle" },
+            {"small key", "small key" },
+            {"smallkey", "small key" },
+            {"corkscrew", "corkscrew" },
+            {"opened bottle", "opened bottle" },
+            {"openedbottle", "opened bottle" },
+            {"bottle", "bottle" },
+            {"extinguisher", "fire extinguisher" },
+            {"shovel", "shovel" },
+            {"key", "key" },
+            {"note", "note" },
+            {"instructions", "instructions" },
+            {"pickaxe", "pickaxe" },
+            {"crowbar", "crowbar" },
+            {"carving knife", "carving knife" },
+            {"carvingknife", "carving knife" },
+            {"wood", "wood" },
+            {"paint", "paint" },
+            {"figurine", "figurine" },
+            {"diary", "diary" },
+            {"handle", "handle" },
+            {"flowers", "flowers" },
+            {"basket", "basket" },
         };
-        private readonly static Dictionary<string, Containers> containers = new()
+        private readonly static Dictionary<string, string> containers = new()
         {
-            {"cupboard", Containers.Cupboard },
-            {"small box", Containers.ShoeBox },
-            {"shoebox", Containers.ShoeBox },
-            {"kitchen counter", Containers.KitchenCounter },
-            {"kitchencounter", Containers.KitchenCounter },
-            {"counter", Containers.KitchenCounter },
-            {"desk", Containers.Desk },
-            {"box", Containers.ShoeBox }
+            {"cupboard", "cupboard" },
+            {"small box", "small box" },
+            {"shoebox", "small box" },
+            {"kitchen counter", "kitchen counter" },
+            {"kitchencounter", "kitchen counter" },
+            {"counter", "counter" },
+            {"desk", "desk" },
+            {"box", "small box" }
         };
         private readonly static Dictionary<string, NPCs> npcs = new()
         {
@@ -150,7 +150,7 @@ namespace AppLogic.Logic
                 return NPCs.Rhys;
             }
         }
-        public static Containers Container(string input)
+        public static string Container(string input)
         {
             string text = input.ToLower();
             if (containers.ContainsKey(text))
@@ -159,7 +159,7 @@ namespace AppLogic.Logic
             }
             else
             {
-                return Containers.Unknown;
+                return string.Empty;
             }
         }
         public static Directions Direction(string input)
@@ -189,7 +189,7 @@ namespace AppLogic.Logic
                 return Commands.Unknown;
             }
         }
-        public static Items Item(string input)
+        public static string Item(string input)
         {
             string text = input.ToLower();
             if (items.ContainsKey(text))
@@ -198,7 +198,7 @@ namespace AppLogic.Logic
             }
             else
             {
-                return Items.Unknown;
+                return string.Empty;
             }
         }
         public static Obstructions Obstruction(string text)

@@ -10,7 +10,7 @@ namespace AppLogic.Models
         public string Article { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int UsableOn { get; set; } = -1;
-        public Items Type { get; set; } = Items.Unknown;
+        public string Type { get; set; } = string.Empty;
         public int SpecialItem { get; set; } = -1;
         public bool Persistent { get; set; } = false;
         public override string ToString()

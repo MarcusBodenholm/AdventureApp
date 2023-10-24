@@ -26,7 +26,7 @@ namespace AppLogic.DataAccess
         {
             PropertyNameCaseInsensitive = true,
         };
-        public static Item? GetItem(Items type)
+        public static Item? GetItem(string type)
         {
             return AllItems.Find(item => item.Type == type);
         }
@@ -38,7 +38,7 @@ namespace AppLogic.DataAccess
         {
             return AllLocations.Find(location => location.ID == id);
         }
-        public static Container? GetContainer(Containers type)
+        public static Container? GetContainer(string type)
         {
             return AllContainers.Find(container => container.Type == type);
         }
@@ -93,7 +93,7 @@ namespace AppLogic.DataAccess
                     newItem.Description = item.Description;
                     newItem.Article = item.Article;
                     newItem.UsableOn = item.UsableOn;
-                    newItem.Type = Parser.Item(item.Type);
+                    newItem.Type = item.Type.ToLower();
                     newItem.SpecialItem = item.SpecialItem;
                     newItem.Persistent = item.Persistent;
                     AllItems.Add(newItem);
@@ -304,7 +304,7 @@ namespace AppLogic.DataAccess
                     newContainer.Name = container.Name;
                     newContainer.Article = container.Article;
                     newContainer.Description = container.Description;
-                    newContainer.Type = Parser.Container(container.Type);
+                    newContainer.Type = container.Type;
                     newContainer.Liftable = container.Liftable;
                     if (container.ItemIDs != null)
                     {
@@ -356,7 +356,7 @@ namespace AppLogic.DataAccess
                     newObstruction.Name = obstruction.Name;
                     newObstruction.Description  = obstruction.Description;
                     newObstruction.Article = obstruction.Article;
-                    newObstruction.ClearedBy = Parser.Item(obstruction.ClearedBy);
+                    newObstruction.ClearedBy = obstruction.ClearedBy;
                     newObstruction.Type = Parser.Obstruction(obstruction.Type);
                     AllObstructions.Add(newObstruction);
                 }
@@ -374,7 +374,7 @@ namespace AppLogic.DataAccess
                 jsonObs.Article = obs.Article;
                 jsonObs.Description = obs.Description;
                 jsonObs.Type = obs.Type.ToString();
-                jsonObs.ClearedBy = obs.ClearedBy.ToString();
+                jsonObs.ClearedBy = obs.ClearedBy;
                 toSave.Add(jsonObs);
             }
             string jsonText = JsonSerializer.Serialize(toSave, _options);

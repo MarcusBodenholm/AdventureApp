@@ -80,7 +80,7 @@ namespace AppLogic.Logic
         }
         private string GiveToNPC(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.RemainingContains("to") && parsed.ItemOne != Items.Unknown && parsed.NPC != NPCs.Unknown)
+            if (parsed.RemainingContains("to") && parsed.ItemOne != string.Empty && parsed.NPC != NPCs.Unknown)
             {
                 return GameState.GiftNPC(parsed);
             }
@@ -92,7 +92,7 @@ namespace AppLogic.Logic
             {
                 return "You need to specify the name of the NPC.";
             }
-            if (parsed.ItemOne == Items.Unknown)
+            if (parsed.ItemOne == string.Empty)
             {
                 return "You need to specify the item.";
             }
@@ -101,19 +101,19 @@ namespace AppLogic.Logic
         private string InspectX(ParsedText parsed, Outcome outcome)
         {
             bool isRemainingZero = parsed.Remaining.Length == 0;
-            if (parsed.ItemOne != Items.Unknown && isRemainingZero
+            if (parsed.ItemOne != string.Empty && isRemainingZero
                 && parsed.HasOnly("itemone command"))
             {
                 return GameState.ExamineItem(parsed);
             }
-            if (parsed.Container != Containers.Unknown && isRemainingZero
+            if (parsed.Container != string.Empty && isRemainingZero
                 && parsed.HasOnly("container command"))
             {
                 return GameState.ExamineContainer(parsed);
 
             }
-            if (parsed.Container != Containers.Unknown && parsed.RemainingContains("on in")
-                && parsed.ItemOne != Items.Unknown && parsed.HasOnly("container command itemone"))
+            if (parsed.Container != string.Empty && parsed.RemainingContains("on in")
+                && parsed.ItemOne != string.Empty && parsed.HasOnly("container command itemone"))
             {
                 return GameState.InspectItemInContainer(parsed);
             }
@@ -130,38 +130,38 @@ namespace AppLogic.Logic
         }
         private string PutItemInContainer(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.Container == Containers.Unknown) return "You need to specify the container.";
+            if (parsed.Container == string.Empty) return "You need to specify the container.";
             if (!parsed.RemainingContains("in")) return "The format is 'put item in container'.";
-            if (parsed.ItemOne == Items.Unknown) return "You need to specify the item.";
+            if (parsed.ItemOne == string.Empty) return "You need to specify the item.";
             return GameState.PutItemInContainer(parsed);
         }
         private string DropX(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.ItemOne != Items.Unknown) return GameState.DropItem(parsed);
-            if (parsed.Container != Containers.Unknown && parsed.HasOnly("container command")) return GameState.DropContainer(parsed);
+            if (parsed.ItemOne != string.Empty) return GameState.DropItem(parsed);
+            if (parsed.Container != string.Empty && parsed.HasOnly("container command")) return GameState.DropContainer(parsed);
             return GameState.DropItem(parsed);
         }
         private string TakeX(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.Container != Containers.Unknown && parsed.Remaining.Contains("from")
-                && parsed.ItemOne != Items.Unknown && parsed.Remaining.Length == 4)
+            if (parsed.Container != string.Empty && parsed.Remaining.Contains("from")
+                && parsed.ItemOne != string.Empty && parsed.Remaining.Length == 4)
             {
                 return GameState.PickUpItemFromContainer(parsed);
             }
-            if (parsed.ItemOne != Items.Unknown &&parsed.Remaining.Length == 0) return GameState.PickUpItem(parsed);
-            if (parsed.Container != Containers.Unknown && parsed.HasOnly("container command")) return GameState.TakeContainer(parsed);
+            if (parsed.ItemOne != string.Empty && parsed.Remaining.Length == 0) return GameState.PickUpItem(parsed);
+            if (parsed.Container != string.Empty && parsed.HasOnly("container command")) return GameState.TakeContainer(parsed);
             return "Command was not recognized.";
         }
         private string UseItemOnX(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.ItemOne == Items.Unknown &&
-                (parsed.Obstruction == Obstructions.Unknown || parsed.ItemTwo == Items.Unknown ||
+            if (parsed.ItemOne == string.Empty &&
+                (parsed.Obstruction == Obstructions.Unknown || parsed.ItemTwo == string.Empty ||
                 parsed.Direction != Directions.Unknown) && !parsed.Remaining.Contains("on in") && parsed.Remaining.Length != 2)
             {
                 return "Command was not recognized.";
             }
 
-            if (parsed.ItemTwo != Items.Unknown)
+            if (parsed.ItemTwo != string.Empty)
             {
                 return GameState.UseItemOnItem(parsed);
             }
@@ -169,7 +169,7 @@ namespace AppLogic.Logic
             {
                 return GameState.ClearObstruction(parsed);
             }
-            if (parsed.ItemOne != Items.Unknown && parsed.Direction != Directions.Unknown)
+            if (parsed.ItemOne != string.Empty && parsed.Direction != Directions.Unknown)
             {
                 return GameState.UnlockDoor(parsed);
             }

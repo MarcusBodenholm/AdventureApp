@@ -150,7 +150,7 @@ namespace AppLogic.Logic
         {
             Container? CarryingContainer = PC.GetContainer();
             if (CarryingContainer != null) return $"You must drop the {CarryingContainer.Name.ToLower()} first.";
-            if (parsed.ItemOne == Enums.Items.Unknown) return "You need to specify an item.";
+            if (parsed.ItemOne == string.Empty) return "You need to specify an item.";
             Item? itemToPickup = CurrentLocation.GetItem(parsed.ItemOne);
             if (itemToPickup != null)
             {
@@ -196,12 +196,12 @@ namespace AppLogic.Logic
             if (container.Liftable == false) return $"The {parsed.ContainerText} is too heavy and cumbersome to take.";
             PC.TakeContainer(container);
             CurrentLocation.RemoveContainer(container);
-            return $"You pick up {parsed.ContainerText} from {CurrentLocation.NameLower()}. Until you drop it, you are limited in what you can do.";
+            return $"You pick up the {parsed.ContainerText} from the {CurrentLocation.NameLower()}. Until you drop it, you are limited in what you can do.";
         }
         public string DropContainer(ParsedText parsed)
         {
             Container? container = PC.GetContainer();
-            if (container == null || parsed.Container == Enums.Containers.Unknown) return $"You are not carrying {parsed.ContainerText}.";
+            if (container == null || parsed.Container == string.Empty) return $"You are not carrying {parsed.ContainerText}.";
             CurrentLocation.AddContainer(container);
             PC.RemoveContainer();
             return $"You drop the {parsed.ContainerText} in {CurrentLocation.NameLower()}";
@@ -210,7 +210,7 @@ namespace AppLogic.Logic
         public string ExamineItem(ParsedText parsed)
         {
             Item? InspectedItem = PC.GetItem(parsed.ItemOne);
-            if (parsed.ItemOne == Enums.Items.Unknown) return "You need to specify an item to examine.";
+            if (parsed.ItemOne == string.Empty) return "You need to specify an item to examine.";
             if (InspectedItem == null)
             {
                 InspectedItem = CurrentLocation.GetItem(parsed.ItemOne);
@@ -260,7 +260,7 @@ namespace AppLogic.Logic
             {
                 return $"There is no {parsed.ObstructionText} in the {CurrentLocation.NameLower()}.";
             }
-            if (obstruction != null && exit != null && obstruction.ClearedBy == item.Type)
+            if (obstruction != null && exit != null && obstruction.ClearedBy == item.ID)
             {
                 exit.Obstruction = null;
                 if (item.Persistent == false)
@@ -272,7 +272,7 @@ namespace AppLogic.Logic
                 return output;
                        
             }
-            if (item.Type != obstruction.ClearedBy)
+            if (item.ID != obstruction.ClearedBy)
             {
                 return $"You cannot clear a {parsed.ObstructionText} with {item.Name}.";
             }
@@ -300,9 +300,9 @@ namespace AppLogic.Logic
             if (PC.CarryingContainer != null) return $"You must drop the {PC.CarryingContainer.Name.ToLower()} first.";
             Item? item = PC.GetItem(parsed.ItemOne);
             if (item == null) return $"You do not have {parsed.ItemOneText}.";
+            if (!CurrentLocation.Exits.ContainsKey(parsed.Direction)) return $"There is no door to the {parsed.Direction.ToString().ToLower()}";
             Exit? exit = CurrentLocation.Exits[parsed.Direction];
-            if (exit == null) return $"There is no door to the {parsed.DirectionText}";
-            //if (parsed.ItemOne != Enums.Items.Key) return $"Nothing happens when you use {parsed.ItemOneText} on the door.";
+            if (exit == null) return $"There is no door to the {parsed.Direction.ToString().ToLower()}";
             if (exit.IsLocked == false) return "The door is not locked.";
             if (exit.UnlockedBy != item.ID) return $"The {parsed.ItemOneText} cannot unlock this door.";
             if (exit.Obstruction != null)

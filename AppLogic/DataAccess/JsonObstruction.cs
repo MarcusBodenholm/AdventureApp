@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public string Article { get; set; }
         public string Type { get; set; }
-        public string ClearedBy { get; set; }
+        public int ClearedBy { get; set; }
 
     }
 }

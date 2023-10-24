@@ -8,7 +8,7 @@
             Description = "An elderly man with a long graying beard, dressed in a purple suit.";
             Greeting = "Hello there, friend. My name is Rhys. I am glad to see you up and about.";
             Farewell = "It's been a pleasure talking to you. I wish you luck on your journey, and may we meet again!";
-            Type = Enums.NPCs.Rhys;
+            Type = "rhys";
             ItemID = 10;
             GiftItemID = 25;
             Conversations = new()
