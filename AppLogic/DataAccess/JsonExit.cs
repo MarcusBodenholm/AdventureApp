@@ -11,8 +11,6 @@ namespace AppLogic.DataAccess
         public string Description { get; set; } = string.Empty;
         public string[]? Directions { get; set; } = null;
         public int[]? LocationIDs { get; set; } = null;
-        public Dictionary<Directions, Location> Locations { get; set; } = new Dictionary<Directions, Location>();
-        public int? ObstructionID { get; set; }
-
+        public int? ObstructionID { get; set; } = null;
     }
 }

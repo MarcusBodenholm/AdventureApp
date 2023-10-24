@@ -130,6 +130,11 @@ namespace Adventure
         {
             textInput.Focus();
         }
+
+        private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            GameLogic.SaveGame();
+        }
     }
 
 }

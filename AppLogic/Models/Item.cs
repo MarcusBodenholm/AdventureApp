@@ -7,11 +7,11 @@ namespace AppLogic.Models
     {
         public int ID { get; set; } = -1;
         public string Name { get; set; } = string.Empty;
+        public string Article { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int UsableOn { get; set; } = -1;
         public Items Type { get; set; } = Items.Unknown;
         public int SpecialItem { get; set; } = -1;
-        public string Article { get; set; } = string.Empty;
         public bool Persistent { get; set; } = false;
         public override string ToString()
         {

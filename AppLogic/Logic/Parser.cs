@@ -75,20 +75,33 @@ namespace AppLogic.Logic
         private readonly static Dictionary<string, Items> items = new()
         {
             {"painted figurine", Items.PaintedFigurine },
+            {"paintedfigurine", Items.PaintedFigurine },
             {"fire extinguisher tank", Items.FireExtinguisherTank },
+            {"fireextinguishertank", Items.FireExtinguisherTank },
             {"second key fragment", Items.SecondKeyFragment },
+            {"secondkeyfragment", Items.SecondKeyFragment },
             {"green key", Items.GreenKey },
+            {"greenkey", Items.GreenKey },
             {"basket with figurine", Items.BasketWithFigurine },
+            {"basketwithfigurine", Items.BasketWithFigurine },
             {"basket of gifts", Items.BasketsWithGifts },
+            {"basketofgifts", Items.BasketsWithGifts },
             {"lump of dirt", Items.DirtLump },
+            {"dirtlump", Items.DirtLump },
             {"key fragment", Items.KeyFragment },
+            {"keyfragment", Items.KeyFragment },
             {"wine bottle", Items.WineBottle },
+            {"winebottle", Items.WineBottle },
             {"purple key", Items.PurpleKey },
+            {"purplekey", Items.PurpleKey },
             {"fire extinguisher", Items.Extinguisher },
             {"opened wine bottle", Items.OpenedWineBottle },
+            {"openedwinebottle", Items.OpenedWineBottle },
             {"small key", Items.SmallKey },
+            {"smallkey", Items.SmallKey },
             {"corkscrew", Items.Corkscrew },
             {"opened bottle", Items.OpenedBottle },
+            {"openedbottle", Items.OpenedBottle },
             {"bottle", Items.Bottle },
             {"extinguisher", Items.Extinguisher },
             {"shovel", Items.Shovel },
@@ -98,6 +111,7 @@ namespace AppLogic.Logic
             {"pickaxe", Items.Pickaxe },
             {"crowbar", Items.Crowbar },
             {"carving knife", Items.CarvingKnife },
+            {"carvingknife", Items.CarvingKnife },
             {"wood", Items.Wood },
             {"paint", Items.Paint },
             {"figurine", Items.Figurine },
@@ -110,7 +124,9 @@ namespace AppLogic.Logic
         {
             {"cupboard", Containers.Cupboard },
             {"small box", Containers.ShoeBox },
+            {"shoebox", Containers.ShoeBox },
             {"kitchen counter", Containers.KitchenCounter },
+            {"kitchencounter", Containers.KitchenCounter },
             {"counter", Containers.KitchenCounter },
             {"desk", Containers.Desk },
             {"box", Containers.ShoeBox }
@@ -119,7 +135,8 @@ namespace AppLogic.Logic
         {
             {"rhys", NPCs.Rhys },
             {"person", NPCs.Rhys },
-            {"old man", NPCs.Rhys }
+            {"old man", NPCs.Rhys },
+            {"oldman", NPCs.Rhys }
         };
         public static NPCs NPC(string input)
         {

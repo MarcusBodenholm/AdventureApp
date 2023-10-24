@@ -309,6 +309,7 @@
             Name = "GameForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Text Adventure Game";
+            FormClosing += GameForm_FormClosing;
             groupBoxPlayer.ResumeLayout(false);
             groupBoxPlayer.PerformLayout();
             panelTextBox.ResumeLayout(false);

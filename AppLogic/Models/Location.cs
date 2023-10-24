@@ -5,15 +5,15 @@ namespace AppLogic.Models
 
     public class Location : IInventory
     {
-        public string Name { get; set; } = string.Empty;
         public int ID { get; set; } = -1;
+        public string Name { get; set; } = string.Empty;
+        public string Article { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        public bool IsEndPoint { get; set; } = false;
         public List<Container> Containers { get; set; } = new();
         public Dictionary<Directions, Exit> Exits { get; set; } = new();
-        public string Article { get; set; } = string.Empty;
-        public bool IsEndPoint { get; set; } = false;
         public List<Item> Items { get; set; } = new List<Item>();
-        public bool HasNotEntered { get; set; } = true;
+        public bool HasEntered { get; set; } = false;
         public Event? Event { get; set; } = null;
         public bool NPC { get; set; } = false;
         public override string ToString()

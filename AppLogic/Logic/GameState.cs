@@ -82,19 +82,19 @@ namespace AppLogic.Logic
             if (newLocation == null) return "Something went wrong.";
             if (newLocation.IsEndPoint) IsWon = true;
             CurrentLocation = newLocation;
-            if (CurrentLocation.HasNotEntered && CurrentLocation.Event != null)
+            if (!CurrentLocation.HasEntered && CurrentLocation.Event != null)
             {
                 Event? e = CurrentLocation.Event;
                 if (e != null)
                 {
                     if (e.Obstruction == null) return "Something went wrong";
                     int obstructId = (int)e.Obstruction;
-                    CurrentLocation.HasNotEntered = false;
+                    CurrentLocation.HasEntered = true;
                     CurrentLocation.Exits[e.Direction].Obstruction = Data.GetObstruction(obstructId);
                     return $"As you enter {CurrentLocation}, to the {e.Direction.ToString().ToLower()} {e.EventText}\n{InspectLocation()}";
                 }
             }
-            CurrentLocation.HasNotEntered = false;
+            CurrentLocation.HasEntered = true;
             string exitMessage = exit.Description == "door" ? $"You go through door to the {parsed.DirectionText.ToLower()}"
                                                             : $"You take the stairs to the {parsed.DirectionText.ToLower()}";
             return $"{exitMessage}. You are now in {CurrentLocation}. \n{InspectLocation()}";
@@ -312,6 +312,10 @@ namespace AppLogic.Logic
             string output = exit.Unlock(item);
             PC.RemoveItem(item);
             return output;
+        }
+        public void SaveCharacter()
+        {
+            Data.SaveCharacter(PC);
         }
     }
 }

@@ -230,5 +230,9 @@ namespace AppLogic.Logic
                    $"\n talk to 'npc' - talks to an NPC." +
                    $"\n give 'item' to 'npc' - gives item to NPC.";
         }
+        public void SaveGame()
+        {
+            GameState.SaveCharacter();
+        }
     }
 }
