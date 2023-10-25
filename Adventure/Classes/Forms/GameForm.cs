@@ -138,7 +138,7 @@ namespace Adventure
 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //GameLogic.SaveGame("autosave");
+            GameLogic.SaveGame("autosave");
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
