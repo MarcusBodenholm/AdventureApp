@@ -212,6 +212,7 @@ namespace AppLogic.Logic
         {
             Item? InspectedItem = PC.GetItem(parsed.ItemOne);
             if (parsed.ItemOne == string.Empty) return "You need to specify an item to examine.";
+            if (InspectedItem != null) return InspectedItem.Inspect();
             if (InspectedItem == null)
             {
                 InspectedItem = CurrentLocation.GetItem(parsed.ItemOne);
