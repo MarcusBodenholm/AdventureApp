@@ -143,6 +143,8 @@ namespace Adventure
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            //folderBrowserDialog1.ShowDialog();
+            MessageBox.Show(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             InputPrompt input = new InputPrompt("Name the save file", "Name save file");
             input.ShowDialog();
             if (input.DialogResult == DialogResult.OK)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Adventure.Classes.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,11 +20,19 @@ namespace Adventure
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
-            GameForm gameForm = new GameForm("test");
-            this.Hide();
-            gameForm.ShowDialog();
-            gameForm.Close();
-            this.Show();
+            SelectLoadFile selection = new SelectLoadFile();
+            selection.ShowDialog();
+            if (selection.DialogResult == DialogResult.OK)
+            {
+                string saveFilePath = selection.SelectedSave;
+                selection.Dispose();
+                GameForm gameForm = new GameForm(saveFilePath);
+                this.Hide();
+                gameForm.ShowDialog();
+                gameForm.Close();
+                gameForm.Dispose();
+                this.Show();
+            }
         }
 
         private void buttonPlay_Click(object sender, EventArgs e)
@@ -32,6 +41,7 @@ namespace Adventure
             this.Hide();
             gameForm.ShowDialog();
             gameForm.Close();
+            gameForm.Dispose();
             this.Show();
         }
     }

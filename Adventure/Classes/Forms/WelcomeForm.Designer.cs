@@ -33,6 +33,7 @@
             textName = new TextBox();
             buttonPlay = new Button();
             buttonLoad = new Button();
+            openFileDialog = new OpenFileDialog();
             SuspendLayout();
             // 
             // labelWelcome
@@ -84,6 +85,10 @@
             buttonLoad.UseVisualStyleBackColor = true;
             buttonLoad.Click += buttonLoad_Click;
             // 
+            // openFileDialog
+            // 
+            openFileDialog.FileName = "openFileDialog1";
+            // 
             // WelcomeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -108,5 +113,6 @@
         private TextBox textName;
         private Button buttonPlay;
         private Button buttonLoad;
+        private OpenFileDialog openFileDialog;
     }
 }

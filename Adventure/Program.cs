@@ -1,3 +1,5 @@
+using Adventure.Classes.Forms;
+
 namespace Adventure
 {
     internal static class Program

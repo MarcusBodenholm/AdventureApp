@@ -46,7 +46,7 @@
             textInput = new TextBox();
             richGameLog = new RichTextBox();
             panelTextBox = new Panel();
-            saveFile = new SaveFileDialog();
+            folderBrowserDialog1 = new FolderBrowserDialog();
             groupBoxPlayer.SuspendLayout();
             panelTextBox.SuspendLayout();
             SuspendLayout();
@@ -355,6 +355,6 @@
         private Label labelInventory;
         private Panel panelTextBox;
         private Button buttonSave;
-        private SaveFileDialog saveFile;
+        private FolderBrowserDialog folderBrowserDialog1;
     }
 }
