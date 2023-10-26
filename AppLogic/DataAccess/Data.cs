@@ -77,7 +77,7 @@ namespace AppLogic.DataAccess
         }
         public static void SaveGame(string fileName, Character PC)
         {
-            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             Directory.CreateDirectory($@"{folderPath}\TextAdventure");
             Directory.CreateDirectory($@"{folderPath}\TextAdventure\SaveFiles");
             Directory.CreateDirectory($@"{folderPath}\TextAdventure\SaveFiles\{fileName}");

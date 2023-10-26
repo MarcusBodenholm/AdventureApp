@@ -17,14 +17,17 @@ namespace Adventure.Classes.Forms
         public SelectLoadFile()
         {
             InitializeComponent();
-            string documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             folderPath = $@"{documentsFolder}\TextAdventure\SaveFiles";
             if (!Directory.Exists(folderPath))
             {
                 DialogResult = DialogResult.Cancel;
                 this.Close();
             }
-            RefreshFiles();
+            else
+            {
+                RefreshFiles();
+            }
         }
         private void RefreshFiles()
         {

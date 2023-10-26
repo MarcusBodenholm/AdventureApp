@@ -20,18 +20,25 @@ namespace Adventure
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
-            SelectLoadFile selection = new SelectLoadFile();
-            selection.ShowDialog();
-            if (selection.DialogResult == DialogResult.OK)
+            try
             {
-                string saveFilePath = selection.SelectedSave;
-                selection.Dispose();
-                GameForm gameForm = new GameForm(saveFilePath);
-                this.Hide();
-                gameForm.ShowDialog();
-                gameForm.Close();
-                gameForm.Dispose();
-                this.Show();
+                SelectLoadFile selection = new();
+                selection.ShowDialog();
+                if (selection.DialogResult == DialogResult.OK)
+                {
+                    string saveFilePath = selection.SelectedSave;
+                    GameForm gameForm = new GameForm(saveFilePath);
+                    this.Hide();
+                    gameForm.ShowDialog();
+                    gameForm.Close();
+                    gameForm.Dispose();
+                    this.Show();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("You have no save files.");
             }
         }
 
