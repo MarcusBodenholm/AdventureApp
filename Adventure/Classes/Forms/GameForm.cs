@@ -17,20 +17,20 @@ namespace Adventure
         {
             UpdateState(GameLogic.StateAtGameStart());
             string[] gameStartText = GameLogic.GameStart();
-            UpdateLog(gameStartText[0], Color.Purple);
-            UpdateLog(gameStartText[1], Color.Purple);
-            UpdateLog(gameStartText[2], Color.Purple);
-            UpdateLog(gameStartText[3], Color.Green);
+            UpdateLog(gameStartText[0], Color.Purple, new Outcome());
+            UpdateLog(gameStartText[1], Color.Purple, new Outcome());
+            UpdateLog(gameStartText[2], Color.Purple, new Outcome());
+            UpdateLog(gameStartText[3], Color.Green, new Outcome());
 
         }
-        public void UpdateLog(string message, Color color)
+        public void UpdateLog(string message, Color color, Outcome outcome)
         {
             if (message.Contains("Player"))
             {
                 richGameLog.AppendText(message, color, true);
                 return;
             }
-            if (message.Contains("Rhys"))
+            if (outcome.NPC != null && message.StartsWith(outcome.NPC.Name))
             {
                 richGameLog.AppendText(message, Color.Purple, true);
                 return;
@@ -73,8 +73,8 @@ namespace Adventure
         private void HandleInput(string text)
         {
             Outcome outcome = GameLogic.DecisionTree(text);
-            UpdateLog($"Player: {text}", Color.Red);
-            UpdateLog(outcome.Message, Color.Green);
+            UpdateLog($"Player: {text}", Color.Red, outcome);
+            UpdateLog(outcome.Message, Color.Green, outcome);
             textInput.Text = "";
             UpdateState(outcome);
         }

@@ -5,16 +5,16 @@ namespace AppLogic.Logic
 {
     public static class Parser
     {
-        private readonly static Dictionary<string, Directions> directions = new()
+        private readonly static Dictionary<string, Direction> directions = new()
         {
-            {"north door", Directions.North },
-            {"south door", Directions.South },
-            {"east door", Directions.East },
-            {"west door", Directions.West },
-            {"north", Directions.North },
-            {"south", Directions.South },
-            {"east", Directions.East },
-            {"west", Directions.West }
+            {"north door", Enums.Direction.North },
+            {"south door", Enums.Direction.South },
+            {"east door", Enums.Direction.East },
+            {"west door", Enums.Direction.West },
+            {"north", Enums.Direction.North },
+            {"south", Enums.Direction.South },
+            {"east", Enums.Direction.East },
+            {"west", Enums.Direction.West }
 
         };
         private readonly static Dictionary<string, string> obstructions = new()
@@ -23,53 +23,53 @@ namespace AppLogic.Logic
             {"boulder", "boulder"},
             {"barricade", "barricade" }
         };
-        private readonly static Dictionary<string, Commands> commands = new()
+        private readonly static Dictionary<string, Command> commands = new()
         {
-            {"a really long way to say take", Commands.Take },
-            {"look at", Commands.Inspect },
-            {"put", Commands.Store },
-            {"pick up", Commands.Take },
-            {"throw away", Commands.Drop },
-            {"grab", Commands.Take },
-            {"use", Commands.Use },
-            {"take", Commands.Take},
-            {"drop", Commands.Drop },
-            {"move", Commands.Move },
-            {"go", Commands.Move },
-            {"walk", Commands.Move },
-            {"inventory", Commands.Inventory },
-            {"inspect", Commands.Inspect },
-            {"check", Commands.Check },
-            {"translocate", Commands.Move },
-            {"advance", Commands.Move },
-            {"manoeuver", Commands.Move },
-            {"run", Commands.Move },
-            {"crawl", Commands.Move },
-            {"teleport", Commands.Move },
-            {"reposition", Commands.Move },
-            {"jog", Commands.Move },
-            {"sprint", Commands.Move },
-            {"look", Commands.Inspect },
-            {"trip", Commands.Move },
-            {"fall", Commands.Move },
-            {"collapse", Commands.Move },
-            {"roll", Commands.Move },
-            {"head", Commands.Move },
-            {"utilize", Commands.Use },
-            {"throw", Commands.Drop },
-            {"discard", Commands.Drop },
-            {"get", Commands.Take },
-            {"examine", Commands.Inspect },
-            {"study", Commands.Inspect },
-            {"read", Commands.Inspect },
-            {"store", Commands.Store },
-            {"give", Commands.Give },
-            {"gift", Commands.Give },
-            {"talk", Commands.Talk },
-            {"speak", Commands.Talk },
-            {"stop talking", Commands.Stop },
-            {"stop", Commands.Stop },
-            {"help", Commands.Help },
+            {"a really long way to say take", Enums.Command.Take },
+            {"look at", Enums.Command.Inspect },
+            {"put", Enums.Command.Store },
+            {"pick up", Enums.Command.Take },
+            {"throw away", Enums.Command.Drop },
+            {"grab", Enums.Command.Take },
+            {"use", Enums.Command.Use },
+            {"take", Enums.Command.Take},
+            {"drop", Enums.Command.Drop },
+            {"move", Enums.Command.Move },
+            {"go", Enums.Command.Move },
+            {"walk", Enums.Command.Move },
+            {"inventory", Enums.Command.Inventory },
+            {"inspect", Enums.Command.Inspect },
+            {"check", Enums.Command.Check },
+            {"translocate", Enums.Command.Move },
+            {"advance", Enums.Command.Move },
+            {"manoeuver", Enums.Command.Move },
+            {"run", Enums.Command.Move },
+            {"crawl", Enums.Command.Move },
+            {"teleport", Enums.Command.Move },
+            {"reposition", Enums.Command.Move },
+            {"jog", Enums.Command.Move },
+            {"sprint", Enums.Command.Move },
+            {"look", Enums.Command.Inspect },
+            {"trip", Enums.Command.Move },
+            {"fall", Enums.Command.Move },
+            {"collapse", Enums.Command.Move },
+            {"roll", Enums.Command.Move },
+            {"head", Enums.Command.Move },
+            {"utilize", Enums.Command.Use },
+            {"throw", Enums.Command.Drop },
+            {"discard", Enums.Command.Drop },
+            {"get", Enums.Command.Take },
+            {"examine", Enums.Command.Inspect },
+            {"study", Enums.Command.Inspect },
+            {"read", Enums.Command.Inspect },
+            {"store", Enums.Command.Store },
+            {"give", Enums.Command.Give },
+            {"gift", Enums.Command.Give },
+            {"talk", Enums.Command.Talk },
+            {"speak", Enums.Command.Talk },
+            {"stop talking", Enums.Command.Stop },
+            {"stop", Enums.Command.Stop },
+            {"help", Enums.Command.Help },
         };
 
         private readonly static Dictionary<string, string> items = new()
@@ -131,14 +131,12 @@ namespace AppLogic.Logic
             {"desk", "desk" },
             {"box", "small box" }
         };
-        private readonly static Dictionary<string, NPCs> npcs = new()
+        private readonly static Dictionary<string, string> npcs = new()
         {
-            {"rhys", NPCs.Rhys },
-            {"person", NPCs.Rhys },
-            {"old man", NPCs.Rhys },
-            {"oldman", NPCs.Rhys }
+            {"rhys", "rhys" },
+            {"old man", "rhys" },
         };
-        public static NPCs NPC(string input)
+        public static string NPC(string input)
         {
             string text = input.ToLower();
             if (npcs.ContainsKey(text))
@@ -147,7 +145,7 @@ namespace AppLogic.Logic
             }
             else
             {
-                return NPCs.Rhys;
+                return string.Empty;
             }
         }
         public static string Container(string input)
@@ -162,7 +160,7 @@ namespace AppLogic.Logic
                 return string.Empty;
             }
         }
-        public static Directions Direction(string input)
+        public static Direction Direction(string input)
         {
             string text = input.ToLower();
 
@@ -172,10 +170,10 @@ namespace AppLogic.Logic
             }
             else 
             {
-                return Directions.Unknown;
+                return Enums.Direction.Unknown;
             }
         }
-        public static Commands Command(string input)
+        public static Command Command(string input)
         {
             string text = input.ToLower();
 
@@ -186,7 +184,7 @@ namespace AppLogic.Logic
             }
             else
             {
-                return Commands.Unknown;
+                return Enums.Command.Unknown;
             }
         }
         public static string Item(string input)

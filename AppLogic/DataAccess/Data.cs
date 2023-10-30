@@ -16,6 +16,7 @@ namespace AppLogic.DataAccess
         private static List<Exit> AllExits { get; set; } = new();
         private static List<Obstruction> AllObstructions { get; set;} = new();
         private static List<Event> AllEvents { get; set; } = new();
+        private static List<NPC> AllNPCs { get; set; } = new();
         private static string GetDirectoryPath()
         {
             string directoryPath = Environment.CurrentDirectory + @"\..\..\..\..\AppLogic\Data";
@@ -64,6 +65,14 @@ namespace AppLogic.DataAccess
         {
             return AllEvents.Find(e => e.ID == id);
         }
+        public static NPC? GetNPC(int id)
+        {
+            return AllNPCs.Find(n => n.ID == id);
+        }
+        private static void UpdateParser()
+        {
+
+        }
         public static void LoadAllData()
         {
             string folderPath = $@"{GetDirectoryPath()}\";
@@ -72,6 +81,7 @@ namespace AppLogic.DataAccess
             LoadObstructions($@"{folderPath}Obstructions.json");
             LoadExits($@"{folderPath}Exits.json");
             LoadEvents($@"{folderPath}Events.json");
+            LoadNPCs($@"{folderPath}NPCs.json");
             LoadLocations($@"{folderPath}Locations.json");
 
         }
@@ -89,6 +99,7 @@ namespace AppLogic.DataAccess
             string eventsFilePath = @$"{folderPath}\TextAdventure\SaveFiles\{fileName}\Data\Events.json";
             string obstructionsFilePath = @$"{folderPath}\TextAdventure\SaveFiles\{fileName}\Data\Obstructions.json";
             string characterFilePath = @$"{folderPath}\TextAdventure\SaveFiles\{fileName}\Data\Character.json";
+            string NPCFilePath = @$"{folderPath}\TextAdventure\SaveFiles\{fileName}\Data\NPCs.json";
 
             SaveItems(itemsFilePath);
             SaveLocations(locationsFilePath);
@@ -97,12 +108,13 @@ namespace AppLogic.DataAccess
             SaveEvents(eventsFilePath);
             SaveExits(exitsFilePath);
             SaveObstructions(obstructionsFilePath);
+            SaveNPCs(NPCFilePath);
 
             string saveFilePath = $@"{folderPath}\TextAdventure\SaveFiles\{fileName}.savedata";
             File.Create(saveFilePath).Dispose();
             string toSaveInSaveFile = @$"{itemsFilePath}|||||{locationsFilePath}|||||{containersFilePath}" +
                                       @$"|||||{exitsFilePath}|||||{eventsFilePath}|||||{obstructionsFilePath}" +
-                                      @$"|||||{characterFilePath}";
+                                      @$"|||||{characterFilePath}|||||{NPCFilePath}";
             File.WriteAllText(saveFilePath,toSaveInSaveFile);
             
         }
@@ -116,6 +128,7 @@ namespace AppLogic.DataAccess
             LoadExits(allPaths[3]);
             LoadEvents(allPaths[4]);
             LoadLocations(allPaths[1]);
+            LoadNPCs(allPaths[7]);
             Character PC = LoadCharacter(allPaths[6]);
             return PC;
         }
@@ -175,7 +188,19 @@ namespace AppLogic.DataAccess
                     newLocation.Description = location.Description;
                     newLocation.Article = location.Article;
                     newLocation.IsEndPoint = location.IsEndPoint;
-                    newLocation.NPC = location.NPC;
+                    if (location.NPCs != null)
+                    {
+                        newLocation.NPCs = new List<NPC>();
+                        foreach (int id in location.NPCs)
+                        {
+                            NPC? npc = GetNPC(id);
+                            if (npc != null)
+                            {
+                                newLocation.NPCs.Add(npc);
+                            }
+                        }
+                        
+                    }
                     if (location.EventID != null)
                     {
                         newLocation.Event = GetEvent((int)location.EventID);
@@ -195,7 +220,7 @@ namespace AppLogic.DataAccess
                     {
                         for (int i = 0; i < location.Directions.Length; i++)
                         {
-                            Directions direction = Parser.Direction(location.Directions[i]);
+                            Direction direction = Parser.Direction(location.Directions[i]);
                             Exit? exit = GetExit(location.ExitIDs[i]);
                             if (exit != null)
                             {
@@ -229,7 +254,11 @@ namespace AppLogic.DataAccess
                 jsonLocation.Description = location.Description;
                 jsonLocation.Article = location.Article;
                 jsonLocation.IsEndPoint = location.IsEndPoint;
-                jsonLocation.NPC = location.NPC;
+                if (location.NPCs != null)
+                {
+                    jsonLocation.NPCs = location.NPCs.Select(n => n.ID).ToArray();
+                }
+                else jsonLocation.NPCs = null;
                 jsonLocation.EventID = location.Event == null ? null : location.Event.ID;
                 jsonLocation.HasEntered = location.HasEntered;
                 if (location.Items.Count > 0)
@@ -246,7 +275,7 @@ namespace AppLogic.DataAccess
                     string[] jsonDirections = new string[location.Exits.Count];
                     int[] jsonExits = new int[location.Exits.Count];
                     int count = 0;
-                    foreach (KeyValuePair<Directions, Exit> kvp in location.Exits)
+                    foreach (KeyValuePair<Direction, Exit> kvp in location.Exits)
                     {
                         jsonDirections[count] = kvp.Key.ToString();
                         jsonExits[count] = kvp.Value.ID;
@@ -285,7 +314,7 @@ namespace AppLogic.DataAccess
                     {
                         for (int i = 0; i < exit.Directions.Length; i++)
                         {
-                            Directions direction = Parser.Direction(exit.Directions[i]);
+                            Direction direction = Parser.Direction(exit.Directions[i]);
                             newExit.Locations.Add(direction, exit.LocationIDs[i]);
                         }
                     }
@@ -308,7 +337,7 @@ namespace AppLogic.DataAccess
                     string[] directions = new string[exit.Locations.Count];
                     int[] locationIDs = new int[exit.Locations.Count];
                     int count = 0;
-                    foreach (KeyValuePair<Directions, int> kvp in exit.Locations)
+                    foreach (KeyValuePair<Direction, int> kvp in exit.Locations)
                     {
                         directions[count] = kvp.Key.ToString();
                         locationIDs[count] = kvp.Value;
@@ -453,6 +482,95 @@ namespace AppLogic.DataAccess
             File.WriteAllText(fullFilePath, jsonText);
 
         }
+        private static void SaveNPCs(string fullFilePath)
+        {
+            List<JsonNPC> toSave = new List<JsonNPC>();
+            foreach (NPC npc in AllNPCs)
+            {
+                JsonNPC jsonNPC = new JsonNPC();
+                jsonNPC.ID = npc.ID;
+                jsonNPC.Name = npc.Name;
+                jsonNPC.Description = npc.Description;
+                jsonNPC.Greeting = npc.Greeting;
+                jsonNPC.Farewell = npc.Farewell;
+                jsonNPC.Handle = npc.Handle;
+                if (npc.Gifts != null)
+                {
+                    jsonNPC.ItemIDs = new int[npc.Gifts.Count];
+                    jsonNPC.GiftItemIDs = new int[npc.Gifts.Count];
+                    int count = 0;
+                    foreach (KeyValuePair<int, int> kvp in npc.Gifts)
+                    {
+                        jsonNPC.ItemIDs[count] = kvp.Key;
+                        jsonNPC.GiftItemIDs[count] = kvp.Value;
+                        count++;
+                    }
+                }
+                else
+                {
+                    jsonNPC.ItemIDs = null;
+                    jsonNPC.GiftItemIDs = null;
+                }
+                if (npc.Conversations != null)
+                {
+                    jsonNPC.Conversations = new string[npc.Conversations.Count];
+                    int count = 0;
+                    foreach (KeyValuePair<string, string> kvp in npc.Conversations)
+                    {
+                        jsonNPC.Conversations[count] = $"{kvp.Key}|||||{kvp.Value}";
+                    }
+                }
+                toSave.Add(jsonNPC);
+            }
+            string jsonText = JsonSerializer.Serialize(toSave, _options);
+            File.WriteAllText(fullFilePath, jsonText);
+        }
+
+        private static void LoadNPCs(string fullFilePath)
+        {
+            var json = File.ReadAllText(fullFilePath);
+            List<JsonNPC>? npcs = JsonSerializer.Deserialize<List<JsonNPC>>(json);
+            AllNPCs.Clear();
+            if (npcs != null)
+            {
+                foreach (var npc in npcs)
+                {
+                    NPC newNPC = new NPC();
+                    newNPC.ID = npc.ID;
+                    newNPC.Name = npc.Name;
+                    newNPC.Description = npc.Description;
+                    newNPC.Greeting = npc.Greeting;
+                    newNPC.Farewell = npc.Farewell;
+                    newNPC.Handle = npc.Handle;
+                    if (npc.ItemIDs != null && npc.GiftItemIDs != null)
+                    {
+                        Dictionary<int, int> gifts = new();
+                        for (int i = 0; i < npc.ItemIDs.Length; i++)
+                        {
+                            gifts.Add(npc.ItemIDs[i], npc.GiftItemIDs[i]);
+                        }
+                        newNPC.Gifts = gifts;
+                    }
+                    else
+                    {
+                        newNPC.Gifts = null;
+                    }
+
+                    if (npc.Conversations != null)
+                    {
+                        Dictionary<string, string> conversations = new();
+                        foreach (string line in npc.Conversations)
+                        {
+                            string[] lineSplit = line.Split("|||||");
+                            conversations.Add(lineSplit[0], lineSplit[1]);
+                        }
+                        newNPC.Conversations = conversations;
+                    }
+                    AllNPCs.Add(newNPC);
+                }
+            }
+        }
+
         private static Character LoadCharacter(string fullFilePath)
         {
             var json = File.ReadAllText(fullFilePath);

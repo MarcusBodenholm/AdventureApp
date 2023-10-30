@@ -69,8 +69,6 @@ namespace Adventure.Classes.Forms
             string folderPath = selectedSave.FullPath.Substring(0, selectedSave.FullPath.Length - 9);
             File.Delete(selectedSave.FullPath);
             Directory.Delete(folderPath, true);
-            DialogResult = DialogResult.OK;
-
             RefreshFiles();
         }
     }

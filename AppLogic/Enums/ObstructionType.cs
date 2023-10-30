@@ -1,6 +1,6 @@
 ﻿namespace AppLogic.Enums
 {
-    public enum Obstructions
+    public enum ObstructionType
     {
         Unknown,
         Fire,

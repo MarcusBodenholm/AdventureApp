@@ -1,6 +1,6 @@
 ﻿namespace AppLogic.Enums
 {
-    public enum NPCs
+    public enum NPCType
     {
         Unknown,
         Rhys

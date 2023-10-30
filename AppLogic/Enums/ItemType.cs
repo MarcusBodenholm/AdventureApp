@@ -1,6 +1,6 @@
 ﻿namespace AppLogic.Enums
 {
-    public enum Items
+    public enum ItemType
     {
         Unknown,
         Key,

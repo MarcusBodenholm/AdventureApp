@@ -11,11 +11,11 @@ namespace AppLogic.Models
         public string Description { get; set; } = string.Empty;
         public bool IsEndPoint { get; set; } = false;
         public List<Container> Containers { get; set; } = new();
-        public Dictionary<Directions, Exit> Exits { get; set; } = new();
+        public Dictionary<Direction, Exit> Exits { get; set; } = new();
         public List<Item> Items { get; set; } = new List<Item>();
         public bool HasEntered { get; set; } = false;
         public Event? Event { get; set; } = null;
-        public bool NPC { get; set; } = false;
+        public List<NPC>? NPCs { get; set; } = null;
         public override string ToString()
         {
             return $"the {Name}".ToLower();
@@ -51,6 +51,15 @@ namespace AppLogic.Models
         public void AddContainer(Container container)
         {
             Containers.Add(container);
+        }
+        public NPC? GetNPC(string handle)
+        {
+            if (NPCs == null) return null;
+            foreach (NPC n in NPCs)
+            {
+                if (n.Handle == handle) return n;
+            }
+            return null;
         }
         public string Inspect()
         {

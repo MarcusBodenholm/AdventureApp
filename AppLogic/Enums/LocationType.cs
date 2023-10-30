@@ -1,6 +1,6 @@
 ﻿namespace AppLogic.Enums
 {
-    public enum Locations
+    public enum LocationType
     {
         Kitchen,
         Bedroom,

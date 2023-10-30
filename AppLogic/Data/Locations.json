@@ -5,12 +5,12 @@
     "Article": "A",
     "Description": "You are in a small sparse windowless room. In a corner is a broken bed, and to the east you see a door.",
     "IsEndPoint": false,
-    "ContainerIDs": [1],
+    "ContainerIDs": [ 1 ],
     "Directions": [ "East" ],
     "ExitIDs": [ 0 ],
-    "ItemIDs": [0],
+    "ItemIDs": [ 0 ],
     "EventID": null,
-    "NPC": false
+    "NPCs": [1]
   },
   {
     "ID": 1,
@@ -21,9 +21,9 @@
     "ContainerIDs": null,
     "Directions": [ "North", "West", "South" ],
     "ExitIDs": [ 1, 0, 17 ],
-    "ItemIDs": [11 ],
+    "ItemIDs": [ 11 ],
     "EventID": 2,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 2,
@@ -36,7 +36,7 @@
     "ExitIDs": [ 3, 2, 1 ],
     "ItemIDs": [ 21 ],
     "EventID": 1,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 3,
@@ -49,7 +49,7 @@
     "ExitIDs": [ 16, 2 ],
     "ItemIDs": null,
     "EventID": null,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 4,
@@ -62,7 +62,7 @@
     "ExitIDs": [ 7, 3, 5, 4 ],
     "ItemIDs": [ 2 ],
     "EventID": 2,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 5,
@@ -73,9 +73,9 @@
     "ContainerIDs": null,
     "Directions": [ "East" ],
     "ExitIDs": [ 4 ],
-    "ItemIDs": [ 8,16 ],
+    "ItemIDs": [ 8, 16 ],
     "EventID": null,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 6,
@@ -86,9 +86,9 @@
     "ContainerIDs": null,
     "Directions": [ "North", "South", "East", "West" ],
     "ExitIDs": [ 8, 16, 6, 5 ],
-    "ItemIDs": [9,24],
+    "ItemIDs": [ 9, 24 ],
     "EventID": 1,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 7,
@@ -99,9 +99,9 @@
     "ContainerIDs": null,
     "Directions": [ "West" ],
     "ExitIDs": [ 6 ],
-    "ItemIDs": [20],
+    "ItemIDs": [ 20 ],
     "EventID": null,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 8,
@@ -112,9 +112,9 @@
     "ContainerIDs": null,
     "Directions": [ "North", "South", "East" ],
     "ExitIDs": [ 10, 7, 9 ],
-    "ItemIDs": [15, 22],
+    "ItemIDs": [ 15, 22 ],
     "EventID": null,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 9,
@@ -125,9 +125,9 @@
     "ContainerIDs": null,
     "Directions": [ "South", "West" ],
     "ExitIDs": [ 8, 9 ],
-    "ItemIDs": [6],
+    "ItemIDs": [ 6 ],
     "EventID": null,
-    "NPC": true
+    "NPCs": [ 1 ]
   },
   {
     "ID": 10,
@@ -138,8 +138,8 @@
     "ContainerIDs": null,
     "Directions": [ "South" ],
     "ExitIDs": [ 10 ],
-    "ItemIDs": [14],
-    "NPC": false
+    "ItemIDs": [ 14 ],
+    "NPCs": null
   },
   {
     "ID": 11,
@@ -152,7 +152,7 @@
     "ExitIDs": [ 11 ],
     "ItemIDs": null,
     "EventID": null,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 12,
@@ -165,7 +165,7 @@
     "ExitIDs": [ 12, 13, 14, 15 ],
     "ItemIDs": null,
     "EventID": null,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 13,
@@ -178,7 +178,7 @@
     "ExitIDs": [ 13 ],
     "ItemIDs": null,
     "EventID": null,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 14,
@@ -191,7 +191,7 @@
     "ExitIDs": [ 14 ],
     "ItemIDs": null,
     "EventID": null,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 15,
@@ -204,7 +204,7 @@
     "ExitIDs": [ 15 ],
     "ItemIDs": null,
     "EventID": null,
-    "NPC": false
+    "NPCs": null
   },
   {
     "ID": 99,
@@ -217,6 +217,6 @@
     "ExitIDs": null,
     "ItemIDs": null,
     "EventID": null,
-    "NPC": false
+    "NPCs": null
   }
 ]

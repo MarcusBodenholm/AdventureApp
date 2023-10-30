@@ -4,13 +4,13 @@
     {
         public Rhys()
         {
+            ID = 1;
             Name = "Rhys";
             Description = "An elderly man with a long graying beard, dressed in a purple suit.";
             Greeting = "Hello there, friend. My name is Rhys. I am glad to see you up and about.";
             Farewell = "It's been a pleasure talking to you. I wish you luck on your journey, and may we meet again!";
-            Type = "rhys";
-            ItemID = 10;
-            GiftItemID = 25;
+            Handle = "rhys";
+            Gifts = new Dictionary<int, int>() { {10,25 } };
             Conversations = new()
             {
                 { "who are you", "I am but an old man in search of items in beautiful purple." },

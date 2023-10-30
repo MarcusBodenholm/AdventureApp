@@ -13,7 +13,7 @@
         public int[]? ItemIDs { get; set; } = null;
         public bool HasEntered { get; set; } = false;
         public int? EventID { get; set; } = null;
-        public bool NPC { get; set; } = true;
+        public int[]? NPCs { get; set; } = null;
 
     }
 }

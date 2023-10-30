@@ -8,7 +8,7 @@ namespace AppLogic.Logic
     {
         private Character PC { get; set; } = new Character();
         private Location CurrentLocation { get; set; } = new Location();
-        private NPC NPC { get; set; } = new Rhys();
+        private NPC? NPC { get; set; } = null;
         public bool ConversationMode { get; set; } = false;
         public bool IsWon { get; set; } = false;
         public GameState(Character pc)
@@ -18,28 +18,30 @@ namespace AppLogic.Logic
             if (location == null) throw new ArgumentNullException();
             CurrentLocation = location;
         }
-        public string StartTalkingToNPC()
+        public string StartTalkingToNPC(ParsedText parsed, Outcome outcome)
         {
-            if (CurrentLocation.NPC != true) return "There is no one in this room.";
+            if (CurrentLocation.NPCs == null) return "There is no one in this room.";
+            NPC? npc = CurrentLocation.GetNPC(parsed.NPC);
+            if (npc == null) return $"No one in this room responds to {parsed.NPCText}.";
+            NPC = npc;
+            outcome.NPC = npc;
             ConversationMode = true;
             return $"{NPC.Name}: {NPC.Greeting} \nYou are now in conversation mode with {NPC.Name}. To stop write 'stop' or 'stop talking'.";
         }
-        public string StopTalkingToNPC()
+        public string StopTalkingToNPC(Outcome outcome)
         {
             ConversationMode = false;
-            return $"{NPC.Name}: {NPC.Farewell}\nYou are no longer in conversation mode with {NPC.Name}";
+            if (NPC == null) return "Something went wrong with NPC";
+            NPC npc = NPC;
+            outcome.NPC = npc;
+            NPC = null;
+            return $"{npc.Name}: {npc.Farewell}\nYou are no longer in conversation mode with {npc.Name}";
         }
-        public string TalkToNPC(string input)
+        public string TalkToNPC(string input, Outcome outcome)
         {
-            string text = input.ToLower();
-            foreach (string topic in NPC.Conversations.Keys)
-            {
-                if (text.Contains(topic))
-                {
-                    return $"{NPC.Name}: {NPC.Conversations[topic]}";
-                }
-            }
-            return $"{NPC.Name}: Sadly I have no answers to that.";
+            if (NPC == null) return "Something went wrong with NPC";
+            outcome.NPC = NPC;
+            return NPC.Talk(input.ToLower());
         }
         public string GiftNPC(ParsedText parsed)
         {

@@ -6,11 +6,11 @@ namespace AppLogic.Logic
     {
         public string ItemOne { get; set; } = string.Empty;
         public string ItemTwo { get; set; } = string.Empty;
-        public Commands Command { get; set; } = Commands.Unknown;
+        public Command Command { get; set; } = Command.Unknown;
         public string Obstruction { get; set; } = string.Empty;
-        public Directions Direction { get; set; } = Directions.Unknown;
+        public Direction Direction { get; set; } = Direction.Unknown;
         public string Container { get; set; } = string.Empty;
-        public NPCs NPC { get; set; } = NPCs.Unknown;
+        public string NPC { get; set; } = string.Empty;
         public string Remaining { get; set; } = string.Empty;
         public string ItemOneText { get; set; } = "";
         public string ItemTwoText { get; set; } = "";
@@ -25,9 +25,9 @@ namespace AppLogic.Logic
             bool output = true;
             if (!skip.Contains("itemone") && ItemOne != string.Empty) output = false;
             if (!skip.Contains("itemtwo") && ItemTwo != string.Empty) output = false;
-            if (!skip.Contains("command") && Command != Commands.Unknown) output = false;
+            if (!skip.Contains("command") && Command != Command.Unknown) output = false;
             if (!skip.Contains("obstruction") && Obstruction != string.Empty) output = false;
-            if (!skip.Contains("direction") && Direction != Directions.Unknown) output = false;
+            if (!skip.Contains("direction") && Direction != Direction.Unknown) output = false;
             if (!skip.Contains("container") && Container != string.Empty) output = false;
             return output;
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AppLogic.Enums
 {
-    public enum Directions
+    public enum Direction
     {
         North,
         West,

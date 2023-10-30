@@ -1,6 +1,6 @@
 ﻿namespace AppLogic.Enums
 {
-    public enum Commands
+    public enum Command
     {
         Unknown,
         Use,
