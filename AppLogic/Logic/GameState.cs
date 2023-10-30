@@ -264,7 +264,8 @@ namespace AppLogic.Logic
             {
                 return $"There is no {parsed.ObstructionText} in the {CurrentLocation.NameLower()}.";
             }
-            if (obstruction != null && exit != null && obstruction.ClearedBy == item.ID)
+            if (obstruction.ClearedBy == null) return "Nothing can break this obstruction.";
+            if (obstruction != null && exit != null && obstruction.ClearedBy.Contains(item.ID))
             {
                 exit.Obstruction = null;
                 if (item.Persistent == false)
@@ -276,7 +277,7 @@ namespace AppLogic.Logic
                 return output;
                        
             }
-            if (item.ID != obstruction.ClearedBy)
+            if (obstruction.ClearedBy.Contains(item.ID) == false)
             {
                 return $"You cannot clear a {parsed.ObstructionText} with {item.Name}.";
             }
@@ -286,6 +287,12 @@ namespace AppLogic.Logic
         public string InspectLocation()
         {
             return CurrentLocation.Inspect();
+        }
+        public string InspectNPC(ParsedText parsed)
+        {
+            NPC? npc = CurrentLocation.GetNPC(parsed.NPC);
+            if (npc == null) return "There is no one here by that name.";
+            return npc.Inspect();
         }
         public string DisplayInventory()
         {

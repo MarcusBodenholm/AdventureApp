@@ -7,6 +7,7 @@
         public string Article { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
+        public string[]? Identifiers { get; set; } = null;
         public bool Liftable { get; set; } = false;
         public int[]? ItemIDs { get; set; } = null;
     }

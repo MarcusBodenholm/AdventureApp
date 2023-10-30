@@ -10,7 +10,7 @@ namespace AppLogic.Models
         public string Description { get; set; } = string.Empty;
         public string Greeting { get; set; } = string.Empty;
         public string Farewell { get; set; } = string.Empty;
-        public string Handle { get; set; } = string.Empty;
+        public string Type { get; set; } = string.Empty;
         public List<string> Identifiers { get; set; } = new();
         public Dictionary<int, int>? Gifts { get; set; } = null;
         public Dictionary<string, string> Conversations { get; set; } = new();
@@ -36,6 +36,10 @@ namespace AppLogic.Models
                 }
             }
             return $"{Name}: Sadly I have no answers to that.";
+        }
+        public string Inspect()
+        {
+            return Description;
         }
     }
 }

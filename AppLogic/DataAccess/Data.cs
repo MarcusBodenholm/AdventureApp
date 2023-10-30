@@ -71,7 +71,10 @@ namespace AppLogic.DataAccess
         }
         private static void UpdateParser()
         {
-
+            Parser.UpdateNPCIdentifiers(AllNPCs);
+            Parser.UpdateContainerIdentifiers(AllContainers);
+            Parser.UpdateItemIdentifiers(AllItems);
+            Parser.UpdateObstructionIdentifiers(AllObstructions);
         }
         public static void LoadAllData()
         {
@@ -83,6 +86,7 @@ namespace AppLogic.DataAccess
             LoadEvents($@"{folderPath}Events.json");
             LoadNPCs($@"{folderPath}NPCs.json");
             LoadLocations($@"{folderPath}Locations.json");
+            UpdateParser();
 
         }
         public static void SaveGame(string fileName, Character PC)
@@ -127,9 +131,10 @@ namespace AppLogic.DataAccess
             LoadObstructions(allPaths[5]);
             LoadExits(allPaths[3]);
             LoadEvents(allPaths[4]);
-            LoadLocations(allPaths[1]);
             LoadNPCs(allPaths[7]);
+            LoadLocations(allPaths[1]);
             Character PC = LoadCharacter(allPaths[6]);
+            UpdateParser();
             return PC;
         }
         private static void LoadItems(string fullFilePath)
@@ -150,6 +155,14 @@ namespace AppLogic.DataAccess
                     newItem.Type = item.Type.ToLower();
                     newItem.SpecialItem = item.SpecialItem;
                     newItem.Persistent = item.Persistent;
+                    if (item.Identifiers == null)
+                    {
+                        newItem.Identifiers = new List<string>();
+                    }
+                    else
+                    {
+                        newItem.Identifiers = item.Identifiers.ToList();
+                    }
                     AllItems.Add(newItem);
                 }
             }
@@ -168,6 +181,7 @@ namespace AppLogic.DataAccess
                 jsonItem.Type = item.Type.ToString();
                 jsonItem.Persistent = item.Persistent;
                 jsonItem.SpecialItem = item.SpecialItem;
+                jsonItem.Identifiers = item.Identifiers.ToArray();
                 toSave.Add(jsonItem);
             }
             string jsonText = JsonSerializer.Serialize(toSave, _options);
@@ -373,6 +387,16 @@ namespace AppLogic.DataAccess
                     newContainer.Description = container.Description;
                     newContainer.Type = container.Type;
                     newContainer.Liftable = container.Liftable;
+                    if (container.Identifiers == null)
+                    {
+                        newContainer.Identifiers = new List<string>();
+                    }
+                    else
+                    {
+                        newContainer.Identifiers = container.Identifiers.ToList();
+                    }
+
+
                     if (container.ItemIDs != null)
                     {
                         foreach (var item in container.ItemIDs)
@@ -401,6 +425,7 @@ namespace AppLogic.DataAccess
                 jsonContainer.Description = container.Description;
                 jsonContainer.Type = container.Type.ToString();
                 jsonContainer.Liftable  = container.Liftable;
+                jsonContainer.Identifiers = container.Identifiers.ToArray();
                 jsonContainer.ItemIDs = container.Items.Select(i => i.ID).ToArray();
                 toSave.Add(jsonContainer);
             }
@@ -422,7 +447,21 @@ namespace AppLogic.DataAccess
                     newObstruction.Name = obstruction.Name;
                     newObstruction.Description  = obstruction.Description;
                     newObstruction.Article = obstruction.Article;
-                    newObstruction.ClearedBy = obstruction.ClearedBy;
+                    if (obstruction.Identifiers == null)
+                    {
+                        newObstruction.Identifiers = new List<string>();
+                    }
+                    else
+                    {
+                        newObstruction.Identifiers = obstruction.Identifiers.ToList();
+                    }
+
+                    if (obstruction.ClearedBy != null)
+                    {
+                        newObstruction.ClearedBy = obstruction.ClearedBy.ToList();
+                    }
+                    else newObstruction.ClearedBy = null;
+
                     newObstruction.Type = obstruction.Type;
                     AllObstructions.Add(newObstruction);
                 }
@@ -439,7 +478,12 @@ namespace AppLogic.DataAccess
                 jsonObs.Article = obs.Article;
                 jsonObs.Description = obs.Description;
                 jsonObs.Type = obs.Type.ToString();
-                jsonObs.ClearedBy = obs.ClearedBy;
+                jsonObs.Identifiers = obs.Identifiers.ToArray();
+                if (obs.ClearedBy != null)
+                {
+                    jsonObs.ClearedBy = obs.ClearedBy.ToArray();
+                }
+                else jsonObs.ClearedBy = null;
                 toSave.Add(jsonObs);
             }
             string jsonText = JsonSerializer.Serialize(toSave, _options);
@@ -493,7 +537,7 @@ namespace AppLogic.DataAccess
                 jsonNPC.Description = npc.Description;
                 jsonNPC.Greeting = npc.Greeting;
                 jsonNPC.Farewell = npc.Farewell;
-                jsonNPC.Handle = npc.Handle;
+                jsonNPC.Handle = npc.Type;
                 if (npc.Gifts != null)
                 {
                     jsonNPC.ItemIDs = new int[npc.Gifts.Count];
@@ -520,6 +564,14 @@ namespace AppLogic.DataAccess
                         jsonNPC.Conversations[count] = $"{kvp.Key}|||||{kvp.Value}";
                     }
                 }
+                if (npc.Identifiers == null)
+                {
+                    jsonNPC.Identifiers = null;
+                }
+                else
+                {
+                    jsonNPC.Identifiers = npc.Identifiers.ToArray();
+                }
                 toSave.Add(jsonNPC);
             }
             string jsonText = JsonSerializer.Serialize(toSave, _options);
@@ -541,7 +593,7 @@ namespace AppLogic.DataAccess
                     newNPC.Description = npc.Description;
                     newNPC.Greeting = npc.Greeting;
                     newNPC.Farewell = npc.Farewell;
-                    newNPC.Handle = npc.Handle;
+                    newNPC.Type = npc.Handle;
                     if (npc.ItemIDs != null && npc.GiftItemIDs != null)
                     {
                         Dictionary<int, int> gifts = new();
@@ -565,6 +617,14 @@ namespace AppLogic.DataAccess
                             conversations.Add(lineSplit[0], lineSplit[1]);
                         }
                         newNPC.Conversations = conversations;
+                    }
+                    if (npc.Identifiers == null)
+                    {
+                        newNPC.Identifiers = new List<string>();
+                    }
+                    else
+                    {
+                        newNPC.Identifiers = npc.Identifiers.ToList();
                     }
                     AllNPCs.Add(newNPC);
                 }

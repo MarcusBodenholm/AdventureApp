@@ -1,4 +1,5 @@
 ﻿using AppLogic.Enums;
+using System.Security.Cryptography;
 
 namespace AppLogic.Models
 {
@@ -57,7 +58,7 @@ namespace AppLogic.Models
             if (NPCs == null) return null;
             foreach (NPC n in NPCs)
             {
-                if (n.Handle == handle) return n;
+                if (n.Type == handle) return n;
             }
             return null;
         }
@@ -93,6 +94,28 @@ namespace AppLogic.Models
                     count++;
                 }
                 output += " \n" + containerInfo + ".";
+            }
+            if (NPCs != null && NPCs.Count > 0)
+            {
+                string NPCInfo = "\nYou also see the following people: ";
+                int count = 0;
+                foreach (NPC n in NPCs)
+                {
+                    if (count == 0)
+                    {
+                        NPCInfo += n.Name;
+                    }
+                    else if (count == NPCs.Count - 1)
+                    {
+                        NPCInfo += $" & {n.Name}";
+                    }
+                    else
+                    {
+                        NPCInfo += $", {n.Name}";
+                    }
+                    count++;
+                }
+                output += NPCInfo + ".";
             }
             return output;
         }

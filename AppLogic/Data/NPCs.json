@@ -6,7 +6,7 @@
     "Greeting": "Hello there, friend. My name is Rhys. I am glad to see you up and about.",
     "Farewell": "It's been a pleasure talking to you. I wish you luck on your journey, and may we meet again!",
     "Handle": "rhys",
-    "Identifiers": ["rhys", "old man"],
+    "Identifiers": [ "rhys", "old man" ],
     "ItemIDs": [ 10 ],
     "GiftItemIDs": [ 25 ],
     "Conversations": [
@@ -33,5 +33,17 @@
       "did you kidnap me|||||Heavens no. I would do no such thing. No, I am afraid we were both put here, somehow.",
       "did you take me here|||||Heavens no. I would do no such thing. No, I am afraid we were both put here, somehow."
     ]
+  },
+  {
+    "ID": 2,
+    "Name": "Yuri",
+    "Description": "A talking goat.",
+    "Greeting": "I am a talking goat.",
+    "Farewell": "Bye. I am a talking goat",
+    "Handle": "yuri",
+    "Identifiers": [ "yuri", "goat" ],
+    "ItemIDs": [ 10 ],
+    "GiftItemIDs": [ 25 ],
+    "Conversations": []
   }
 ]

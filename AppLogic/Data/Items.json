@@ -6,6 +6,7 @@
     "Description": "You see a small crumbled up note. On it is written \"I have hidden a key in the cupboard. Make your way out of here!\".",
     "UsableOn": -1,
     "Type": "note",
+    "Identifiers": [ "note" ],
     "SpecialItem": -1,
     "Persistent": false
   },
@@ -16,6 +17,7 @@
     "Description": "A one-time use corkscrew for opening bottles.",
     "UsableOn": 2,
     "Type": "corkscrew",
+    "Identifiers": [ "corkscrew" ],
     "SpecialItem": 3,
     "Persistent": false
   },
@@ -26,6 +28,7 @@
     "Description": "A bottle of exquisite wine, unfortunately not to your taste.",
     "UsableOn": -1,
     "Type": "wine bottle",
+    "Identifiers": [ "wine bottle" ],
     "SpecialItem": -1,
     "Persistent": false
   },
@@ -36,6 +39,7 @@
     "Description": "An opened bottle of wine. Not to your taste, but could be used to wash something.",
     "UsableOn": 12,
     "Type": "opened wine bottle",
+    "Identifiers": [ "opened wine bottle" ],
     "SpecialItem": 13,
     "Persistent": false
   },
@@ -46,16 +50,18 @@
     "Description": "This is a shovel.",
     "UsableOn": -1,
     "Type": "shovel",
+    "Identifiers": [ "shovel" ],
     "SpecialItem": -1,
     "Persistent": true
   },
   {
     "ID": 5,
-    "Name": "Small key",
+    "Name": "Key",
     "Article": "A",
-    "Description": "A small key with ample rust on it. Should still work.",
+    "Description": "A key with ample rust on it. Should still work.",
     "UsableOn": -1,
-    "Type": "small key",
+    "Type": "key",
+    "Identifiers": [ "small key", "key" ],
     "SpecialItem": -1,
     "Persistent": false
   },
@@ -66,6 +72,7 @@
     "Description": "A sturdy pickaxe looking capable of clearing boulders.",
     "UsableOn": -1,
     "Type": "pickaxe",
+    "Identifiers": [ "pickaxe" ],
     "SpecialItem": -1,
     "Persistent": true
   },
@@ -76,6 +83,7 @@
     "Description": "A beautiful purple key with a triangle engraving.",
     "UsableOn": -1,
     "Type": "purple key",
+    "Identifiers": [ "purple key" ],
     "SpecialItem": -1,
     "Persistent": true
   },
@@ -86,6 +94,7 @@
     "Description": "A sturdy crowbar, useful for removing planks.",
     "UsableOn": -1,
     "Type": "crowbar",
+    "Identifiers": [ "crowbar" ],
     "SpecialItem": -1,
     "Persistent": true
   },
@@ -96,6 +105,7 @@
     "Description": "One half of what seems to be a beautiful purple key.",
     "UsableOn": 10,
     "Type": "key fragment",
+    "Identifiers": [ "key fragment" ],
     "SpecialItem": 7,
     "Persistent": false
   },
@@ -106,6 +116,7 @@
     "Description": "One half of what seems to be a beautiful purple key.",
     "UsableOn": 9,
     "Type": "second key fragment",
+    "Identifiers": [ "second key fragment" ],
     "SpecialItem": 7,
     "Persistent": false
   },
@@ -116,6 +127,7 @@
     "Description": "A small fire extinguisher.",
     "UsableOn": -1,
     "Type": "fire extinguisher",
+    "Identifiers": [ "fire extinguisher" ],
     "SpecialItem": -1,
     "Persistent": false
   },
@@ -126,6 +138,7 @@
     "Description": "A lump of dirt. There seems to be something inside it.",
     "UsableOn": -1,
     "Type": "lump of dirt",
+    "Identifiers": [ "lump of dirt", "dirt" ],
     "SpecialItem": -1,
     "Persistent": false
   },
@@ -136,6 +149,7 @@
     "Description": "A green key.",
     "UsableOn": -1,
     "Type": "green key",
+    "Identifiers": [ "green key" ],
     "SpecialItem": -1,
     "Persistent": false
   },
@@ -146,6 +160,7 @@
     "Description": "A well-used carving knife perfect for carving wood.",
     "UsableOn": 15,
     "Type": "carving knife",
+    "Identifiers": [ "carving knife" ],
     "SpecialItem": 17,
     "Persistent": false
   },
@@ -156,16 +171,18 @@
     "Description": "A lump of malleable wood.",
     "UsableOn": -1,
     "Type": "wood",
+    "Identifiers": [ "wood" ],
     "SpecialItem": -1,
     "Persistent": false
   },
   {
     "ID": 16,
     "Name": "Paint",
-    "Article": "A",
+    "Article": "Some",
     "Description": "A bucket of the finest purple paint.",
     "UsableOn": 17,
     "Type": "paint",
+    "Identifiers": [ "paint" ],
     "SpecialItem": 18,
     "Persistent": false
   },
@@ -176,6 +193,7 @@
     "Description": "A figurine carved in wood resembling a goat.",
     "UsableOn": -1,
     "Type": "figurine",
+    "Identifiers": [ "figurine" ],
     "SpecialItem": -1,
     "Persistent": false
   },
@@ -186,6 +204,7 @@
     "Description": "A figurine carved in wood resembling a goat that has been dipped in purple paint.",
     "UsableOn": 22,
     "Type": "painted figurine",
+    "Identifiers": [ "painted figurine" ],
     "SpecialItem": 23,
     "Persistent": false
   },
@@ -196,6 +215,7 @@
     "Description": "A diary with only one readable entry. \n\"Today I was reminded of the basket I once had. My father had given me one, with a purple figurine goat and some purple flowers. Unfortunately I lost it, and I have been looking all over for a new one.\".",
     "UsableOn": -1,
     "Type": "diary",
+    "Identifiers": [ "diary" ],
     "SpecialItem": -1,
     "Persistent": false
   },
@@ -206,6 +226,7 @@
     "Description": "The tank for a fire extinguisher.",
     "UsableOn": 21,
     "Type": "fire extinguisher tank",
+    "Identifiers": [ "fire extinguisher tank" ],
     "SpecialItem": 11,
     "Persistent": false
   },
@@ -216,6 +237,7 @@
     "Description": "A handle for a fire extinguisher.",
     "UsableOn": 20,
     "Type": "handle",
+    "Identifiers": [ "handle" ],
     "SpecialItem": 11,
     "Persistent": false
   },
@@ -226,6 +248,7 @@
     "Description": "A basket useful for carrying things in.",
     "UsableOn": -1,
     "Type": "basket",
+    "Identifiers": [ "basket" ],
     "SpecialItem": -1,
     "Persistent": false
   },
@@ -236,6 +259,7 @@
     "Description": "A basket with a painted figurine in it.",
     "UsableOn": -1,
     "Type": "basket with figurine",
+    "Identifiers": [ "basket with figurine" ],
     "SpecialItem": -1,
     "Persistent": false
   },
@@ -246,6 +270,7 @@
     "Description": "A bouquet of purple flowers.",
     "UsableOn": 23,
     "Type": "flowers",
+    "Identifiers": [ "flowers" ],
     "SpecialItem": 25,
     "Persistent": false
   },
@@ -256,6 +281,7 @@
     "Description": "A basket with a bouquet of purple flowers and a painted figurine.",
     "UsableOn": -1,
     "Type": "basket of gifts",
+    "Identifiers": [ "basket of gifts" ],
     "SpecialItem": -1,
     "Persistent": false
   }

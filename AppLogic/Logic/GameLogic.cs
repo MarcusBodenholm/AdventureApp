@@ -115,6 +115,7 @@ namespace AppLogic.Logic
             {
                 return GameState.ExamineItem(parsed);
             }
+            if (parsed.NPC != string.Empty) return GameState.InspectNPC(parsed);
             if (parsed.Container != string.Empty && isRemainingZero
                 && parsed.HasOnly("container command"))
             {

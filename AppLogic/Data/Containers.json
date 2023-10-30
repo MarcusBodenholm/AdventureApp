@@ -5,6 +5,7 @@
     "Article": "A",
     "Description": "Before you is a small cupboard that has seen better days.",
     "Type": "cupboard",
+    "Identifiers": ["cupboard"],
     "Liftable": true,
     "ItemIDs": [ 5 ]
   },
@@ -14,6 +15,7 @@
     "Article": "A",
     "Description": "A small old shoe box.",
     "Type": "small box",
+    "Identifiers": [ "small box", "shoebox" ],
     "Liftable": true,
     "ItemIDs": [ 1 ]
   },
@@ -23,6 +25,7 @@
     "Article": "A",
     "Description": "A dirty kitchen counter.",
     "Type": "kitchen counter",
+    "Identifiers": [ "kitchen counter", "counter" ],
     "Liftable": false,
     "ItemIDs": [ 12 ]
   },
@@ -32,6 +35,7 @@
     "Article": "A",
     "Description": "A desk covered with papers of all kinds.",
     "Type": "desk",
+    "Identifiers": [ "desk" ],
     "Liftable": false,
     "ItemIDs": [ 19 ]
   }

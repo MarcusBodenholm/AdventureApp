@@ -1,11 +1,13 @@
 ﻿using AppLogic.Enums;
+using AppLogic.Models;
+using System.Reflection.Metadata;
 using System.Security.Permissions;
 
 namespace AppLogic.Logic
 {
     public static class Parser
     {
-        private readonly static Dictionary<string, Direction> directions = new()
+        private readonly static Dictionary<string, Direction> DirectionDefinitions = new()
         {
             {"north door", Enums.Direction.North },
             {"south door", Enums.Direction.South },
@@ -17,13 +19,8 @@ namespace AppLogic.Logic
             {"west", Enums.Direction.West }
 
         };
-        private readonly static Dictionary<string, string> obstructions = new()
-        {
-            {"fire", "fire" },
-            {"boulder", "boulder"},
-            {"barricade", "barricade" }
-        };
-        private readonly static Dictionary<string, Command> commands = new()
+        private static Dictionary<string, string> ObstructionDefinitions = new();
+        private static Dictionary<string, Command> CommandDefinitions = new()
         {
             {"a really long way to say take", Enums.Command.Take },
             {"look at", Enums.Command.Inspect },
@@ -72,76 +69,63 @@ namespace AppLogic.Logic
             {"help", Enums.Command.Help },
         };
 
-        private readonly static Dictionary<string, string> items = new()
+        private static Dictionary<string, string> ItemDefinitions = new();
+        private static Dictionary<string, string> ContainerDefinitions = new();
+        private static Dictionary<string, string> NpcDefinitions = new();
+        public static void UpdateContainerIdentifiers(List<Container> allContainers)
         {
-            {"painted figurine", "painted figurine" },
-            {"paintedfigurine",  "painted figurine" },
-            {"fire extinguisher tank", "fire extinguisher tank" },
-            {"fireextinguishertank", "fire extinguisher tank" },
-            {"second key fragment", "second key fragment" },
-            {"secondkeyfragment", "second key fragment" },
-            {"green key", "green key" },
-            {"greenkey", "green key" },
-            {"basket with figurine", "basket with figurine" },
-            {"basketwithfigurine", "basket with figurine" },
-            {"basket of gifts", "basket of gifts" },
-            {"basketofgifts", "basket of gifts" },
-            {"lump of dirt", "lump of dirt" },
-            {"dirtlump", "lump of dirt" },
-            {"key fragment", "key fragment" },
-            {"keyfragment", "key fragment" },
-            {"wine bottle", "wine bottle" },
-            {"winebottle", "wine bottle" },
-            {"purple key", "purple key" },
-            {"purplekey", "purple key" },
-            {"fire extinguisher", "fire extinguisher" },
-            {"opened wine bottle", "opened wine bottle" },
-            {"openedwinebottle", "opened wine bottle" },
-            {"small key", "small key" },
-            {"smallkey", "small key" },
-            {"corkscrew", "corkscrew" },
-            {"opened bottle", "opened bottle" },
-            {"openedbottle", "opened bottle" },
-            {"bottle", "bottle" },
-            {"extinguisher", "fire extinguisher" },
-            {"shovel", "shovel" },
-            {"key", "key" },
-            {"note", "note" },
-            {"instructions", "instructions" },
-            {"pickaxe", "pickaxe" },
-            {"crowbar", "crowbar" },
-            {"carving knife", "carving knife" },
-            {"carvingknife", "carving knife" },
-            {"wood", "wood" },
-            {"paint", "paint" },
-            {"figurine", "figurine" },
-            {"diary", "diary" },
-            {"handle", "handle" },
-            {"flowers", "flowers" },
-            {"basket", "basket" },
-        };
-        private readonly static Dictionary<string, string> containers = new()
+            ContainerDefinitions.Clear();
+            foreach (Container container in allContainers)
+            {
+                string type = container.Type;
+                foreach (string identifier in container.Identifiers)
+                {
+                    ContainerDefinitions.Add(identifier, type);
+                }
+            }
+        }
+        public static void UpdateItemIdentifiers(List<Item> allItems)
         {
-            {"cupboard", "cupboard" },
-            {"small box", "small box" },
-            {"shoebox", "small box" },
-            {"kitchen counter", "kitchen counter" },
-            {"kitchencounter", "kitchen counter" },
-            {"counter", "counter" },
-            {"desk", "desk" },
-            {"box", "small box" }
-        };
-        private readonly static Dictionary<string, string> npcs = new()
+            ItemDefinitions.Clear();
+            foreach (Item item in allItems)
+            {
+                string type = item.Type;
+                foreach (string identifier in item.Identifiers)
+                {
+                    ItemDefinitions.Add(identifier, type);
+                }
+            }
+        }
+        public static void UpdateNPCIdentifiers(List<NPC> allNPCs)
         {
-            {"rhys", "rhys" },
-            {"old man", "rhys" },
-        };
+            NpcDefinitions.Clear();
+            foreach (NPC npc in allNPCs)
+            {
+                string type = npc.Type;
+                foreach (string identifier in npc.Identifiers)
+                {
+                    NpcDefinitions.Add(identifier, type);
+                }
+            }
+        }
+        public static void UpdateObstructionIdentifiers(List<Obstruction> allObstructions)
+        {
+            ObstructionDefinitions.Clear();
+            foreach (Obstruction obs in allObstructions)
+            {
+                string type = obs.Type;
+                foreach (string identifier in obs.Identifiers)
+                {
+                    ObstructionDefinitions.Add(identifier, type);
+                }
+            }
+        }
         public static string NPC(string input)
         {
             string text = input.ToLower();
-            if (npcs.ContainsKey(text))
+            if (NpcDefinitions.ContainsKey(text))
             {
-                return npcs[text];
+                return NpcDefinitions[text];
             }
             else
             {
@@ -151,9 +135,9 @@ namespace AppLogic.Logic
         public static string Container(string input)
         {
             string text = input.ToLower();
-            if (containers.ContainsKey(text))
+            if (ContainerDefinitions.ContainsKey(text))
             {
-                return containers[text];
+                return ContainerDefinitions[text];
             }
             else
             {
@@ -164,9 +148,9 @@ namespace AppLogic.Logic
         {
             string text = input.ToLower();
 
-            if (directions.ContainsKey(text))
+            if (DirectionDefinitions.ContainsKey(text))
             {
-                return directions[text];
+                return DirectionDefinitions[text];
             }
             else 
             {
@@ -177,10 +161,10 @@ namespace AppLogic.Logic
         {
             string text = input.ToLower();
 
-            bool inDictionary = commands.ContainsKey(text);
+            bool inDictionary = CommandDefinitions.ContainsKey(text);
             if (inDictionary)
             {
-                return commands[text];
+                return CommandDefinitions[text];
             }
             else
             {
@@ -190,9 +174,9 @@ namespace AppLogic.Logic
         public static string Item(string input)
         {
             string text = input.ToLower();
-            if (items.ContainsKey(text))
+            if (ItemDefinitions.ContainsKey(text))
             {
-                return items[text];
+                return ItemDefinitions[text];
             }
             else
             {
@@ -201,9 +185,9 @@ namespace AppLogic.Logic
         }
         public static string Obstruction(string text)
         {
-            if (obstructions.ContainsKey(text))
+            if (ObstructionDefinitions.ContainsKey(text))
             {
-                return obstructions[text];
+                return ObstructionDefinitions[text];
             }
             else
             {
@@ -234,7 +218,7 @@ namespace AppLogic.Logic
         }
         private static string ParseDirection(string input, ParsedText parsed)
         {
-            foreach (string direction in directions.Keys)
+            foreach (string direction in DirectionDefinitions.Keys)
             {
                 if (input.EndsWith(direction))
                 {
@@ -248,7 +232,7 @@ namespace AppLogic.Logic
         }
         private static string ParseObstruction(string input, ParsedText parsed)
         {
-            foreach (string obstruction in obstructions.Keys)
+            foreach (string obstruction in ObstructionDefinitions.Keys)
             {
                 if (input.EndsWith(obstruction))
                 {
@@ -263,7 +247,7 @@ namespace AppLogic.Logic
         }
         private static string ParseCommand(string input, ParsedText parsed)
         {
-            foreach (string command in commands.Keys)
+            foreach (string command in CommandDefinitions.Keys)
             {
                 if (input.StartsWith(command))
                 {
@@ -277,7 +261,7 @@ namespace AppLogic.Logic
         }
         private static string ParseItem(string input, ParsedText parsed, int itemNr)
         {
-            foreach (string item in items.Keys)
+            foreach (string item in ItemDefinitions.Keys)
             {
                 if (itemNr == 1 && input.StartsWith(item))
                 {
@@ -298,7 +282,7 @@ namespace AppLogic.Logic
         }
         private static string ParseContainer(string input, ParsedText parsed)
         {
-            foreach (string container in containers.Keys)
+            foreach (string container in ContainerDefinitions.Keys)
             {
                 if (input.EndsWith(container))
                 {
@@ -312,7 +296,7 @@ namespace AppLogic.Logic
         }
         private static string ParseNPC(string input, ParsedText parsed)
         {
-            foreach (string npc in npcs.Keys)
+            foreach (string npc in NpcDefinitions.Keys)
             {
                 if (input.EndsWith(npc))
                 {

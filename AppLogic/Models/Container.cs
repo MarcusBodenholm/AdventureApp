@@ -11,6 +11,7 @@ namespace AppLogic.Models
         public string Article { get; set; } = string.Empty;
         public bool Liftable { get; set; } = false;
         public string Type { get; set; } = string.Empty;
+        public List<string> Identifiers { get; set; } = new();
         public override string ToString()
         {
             return $"{Article.ToLower()} {Name.ToLower()}";

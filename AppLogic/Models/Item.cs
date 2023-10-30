@@ -11,6 +11,7 @@ namespace AppLogic.Models
         public string Description { get; set; } = string.Empty;
         public int UsableOn { get; set; } = -1;
         public string Type { get; set; } = string.Empty;
+        public List<string> Identifiers { get; set; } = new();
         public int SpecialItem { get; set; } = -1;
         public bool Persistent { get; set; } = false;
         public override string ToString()
