@@ -1,6 +1,7 @@
 ﻿using AppLogic.Models;
 using AppLogic.DataAccess;
 using System.Collections;
+using AppLogic.Enums;
 
 namespace AppLogic.Logic
 {
@@ -9,7 +10,7 @@ namespace AppLogic.Logic
         private Character PC { get; set; } = new Character();
         private Location CurrentLocation { get; set; } = new Location();
         private NPC? NPC { get; set; } = null;
-        public bool ConversationMode { get; set; } = false;
+        public Mode Mode { get; set; } = Mode.Adventure;
         public bool IsWon { get; set; } = false;
         public GameState(Character pc)
         {
@@ -25,12 +26,12 @@ namespace AppLogic.Logic
             if (npc == null) return $"No one in this room responds to {parsed.NPCText}.";
             NPC = npc;
             outcome.NPC = npc;
-            ConversationMode = true;
+            Mode = Mode.Dialogue;
             return $"{NPC.Name}: {NPC.Greeting} \nYou are now in conversation mode with {NPC.Name}. To stop write 'stop' or 'stop talking'.";
         }
         public string StopTalkingToNPC(Outcome outcome)
         {
-            ConversationMode = false;
+            Mode = Mode.Adventure;
             if (NPC == null) return "Something went wrong with NPC";
             NPC npc = NPC;
             outcome.NPC = npc;

@@ -1,5 +1,6 @@
 ﻿using AppLogic.Enums;
 using AppLogic.Models;
+using System.Collections.Immutable;
 using System.Reflection.Metadata;
 using System.Security.Permissions;
 
@@ -83,6 +84,8 @@ namespace AppLogic.Logic
                     ContainerDefinitions.Add(identifier, type);
                 }
             }
+            ContainerDefinitions = ContainerDefinitions.OrderByDescending(x => x.Key.Length).ToDictionary(x => x.Key, x => x.Value);
+
         }
         public static void UpdateItemIdentifiers(List<Item> allItems)
         {
@@ -95,6 +98,7 @@ namespace AppLogic.Logic
                     ItemDefinitions.Add(identifier, type);
                 }
             }
+            ItemDefinitions = ItemDefinitions.OrderByDescending(x => x.Key.Length).ToDictionary(x => x.Key, x => x.Value);
         }
         public static void UpdateNPCIdentifiers(List<NPC> allNPCs)
         {
@@ -107,6 +111,7 @@ namespace AppLogic.Logic
                     NpcDefinitions.Add(identifier, type);
                 }
             }
+            NpcDefinitions = NpcDefinitions.OrderByDescending(x => x.Key.Length).ToDictionary(x => x.Key, x => x.Value);
         }
         public static void UpdateObstructionIdentifiers(List<Obstruction> allObstructions)
         {
@@ -119,6 +124,7 @@ namespace AppLogic.Logic
                     ObstructionDefinitions.Add(identifier, type);
                 }
             }
+            ObstructionDefinitions = ObstructionDefinitions.OrderByDescending(x => x.Key.Length).ToDictionary(x => x.Key, x => x.Value);
         }
         public static string NPC(string input)
         {

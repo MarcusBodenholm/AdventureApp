@@ -23,9 +23,24 @@ namespace AppLogic.Logic
                 GameState = new GameState(PC);
             }
         }
+        
         public Outcome DecisionTree(string text)
         {
             Outcome outcome = new();
+            ParsedText parsedText = Parser.ParseText(text.ToLower());
+            Dictionary<Mode, Action<string, ParsedText, Outcome>> ModeSelection = new()
+            {
+                {Mode.Dialogue, DialogueDecisionTree },
+                {Mode.Adventure, AdventureDecisionTree },
+            };
+            ModeSelection[GameState.Mode](text, parsedText, outcome);
+            outcome.CurrentLocation = GameState.GetCurrentLocationInfo();
+            outcome.InventoryNames = GameState.GetPlayerItems();
+            outcome.HasWon = GameState.IsWon;
+            return outcome;
+        }
+        private void AdventureDecisionTree(string text, ParsedText parsed, Outcome outcome)
+        {
             Dictionary<Command, Func<ParsedText, Outcome, string>> methods = new()
             {
                 {Command.Drop, DropX },
@@ -42,35 +57,34 @@ namespace AppLogic.Logic
                 {Command.Talk, StartTalkingToNPC },
                 {Command.Store, PutItemInContainer }
             };
-            ParsedText parsedText = Parser.ParseText(text.ToLower());
-            if (parsedText.Command == Command.Stop && GameState.ConversationMode)
+            if (methods.ContainsKey(parsed.Command))
             {
-                outcome.Message = StopTalkingToNPC(parsedText, outcome);
-            } 
-            else if (parsedText.Command == Command.Give && GameState.ConversationMode)
-            {
-                outcome.Message = GiveToNPC(parsedText, outcome);
-            }
-            else if (GameState.ConversationMode)
-            {
-                outcome.Message = TalkToNPC(text, outcome);
-            }
-            else if (methods.ContainsKey(parsedText.Command))
-            {
-                outcome.Message = methods[parsedText.Command](parsedText, outcome);
+                outcome.Message = methods[parsed.Command](parsed, outcome);
             }
             else
             {
                 outcome.Message = "Command was not recognized";
             }
-            outcome.CurrentLocation = GameState.GetCurrentLocationInfo();
-            outcome.InventoryNames = GameState.GetPlayerItems();
-            outcome.HasWon = GameState.IsWon;
-            return outcome;
+        }
+        private void DialogueDecisionTree(string text, ParsedText parsed, Outcome outcome)
+        {
+            if (parsed.Command == Command.Stop && GameState.Mode == Mode.Dialogue)
+            {
+                outcome.Message = StopTalkingToNPC(parsed, outcome);
+            }
+            else if (parsed.Command == Command.Give && GameState.Mode == Mode.Dialogue)
+            {
+                outcome.Message = GiveToNPC(parsed, outcome);
+            }
+            else if (GameState.Mode == Mode.Dialogue)
+            {
+                outcome.Message = TalkToNPC(text, outcome);
+            }
+
         }
         private string StartTalkingToNPC(ParsedText parsed, Outcome outcome)
         {
-            if (GameState.ConversationMode) return $"You're already talking to someone.";
+            if (GameState.Mode == Mode.Dialogue) return $"You're already talking to someone.";
             if (parsed.NPC != string.Empty && parsed.Command == Command.Talk
                 && parsed.RemainingContains("to"))
             {
