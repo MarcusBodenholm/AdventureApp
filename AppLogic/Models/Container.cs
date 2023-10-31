@@ -2,7 +2,7 @@
 
 namespace AppLogic.Models
 {
-    public class Container : IInventory
+    public class Container
     {
         public int ID { get; set; } = -1;
         public string Name { get; set; } = string.Empty;

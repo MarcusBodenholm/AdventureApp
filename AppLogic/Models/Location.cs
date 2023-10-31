@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 namespace AppLogic.Models
 {
 
-    public class Location : IInventory
+    public class Location
     {
         public int ID { get; set; } = -1;
         public string Name { get; set; } = string.Empty;
