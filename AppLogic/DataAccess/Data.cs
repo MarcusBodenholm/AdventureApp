@@ -89,7 +89,7 @@ namespace AppLogic.DataAccess
             UpdateParser();
 
         }
-        public static void SaveGame(string fileName, Character PC)
+        public static string SaveGame(string fileName, Character PC)
         {
             string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             Directory.CreateDirectory($@"{folderPath}\TextAdventure");
@@ -120,7 +120,7 @@ namespace AppLogic.DataAccess
                                       @$"|||||{exitsFilePath}|||||{eventsFilePath}|||||{obstructionsFilePath}" +
                                       @$"|||||{characterFilePath}|||||{NPCFilePath}";
             File.WriteAllText(saveFilePath,toSaveInSaveFile);
-            
+            return saveFilePath;
         }
         public static Character LoadSave(string saveFilePath)
         {
@@ -562,6 +562,7 @@ namespace AppLogic.DataAccess
                     foreach (KeyValuePair<string, string> kvp in npc.Conversations)
                     {
                         jsonNPC.Conversations[count] = $"{kvp.Key}|||||{kvp.Value}";
+                        count++;
                     }
                 }
                 if (npc.Identifiers == null)

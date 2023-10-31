@@ -41,7 +41,7 @@
             listSaves.ItemHeight = 30;
             listSaves.Location = new Point(12, 44);
             listSaves.Name = "listSaves";
-            listSaves.Size = new Size(446, 244);
+            listSaves.Size = new Size(451, 244);
             listSaves.TabIndex = 0;
             // 
             // labelSaveFiles
@@ -59,7 +59,7 @@
             buttonLoad.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
             buttonLoad.Location = new Point(12, 294);
             buttonLoad.Name = "buttonLoad";
-            buttonLoad.Size = new Size(446, 45);
+            buttonLoad.Size = new Size(451, 45);
             buttonLoad.TabIndex = 2;
             buttonLoad.Text = "Load save";
             buttonLoad.UseVisualStyleBackColor = true;
@@ -68,7 +68,7 @@
             // buttonDelete
             // 
             buttonDelete.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonDelete.Location = new Point(340, 12);
+            buttonDelete.Location = new Point(345, 12);
             buttonDelete.Name = "buttonDelete";
             buttonDelete.Size = new Size(118, 29);
             buttonDelete.TabIndex = 3;
@@ -80,7 +80,7 @@
             // 
             AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(466, 347);
+            ClientSize = new Size(479, 347);
             Controls.Add(buttonDelete);
             Controls.Add(buttonLoad);
             Controls.Add(labelSaveFiles);

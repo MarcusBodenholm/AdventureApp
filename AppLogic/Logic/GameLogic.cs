@@ -254,10 +254,11 @@ namespace AppLogic.Logic
                    $"\n talk to 'npc' - talks to an NPC." +
                    $"\n give 'item' to 'npc' - gives item to NPC.";
         }
-        public void SaveGame(string saveFileName)
+        public string SaveGame(string saveFileName)
         {
             Character PC = GameState.GetCharacter();
-            Data.SaveGame(saveFileName, PC);
+            string filePath = Data.SaveGame(saveFileName, PC);
+            return @$"Game saved as {saveFileName} at {filePath}.";
         }
     }
 }

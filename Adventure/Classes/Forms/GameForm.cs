@@ -138,24 +138,26 @@ namespace Adventure
 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GameLogic.SaveGame("autosave");
+            SaveGame("autosave", false);
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            //folderBrowserDialog1.ShowDialog();
-            MessageBox.Show(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
             InputPrompt input = new InputPrompt("Name the save file", "Name save file");
             input.ShowDialog();
             if (input.DialogResult == DialogResult.OK)
             {
-                SaveGame(input.Input);
+                SaveGame(input.Input, true);
             }
             input.Dispose();
         }
-        private void SaveGame(string saveFileName)
+        private void SaveGame(string saveFileName, bool toLog)
         {
-            GameLogic.SaveGame(saveFileName);
+            string saveMessage = GameLogic.SaveGame(saveFileName);
+            if (toLog)
+            {
+                UpdateLog(saveMessage, Color.White, new Outcome());
+            }
         }
     }
 

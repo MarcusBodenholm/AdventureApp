@@ -61,9 +61,9 @@ namespace Adventure.Classes.Forms
             {
                 return;
             }
-            DialogResult dr = MessageBox.Show($"Are you sure you want to delete: {selectedSave.Name}", 
-                                              "Delete", 
-                                              MessageBoxButtons.YesNo, 
+            DialogResult dr = MessageBox.Show($"Are you sure you want to delete: {selectedSave.Name}",
+                                              "Delete",
+                                              MessageBoxButtons.YesNo,
                                               MessageBoxIcon.Warning);
             if (dr == DialogResult.No) return;
             string folderPath = selectedSave.FullPath.Substring(0, selectedSave.FullPath.Length - 9);
@@ -85,7 +85,7 @@ namespace Adventure.Classes.Forms
         }
         public override string ToString()
         {
-            return $"{Name} - {CreatedAt.Year}-{CreatedAt.Month}-{CreatedAt.Day} {CreatedAt.Hour}:{CreatedAt.Minute}";
+            return $"{Name} - {CreatedAt.Year}-{CreatedAt.Month}-{CreatedAt.Day} {CreatedAt.Hour}:{(CreatedAt.Minute < 10 ? $"0{CreatedAt.Minute}" : CreatedAt.Minute)}";
         }
     }
 }
