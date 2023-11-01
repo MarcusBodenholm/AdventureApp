@@ -38,10 +38,10 @@
             // 
             listSaves.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
             listSaves.FormattingEnabled = true;
-            listSaves.ItemHeight = 30;
-            listSaves.Location = new Point(12, 44);
+            listSaves.ItemHeight = 36;
+            listSaves.Location = new Point(12, 53);
             listSaves.Name = "listSaves";
-            listSaves.Size = new Size(451, 244);
+            listSaves.Size = new Size(540, 256);
             listSaves.TabIndex = 0;
             // 
             // labelSaveFiles
@@ -50,16 +50,16 @@
             labelSaveFiles.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             labelSaveFiles.Location = new Point(12, 9);
             labelSaveFiles.Name = "labelSaveFiles";
-            labelSaveFiles.Size = new Size(120, 32);
+            labelSaveFiles.Size = new Size(150, 41);
             labelSaveFiles.TabIndex = 1;
             labelSaveFiles.Text = "Save files";
             // 
             // buttonLoad
             // 
             buttonLoad.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
-            buttonLoad.Location = new Point(12, 294);
+            buttonLoad.Location = new Point(12, 319);
             buttonLoad.Name = "buttonLoad";
-            buttonLoad.Size = new Size(451, 45);
+            buttonLoad.Size = new Size(540, 50);
             buttonLoad.TabIndex = 2;
             buttonLoad.Text = "Load save";
             buttonLoad.UseVisualStyleBackColor = true;
@@ -68,9 +68,9 @@
             // buttonDelete
             // 
             buttonDelete.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            buttonDelete.Location = new Point(345, 12);
+            buttonDelete.Location = new Point(417, 9);
             buttonDelete.Name = "buttonDelete";
-            buttonDelete.Size = new Size(118, 29);
+            buttonDelete.Size = new Size(135, 38);
             buttonDelete.TabIndex = 3;
             buttonDelete.Text = "Delete save";
             buttonDelete.UseVisualStyleBackColor = true;
@@ -78,9 +78,9 @@
             // 
             // SelectLoadFile
             // 
-            AutoScaleDimensions = new SizeF(11F, 25F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(479, 347);
+            ClientSize = new Size(564, 381);
             Controls.Add(buttonDelete);
             Controls.Add(buttonLoad);
             Controls.Add(labelSaveFiles);

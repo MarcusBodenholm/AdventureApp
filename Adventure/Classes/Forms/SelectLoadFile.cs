@@ -85,7 +85,11 @@ namespace Adventure.Classes.Forms
         }
         public override string ToString()
         {
-            return $"{Name} - {CreatedAt.Year}-{CreatedAt.Month}-{CreatedAt.Day} {CreatedAt.Hour}:{(CreatedAt.Minute < 10 ? $"0{CreatedAt.Minute}" : CreatedAt.Minute)}";
+            return $"{Name} - {CreatedAt.Year}-{AddZero(CreatedAt.Month)}-{AddZero(CreatedAt.Day)} {CreatedAt.Hour}:{AddZero(CreatedAt.Minute)}";
+        }
+        private string AddZero(int input)
+        {
+            return input < 10 ? $"0{input}" : input.ToString();
         }
     }
 }

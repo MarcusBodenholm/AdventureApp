@@ -33,17 +33,6 @@
       "did you kidnap me|||||Heavens no. I would do no such thing. No, I am afraid we were both put here, somehow.",
       "did you take me here|||||Heavens no. I would do no such thing. No, I am afraid we were both put here, somehow."
     ]
-  },
-  {
-    "ID": 2,
-    "Name": "Yuri",
-    "Description": "A talking goat.",
-    "Greeting": "I am a talking goat.",
-    "Farewell": "Bye. I am a talking goat",
-    "Handle": "yuri",
-    "Identifiers": [ "yuri", "goat" ],
-    "ItemIDs": [ 10 ],
-    "GiftItemIDs": [ 25 ],
-    "Conversations": []
   }
+
 ]
