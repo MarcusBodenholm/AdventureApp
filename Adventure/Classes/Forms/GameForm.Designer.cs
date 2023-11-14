@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             groupBoxPlayer = new GroupBox();
+            buttonSave = new Button();
             labelInventory = new Label();
             buttonUseItemOn = new Button();
             buttonExamineitem = new Button();
@@ -45,6 +46,7 @@
             textInput = new TextBox();
             richGameLog = new RichTextBox();
             panelTextBox = new Panel();
+            folderBrowserDialog1 = new FolderBrowserDialog();
             groupBoxPlayer.SuspendLayout();
             panelTextBox.SuspendLayout();
             SuspendLayout();
@@ -52,6 +54,7 @@
             // groupBoxPlayer
             // 
             groupBoxPlayer.BackColor = SystemColors.ActiveCaptionText;
+            groupBoxPlayer.Controls.Add(buttonSave);
             groupBoxPlayer.Controls.Add(labelInventory);
             groupBoxPlayer.Controls.Add(buttonUseItemOn);
             groupBoxPlayer.Controls.Add(buttonExamineitem);
@@ -75,6 +78,21 @@
             groupBoxPlayer.TabIndex = 0;
             groupBoxPlayer.TabStop = false;
             groupBoxPlayer.Text = "Player";
+            // 
+            // buttonSave
+            // 
+            buttonSave.FlatAppearance.BorderColor = Color.Green;
+            buttonSave.FlatAppearance.MouseDownBackColor = Color.White;
+            buttonSave.FlatAppearance.MouseOverBackColor = Color.White;
+            buttonSave.FlatStyle = FlatStyle.Flat;
+            buttonSave.Font = new Font("Courier New", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonSave.Location = new Point(539, 158);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(87, 28);
+            buttonSave.TabIndex = 12;
+            buttonSave.Text = "Save";
+            buttonSave.UseVisualStyleBackColor = false;
+            buttonSave.Click += buttonSave_Click;
             // 
             // labelInventory
             // 
@@ -336,5 +354,7 @@
         private RichTextBox richGameLog;
         private Label labelInventory;
         private Panel panelTextBox;
+        private Button buttonSave;
+        private FolderBrowserDialog folderBrowserDialog1;
     }
 }

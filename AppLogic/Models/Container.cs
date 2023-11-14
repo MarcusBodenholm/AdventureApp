@@ -2,7 +2,7 @@
 
 namespace AppLogic.Models
 {
-    public class Container : IInventory
+    public class Container
     {
         public int ID { get; set; } = -1;
         public string Name { get; set; } = string.Empty;
@@ -10,16 +10,17 @@ namespace AppLogic.Models
         public List<Item> Items { get; set; } = new List<Item>();
         public string Article { get; set; } = string.Empty;
         public bool Liftable { get; set; } = false;
-        public Containers Type { get; set; } = Containers.Unknown;
+        public string Type { get; set; } = string.Empty;
+        public List<string> Identifiers { get; set; } = new();
         public override string ToString()
         {
             return $"{Article.ToLower()} {Name.ToLower()}";
         }
-        public bool HasItem(Items itemType)
+        public bool HasItem(string itemType)
         {
             return Items.Any(item => item.Type == itemType);
         }
-        public Item? GetItem(Items itemType)
+        public Item? GetItem(string itemType)
         {
             return Items.Find(item => item.Type == itemType);
         }

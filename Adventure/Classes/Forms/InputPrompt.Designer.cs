@@ -30,6 +30,7 @@
         {
             labelQuestion = new Label();
             textItem = new TextBox();
+            buttonDone = new Button();
             SuspendLayout();
             // 
             // labelQuestion
@@ -45,15 +46,27 @@
             // 
             textItem.Location = new Point(12, 27);
             textItem.Name = "textItem";
-            textItem.Size = new Size(173, 23);
+            textItem.Size = new Size(232, 23);
             textItem.TabIndex = 0;
             textItem.KeyDown += textItem_KeyDown_1;
+            // 
+            // buttonDone
+            // 
+            buttonDone.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            buttonDone.Location = new Point(250, 27);
+            buttonDone.Name = "buttonDone";
+            buttonDone.Size = new Size(66, 23);
+            buttonDone.TabIndex = 1;
+            buttonDone.Text = "Done";
+            buttonDone.UseVisualStyleBackColor = true;
+            buttonDone.Click += buttonDone_Click;
             // 
             // InputPrompt
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(197, 59);
+            ClientSize = new Size(328, 59);
+            Controls.Add(buttonDone);
             Controls.Add(textItem);
             Controls.Add(labelQuestion);
             MaximizeBox = false;
@@ -68,5 +81,6 @@
 
         private Label labelQuestion;
         private TextBox textItem;
+        private Button buttonDone;
     }
 }

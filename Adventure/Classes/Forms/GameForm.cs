@@ -6,26 +6,31 @@ namespace Adventure
 {
     public partial class GameForm : Form
     {
-        public GameLogic GameLogic { get; set; }
-        public GameForm()
+        public GameLogic? GameLogic { get; set; }
+        public GameForm(string saveFile = "")
         {
             InitializeComponent();
-            GameLogic = new GameLogic();
+            GameLogic = new GameLogic(saveFile);
+            StartUpGame();
+        }
+        public void StartUpGame()
+        {
             UpdateState(GameLogic.StateAtGameStart());
             string[] gameStartText = GameLogic.GameStart();
-            UpdateLog(gameStartText[0], Color.Purple);
-            UpdateLog(gameStartText[1], Color.Purple);
-            UpdateLog(gameStartText[2], Color.Purple);
-            UpdateLog(gameStartText[3], Color.Green);
+            UpdateLog(gameStartText[0], Color.Purple, new Outcome());
+            UpdateLog(gameStartText[1], Color.Purple, new Outcome());
+            UpdateLog(gameStartText[2], Color.Purple, new Outcome());
+            UpdateLog(gameStartText[3], Color.Green, new Outcome());
+
         }
-        public void UpdateLog(string message, Color color)
+        public void UpdateLog(string message, Color color, Outcome outcome)
         {
             if (message.Contains("Player"))
             {
                 richGameLog.AppendText(message, color, true);
                 return;
             }
-            if (message.Contains("Rhys"))
+            if (outcome.NPC != null && message.StartsWith(outcome.NPC.Name))
             {
                 richGameLog.AppendText(message, Color.Purple, true);
                 return;
@@ -68,8 +73,8 @@ namespace Adventure
         private void HandleInput(string text)
         {
             Outcome outcome = GameLogic.DecisionTree(text);
-            UpdateLog($"Player: {text}", Color.Red);
-            UpdateLog(outcome.Message, Color.Green);
+            UpdateLog($"Player: {text}", Color.Red, outcome);
+            UpdateLog(outcome.Message, Color.Green, outcome);
             textInput.Text = "";
             UpdateState(outcome);
         }
@@ -133,7 +138,26 @@ namespace Adventure
 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            GameLogic.SaveGame();
+            SaveGame("autosave", false);
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            InputPrompt input = new InputPrompt("Name the save file", "Name save file");
+            input.ShowDialog();
+            if (input.DialogResult == DialogResult.OK)
+            {
+                SaveGame(input.Input, true);
+            }
+            input.Dispose();
+        }
+        private void SaveGame(string saveFileName, bool toLog)
+        {
+            string saveMessage = GameLogic.SaveGame(saveFileName);
+            if (toLog)
+            {
+                UpdateLog(saveMessage, Color.White, new Outcome());
+            }
         }
     }
 

@@ -9,9 +9,9 @@ namespace AppLogic.Models
         public bool IsLocked { get; set; } = false;
         public int UnlockedBy { get; set; } = 1;
         public string Description { get; set; } = string.Empty;
-        public Dictionary<Directions, int> Locations { get; set; } = new();
+        public Dictionary<Direction, int> Locations { get; set; } = new();
         public Obstruction? Obstruction { get; set; }
-        public string Inspect(Directions direction)
+        public string Inspect(Direction direction)
         {
             string output = $"You see a {Description}. ";
             string obstruction = Obstruction == null ? "" : $"There is {Obstruction} in the way. ";

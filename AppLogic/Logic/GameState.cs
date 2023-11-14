@@ -1,6 +1,7 @@
 ﻿using AppLogic.Models;
 using AppLogic.DataAccess;
 using System.Collections;
+using AppLogic.Enums;
 
 namespace AppLogic.Logic
 {
@@ -8,37 +9,40 @@ namespace AppLogic.Logic
     {
         private Character PC { get; set; } = new Character();
         private Location CurrentLocation { get; set; } = new Location();
-        private NPC NPC { get; set; } = new Rhys();
-        public bool ConversationMode { get; set; } = false;
+        private NPC? NPC { get; set; } = null;
+        public Mode Mode { get; set; } = Mode.Adventure;
         public bool IsWon { get; set; } = false;
-        public GameState()
+        public GameState(Character pc)
         {
-            Location? location = Data.GetLocation(0);
+            PC = pc;
+            Location? location = Data.GetLocation(PC.SaveLocationID);
             if (location == null) throw new ArgumentNullException();
             CurrentLocation = location;
         }
-        public string StartTalkingToNPC()
+        public string StartTalkingToNPC(ParsedText parsed, Outcome outcome)
         {
-            if (CurrentLocation.NPC != true) return "There is no one in this room.";
-            ConversationMode = true;
+            if (CurrentLocation.NPCs == null) return "There is no one in this room.";
+            NPC? npc = CurrentLocation.GetNPC(parsed.NPC);
+            if (npc == null) return $"No one in this room responds to {parsed.NPCText}.";
+            NPC = npc;
+            outcome.NPC = npc;
+            Mode = Mode.Dialogue;
             return $"{NPC.Name}: {NPC.Greeting} \nYou are now in conversation mode with {NPC.Name}. To stop write 'stop' or 'stop talking'.";
         }
-        public string StopTalkingToNPC()
+        public string StopTalkingToNPC(Outcome outcome)
         {
-            ConversationMode = false;
-            return $"{NPC.Name}: {NPC.Farewell}\nYou are no longer in conversation mode with {NPC.Name}";
+            Mode = Mode.Adventure;
+            if (NPC == null) return "Something went wrong with NPC";
+            NPC npc = NPC;
+            outcome.NPC = npc;
+            NPC = null;
+            return $"{npc.Name}: {npc.Farewell}\nYou are no longer in conversation mode with {npc.Name}";
         }
-        public string TalkToNPC(string input)
+        public string TalkToNPC(string input, Outcome outcome)
         {
-            string text = input.ToLower();
-            foreach (string topic in NPC.Conversations.Keys)
-            {
-                if (text.Contains(topic))
-                {
-                    return $"{NPC.Name}: {NPC.Conversations[topic]}";
-                }
-            }
-            return $"{NPC.Name}: Sadly I have no answers to that.";
+            if (NPC == null) return "Something went wrong with NPC";
+            outcome.NPC = NPC;
+            return NPC.Talk(input.ToLower());
         }
         public string GiftNPC(ParsedText parsed)
         {
@@ -150,7 +154,7 @@ namespace AppLogic.Logic
         {
             Container? CarryingContainer = PC.GetContainer();
             if (CarryingContainer != null) return $"You must drop the {CarryingContainer.Name.ToLower()} first.";
-            if (parsed.ItemOne == Enums.Items.Unknown) return "You need to specify an item.";
+            if (parsed.ItemOne == string.Empty) return "You need to specify an item.";
             Item? itemToPickup = CurrentLocation.GetItem(parsed.ItemOne);
             if (itemToPickup != null)
             {
@@ -196,12 +200,12 @@ namespace AppLogic.Logic
             if (container.Liftable == false) return $"The {parsed.ContainerText} is too heavy and cumbersome to take.";
             PC.TakeContainer(container);
             CurrentLocation.RemoveContainer(container);
-            return $"You pick up {parsed.ContainerText} from {CurrentLocation.NameLower()}. Until you drop it, you are limited in what you can do.";
+            return $"You pick up the {parsed.ContainerText} from the {CurrentLocation.NameLower()}. Until you drop it, you are limited in what you can do.";
         }
         public string DropContainer(ParsedText parsed)
         {
             Container? container = PC.GetContainer();
-            if (container == null || parsed.Container == Enums.Containers.Unknown) return $"You are not carrying {parsed.ContainerText}.";
+            if (container == null || parsed.Container == string.Empty) return $"You are not carrying {parsed.ContainerText}.";
             CurrentLocation.AddContainer(container);
             PC.RemoveContainer();
             return $"You drop the {parsed.ContainerText} in {CurrentLocation.NameLower()}";
@@ -210,7 +214,8 @@ namespace AppLogic.Logic
         public string ExamineItem(ParsedText parsed)
         {
             Item? InspectedItem = PC.GetItem(parsed.ItemOne);
-            if (parsed.ItemOne == Enums.Items.Unknown) return "You need to specify an item to examine.";
+            if (parsed.ItemOne == string.Empty) return "You need to specify an item to examine.";
+            if (InspectedItem != null) return InspectedItem.Inspect();
             if (InspectedItem == null)
             {
                 InspectedItem = CurrentLocation.GetItem(parsed.ItemOne);
@@ -260,7 +265,8 @@ namespace AppLogic.Logic
             {
                 return $"There is no {parsed.ObstructionText} in the {CurrentLocation.NameLower()}.";
             }
-            if (obstruction != null && exit != null && obstruction.ClearedBy == item.Type)
+            if (obstruction.ClearedBy == null) return "Nothing can break this obstruction.";
+            if (obstruction != null && exit != null && obstruction.ClearedBy.Contains(item.ID))
             {
                 exit.Obstruction = null;
                 if (item.Persistent == false)
@@ -272,7 +278,7 @@ namespace AppLogic.Logic
                 return output;
                        
             }
-            if (item.Type != obstruction.ClearedBy)
+            if (obstruction.ClearedBy.Contains(item.ID) == false)
             {
                 return $"You cannot clear a {parsed.ObstructionText} with {item.Name}.";
             }
@@ -282,6 +288,12 @@ namespace AppLogic.Logic
         public string InspectLocation()
         {
             return CurrentLocation.Inspect();
+        }
+        public string InspectNPC(ParsedText parsed)
+        {
+            NPC? npc = CurrentLocation.GetNPC(parsed.NPC);
+            if (npc == null) return "There is no one here by that name.";
+            return npc.Inspect();
         }
         public string DisplayInventory()
         {
@@ -300,9 +312,9 @@ namespace AppLogic.Logic
             if (PC.CarryingContainer != null) return $"You must drop the {PC.CarryingContainer.Name.ToLower()} first.";
             Item? item = PC.GetItem(parsed.ItemOne);
             if (item == null) return $"You do not have {parsed.ItemOneText}.";
+            if (!CurrentLocation.Exits.ContainsKey(parsed.Direction)) return $"There is no door to the {parsed.Direction.ToString().ToLower()}";
             Exit? exit = CurrentLocation.Exits[parsed.Direction];
-            if (exit == null) return $"There is no door to the {parsed.DirectionText}";
-            //if (parsed.ItemOne != Enums.Items.Key) return $"Nothing happens when you use {parsed.ItemOneText} on the door.";
+            if (exit == null) return $"There is no door to the {parsed.Direction.ToString().ToLower()}";
             if (exit.IsLocked == false) return "The door is not locked.";
             if (exit.UnlockedBy != item.ID) return $"The {parsed.ItemOneText} cannot unlock this door.";
             if (exit.Obstruction != null)
@@ -313,9 +325,10 @@ namespace AppLogic.Logic
             PC.RemoveItem(item);
             return output;
         }
-        public void SaveCharacter()
+        public Character GetCharacter()
         {
-            Data.SaveCharacter(PC);
+            PC.SaveLocationID = CurrentLocation.ID;
+            return PC;
         }
     }
 }

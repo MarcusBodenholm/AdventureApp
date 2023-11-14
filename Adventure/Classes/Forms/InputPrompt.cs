@@ -19,7 +19,7 @@ namespace Adventure.Classes.Models
             this.Text = title;
             labelQuestion.Text = question;
         }
-        private void UserIsDone(object sender, EventArgs e)
+        private void UserIsDone()
         {
             Input = textItem.Text;
             DialogResult = DialogResult.OK;
@@ -29,9 +29,14 @@ namespace Adventure.Classes.Models
         {
             if (e.KeyCode == Keys.Enter)
             {
-                UserIsDone(sender, e);
+                UserIsDone();
             }
 
+        }
+
+        private void buttonDone_Click(object sender, EventArgs e)
+        {
+            UserIsDone();
         }
     }
 }

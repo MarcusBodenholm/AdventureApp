@@ -4,13 +4,13 @@ namespace AppLogic.Logic
 {
     public class ParsedText
     {
-        public Items ItemOne { get; set; } = Items.Unknown;
-        public Items ItemTwo { get; set; } = Items.Unknown;
-        public Commands Command { get; set; } = Commands.Unknown;
-        public Obstructions Obstruction { get; set; } = Obstructions.Unknown;
-        public Directions Direction { get; set; } = Directions.Unknown;
-        public Containers Container { get; set; } = Containers.Unknown;
-        public NPCs NPC { get; set; } = NPCs.Unknown;
+        public string ItemOne { get; set; } = string.Empty;
+        public string ItemTwo { get; set; } = string.Empty;
+        public Command Command { get; set; } = Command.Unknown;
+        public string Obstruction { get; set; } = string.Empty;
+        public Direction Direction { get; set; } = Direction.Unknown;
+        public string Container { get; set; } = string.Empty;
+        public string NPC { get; set; } = string.Empty;
         public string Remaining { get; set; } = string.Empty;
         public string ItemOneText { get; set; } = "";
         public string ItemTwoText { get; set; } = "";
@@ -23,12 +23,12 @@ namespace AppLogic.Logic
         {
             string skip = text.ToLower();
             bool output = true;
-            if (!skip.Contains("itemone") && ItemOne != Items.Unknown) output = false;
-            if (!skip.Contains("itemtwo") && ItemTwo != Items.Unknown) output = false;
-            if (!skip.Contains("command") && Command != Commands.Unknown) output = false;
-            if (!skip.Contains("obstruction") && Obstruction != Obstructions.Unknown) output = false;
-            if (!skip.Contains("direction") && Direction != Directions.Unknown) output = false;
-            if (!skip.Contains("container") && Container != Containers.Unknown) output = false;
+            if (!skip.Contains("itemone") && ItemOne != string.Empty) output = false;
+            if (!skip.Contains("itemtwo") && ItemTwo != string.Empty) output = false;
+            if (!skip.Contains("command") && Command != Command.Unknown) output = false;
+            if (!skip.Contains("obstruction") && Obstruction != string.Empty) output = false;
+            if (!skip.Contains("direction") && Direction != Direction.Unknown) output = false;
+            if (!skip.Contains("container") && Container != string.Empty) output = false;
             return output;
         }
         public bool RemainingContains(string text)

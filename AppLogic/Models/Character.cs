@@ -9,6 +9,7 @@ namespace AppLogic.Models
         public string Name { get; set; } = string.Empty;
         public List<Item> Items { get; set; } = new List<Item>();
         public Container? CarryingContainer { get; set; } = null;
+        public int SaveLocationID { get; set; } = 0;
         public void AddItem(Item item)
         {
             Items.Add(item);
@@ -17,11 +18,11 @@ namespace AppLogic.Models
         {
             Items.Remove(item);
         }
-        public bool HasItem(Items itemType)
+        public bool HasItem(string itemType)
         {
             return Items.Any(item => item.Type == itemType);
         }
-        public Item? GetItem(Items itemType)
+        public Item? GetItem(string itemType)
         {
             return Items.Find(item => item.Type == itemType);
         }

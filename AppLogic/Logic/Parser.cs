@@ -1,215 +1,203 @@
 ﻿using AppLogic.Enums;
+using AppLogic.Models;
+using System.Collections.Immutable;
+using System.Reflection.Metadata;
 using System.Security.Permissions;
 
 namespace AppLogic.Logic
 {
     public static class Parser
     {
-        private readonly static Dictionary<string, Directions> directions = new()
+        private readonly static Dictionary<string, Direction> DirectionDefinitions = new()
         {
-            {"north door", Directions.North },
-            {"south door", Directions.South },
-            {"east door", Directions.East },
-            {"west door", Directions.West },
-            {"north", Directions.North },
-            {"south", Directions.South },
-            {"east", Directions.East },
-            {"west", Directions.West }
+            {"north door", Enums.Direction.North },
+            {"south door", Enums.Direction.South },
+            {"east door", Enums.Direction.East },
+            {"west door", Enums.Direction.West },
+            {"north", Enums.Direction.North },
+            {"south", Enums.Direction.South },
+            {"east", Enums.Direction.East },
+            {"west", Enums.Direction.West }
 
         };
-        private readonly static Dictionary<string, Obstructions> obstructions = new()
+        private static Dictionary<string, string> ObstructionDefinitions = new();
+        private static Dictionary<string, Command> CommandDefinitions = new()
         {
-            {"fire", Obstructions.Fire },
-            {"boulder", Obstructions.Boulder},
-            {"barricade", Obstructions.Barricade }
-        };
-        private readonly static Dictionary<string, Commands> commands = new()
-        {
-            {"a really long way to say take", Commands.Take },
-            {"look at", Commands.Inspect },
-            {"put", Commands.Store },
-            {"pick up", Commands.Take },
-            {"throw away", Commands.Drop },
-            {"grab", Commands.Take },
-            {"use", Commands.Use },
-            {"take", Commands.Take},
-            {"drop", Commands.Drop },
-            {"move", Commands.Move },
-            {"go", Commands.Move },
-            {"walk", Commands.Move },
-            {"inventory", Commands.Inventory },
-            {"inspect", Commands.Inspect },
-            {"check", Commands.Check },
-            {"translocate", Commands.Move },
-            {"advance", Commands.Move },
-            {"manoeuver", Commands.Move },
-            {"run", Commands.Move },
-            {"crawl", Commands.Move },
-            {"teleport", Commands.Move },
-            {"reposition", Commands.Move },
-            {"jog", Commands.Move },
-            {"sprint", Commands.Move },
-            {"look", Commands.Inspect },
-            {"trip", Commands.Move },
-            {"fall", Commands.Move },
-            {"collapse", Commands.Move },
-            {"roll", Commands.Move },
-            {"head", Commands.Move },
-            {"utilize", Commands.Use },
-            {"throw", Commands.Drop },
-            {"discard", Commands.Drop },
-            {"get", Commands.Take },
-            {"examine", Commands.Inspect },
-            {"study", Commands.Inspect },
-            {"read", Commands.Inspect },
-            {"store", Commands.Store },
-            {"give", Commands.Give },
-            {"gift", Commands.Give },
-            {"talk", Commands.Talk },
-            {"speak", Commands.Talk },
-            {"stop talking", Commands.Stop },
-            {"stop", Commands.Stop },
-            {"help", Commands.Help },
+            {"a really long way to say take", Enums.Command.Take },
+            {"look at", Enums.Command.Inspect },
+            {"put", Enums.Command.Store },
+            {"pick up", Enums.Command.Take },
+            {"throw away", Enums.Command.Drop },
+            {"grab", Enums.Command.Take },
+            {"use", Enums.Command.Use },
+            {"take", Enums.Command.Take},
+            {"drop", Enums.Command.Drop },
+            {"move", Enums.Command.Move },
+            {"go", Enums.Command.Move },
+            {"walk", Enums.Command.Move },
+            {"inventory", Enums.Command.Inventory },
+            {"inspect", Enums.Command.Inspect },
+            {"check", Enums.Command.Check },
+            {"translocate", Enums.Command.Move },
+            {"advance", Enums.Command.Move },
+            {"manoeuver", Enums.Command.Move },
+            {"run", Enums.Command.Move },
+            {"crawl", Enums.Command.Move },
+            {"teleport", Enums.Command.Move },
+            {"reposition", Enums.Command.Move },
+            {"jog", Enums.Command.Move },
+            {"sprint", Enums.Command.Move },
+            {"look", Enums.Command.Inspect },
+            {"trip", Enums.Command.Move },
+            {"fall", Enums.Command.Move },
+            {"collapse", Enums.Command.Move },
+            {"roll", Enums.Command.Move },
+            {"head", Enums.Command.Move },
+            {"utilize", Enums.Command.Use },
+            {"throw", Enums.Command.Drop },
+            {"discard", Enums.Command.Drop },
+            {"get", Enums.Command.Take },
+            {"examine", Enums.Command.Inspect },
+            {"study", Enums.Command.Inspect },
+            {"read", Enums.Command.Inspect },
+            {"store", Enums.Command.Store },
+            {"give", Enums.Command.Give },
+            {"gift", Enums.Command.Give },
+            {"talk", Enums.Command.Talk },
+            {"speak", Enums.Command.Talk },
+            {"stop talking", Enums.Command.Stop },
+            {"stop", Enums.Command.Stop },
+            {"help", Enums.Command.Help },
         };
 
-        private readonly static Dictionary<string, Items> items = new()
+        private static Dictionary<string, string> ItemDefinitions = new();
+        private static Dictionary<string, string> ContainerDefinitions = new();
+        private static Dictionary<string, string> NpcDefinitions = new();
+        public static void UpdateContainerIdentifiers(List<Container> allContainers)
         {
-            {"painted figurine", Items.PaintedFigurine },
-            {"paintedfigurine", Items.PaintedFigurine },
-            {"fire extinguisher tank", Items.FireExtinguisherTank },
-            {"fireextinguishertank", Items.FireExtinguisherTank },
-            {"second key fragment", Items.SecondKeyFragment },
-            {"secondkeyfragment", Items.SecondKeyFragment },
-            {"green key", Items.GreenKey },
-            {"greenkey", Items.GreenKey },
-            {"basket with figurine", Items.BasketWithFigurine },
-            {"basketwithfigurine", Items.BasketWithFigurine },
-            {"basket of gifts", Items.BasketsWithGifts },
-            {"basketofgifts", Items.BasketsWithGifts },
-            {"lump of dirt", Items.DirtLump },
-            {"dirtlump", Items.DirtLump },
-            {"key fragment", Items.KeyFragment },
-            {"keyfragment", Items.KeyFragment },
-            {"wine bottle", Items.WineBottle },
-            {"winebottle", Items.WineBottle },
-            {"purple key", Items.PurpleKey },
-            {"purplekey", Items.PurpleKey },
-            {"fire extinguisher", Items.Extinguisher },
-            {"opened wine bottle", Items.OpenedWineBottle },
-            {"openedwinebottle", Items.OpenedWineBottle },
-            {"small key", Items.SmallKey },
-            {"smallkey", Items.SmallKey },
-            {"corkscrew", Items.Corkscrew },
-            {"opened bottle", Items.OpenedBottle },
-            {"openedbottle", Items.OpenedBottle },
-            {"bottle", Items.Bottle },
-            {"extinguisher", Items.Extinguisher },
-            {"shovel", Items.Shovel },
-            {"key", Items.Key },
-            {"note", Items.Note },
-            {"instructions", Items.Note },
-            {"pickaxe", Items.Pickaxe },
-            {"crowbar", Items.Crowbar },
-            {"carving knife", Items.CarvingKnife },
-            {"carvingknife", Items.CarvingKnife },
-            {"wood", Items.Wood },
-            {"paint", Items.Paint },
-            {"figurine", Items.Figurine },
-            {"diary", Items.Diary },
-            {"handle", Items.Handle },
-            {"flowers", Items.Flowers },
-            {"basket", Items.Basket },
-        };
-        private readonly static Dictionary<string, Containers> containers = new()
+            ContainerDefinitions.Clear();
+            foreach (Container container in allContainers)
+            {
+                string type = container.Type;
+                foreach (string identifier in container.Identifiers)
+                {
+                    ContainerDefinitions.Add(identifier, type);
+                }
+            }
+            ContainerDefinitions = ContainerDefinitions.OrderByDescending(x => x.Key.Length).ToDictionary(x => x.Key, x => x.Value);
+
+        }
+        public static void UpdateItemIdentifiers(List<Item> allItems)
         {
-            {"cupboard", Containers.Cupboard },
-            {"small box", Containers.ShoeBox },
-            {"shoebox", Containers.ShoeBox },
-            {"kitchen counter", Containers.KitchenCounter },
-            {"kitchencounter", Containers.KitchenCounter },
-            {"counter", Containers.KitchenCounter },
-            {"desk", Containers.Desk },
-            {"box", Containers.ShoeBox }
-        };
-        private readonly static Dictionary<string, NPCs> npcs = new()
+            ItemDefinitions.Clear();
+            foreach (Item item in allItems)
+            {
+                string type = item.Type;
+                foreach (string identifier in item.Identifiers)
+                {
+                    ItemDefinitions.Add(identifier, type);
+                }
+            }
+            ItemDefinitions = ItemDefinitions.OrderByDescending(x => x.Key.Length).ToDictionary(x => x.Key, x => x.Value);
+        }
+        public static void UpdateNPCIdentifiers(List<NPC> allNPCs)
         {
-            {"rhys", NPCs.Rhys },
-            {"person", NPCs.Rhys },
-            {"old man", NPCs.Rhys },
-            {"oldman", NPCs.Rhys }
-        };
-        public static NPCs NPC(string input)
+            NpcDefinitions.Clear();
+            foreach (NPC npc in allNPCs)
+            {
+                string type = npc.Type;
+                foreach (string identifier in npc.Identifiers)
+                {
+                    NpcDefinitions.Add(identifier, type);
+                }
+            }
+            NpcDefinitions = NpcDefinitions.OrderByDescending(x => x.Key.Length).ToDictionary(x => x.Key, x => x.Value);
+        }
+        public static void UpdateObstructionIdentifiers(List<Obstruction> allObstructions)
+        {
+            ObstructionDefinitions.Clear();
+            foreach (Obstruction obs in allObstructions)
+            {
+                string type = obs.Type;
+                foreach (string identifier in obs.Identifiers)
+                {
+                    ObstructionDefinitions.Add(identifier, type);
+                }
+            }
+            ObstructionDefinitions = ObstructionDefinitions.OrderByDescending(x => x.Key.Length).ToDictionary(x => x.Key, x => x.Value);
+        }
+        public static string NPC(string input)
         {
             string text = input.ToLower();
-            if (npcs.ContainsKey(text))
+            if (NpcDefinitions.ContainsKey(text))
             {
-                return npcs[text];
+                return NpcDefinitions[text];
             }
             else
             {
-                return NPCs.Rhys;
+                return string.Empty;
             }
         }
-        public static Containers Container(string input)
+        public static string Container(string input)
         {
             string text = input.ToLower();
-            if (containers.ContainsKey(text))
+            if (ContainerDefinitions.ContainsKey(text))
             {
-                return containers[text];
+                return ContainerDefinitions[text];
             }
             else
             {
-                return Containers.Unknown;
+                return string.Empty;
             }
         }
-        public static Directions Direction(string input)
+        public static Direction Direction(string input)
         {
             string text = input.ToLower();
 
-            if (directions.ContainsKey(text))
+            if (DirectionDefinitions.ContainsKey(text))
             {
-                return directions[text];
+                return DirectionDefinitions[text];
             }
             else 
             {
-                return Directions.Unknown;
+                return Enums.Direction.Unknown;
             }
         }
-        public static Commands Command(string input)
+        public static Command Command(string input)
         {
             string text = input.ToLower();
 
-            bool inDictionary = commands.ContainsKey(text);
+            bool inDictionary = CommandDefinitions.ContainsKey(text);
             if (inDictionary)
             {
-                return commands[text];
+                return CommandDefinitions[text];
             }
             else
             {
-                return Commands.Unknown;
+                return Enums.Command.Unknown;
             }
         }
-        public static Items Item(string input)
+        public static string Item(string input)
         {
             string text = input.ToLower();
-            if (items.ContainsKey(text))
+            if (ItemDefinitions.ContainsKey(text))
             {
-                return items[text];
+                return ItemDefinitions[text];
             }
             else
             {
-                return Items.Unknown;
+                return string.Empty;
             }
         }
-        public static Obstructions Obstruction(string text)
+        public static string Obstruction(string text)
         {
-            if (obstructions.ContainsKey(text))
+            if (ObstructionDefinitions.ContainsKey(text))
             {
-                return obstructions[text];
+                return ObstructionDefinitions[text];
             }
             else
             {
-                return Obstructions.Unknown;
+                return string.Empty;
             }
         }
         public static ParsedText ParseText(string input)
@@ -236,7 +224,7 @@ namespace AppLogic.Logic
         }
         private static string ParseDirection(string input, ParsedText parsed)
         {
-            foreach (string direction in directions.Keys)
+            foreach (string direction in DirectionDefinitions.Keys)
             {
                 if (input.EndsWith(direction))
                 {
@@ -250,7 +238,7 @@ namespace AppLogic.Logic
         }
         private static string ParseObstruction(string input, ParsedText parsed)
         {
-            foreach (string obstruction in obstructions.Keys)
+            foreach (string obstruction in ObstructionDefinitions.Keys)
             {
                 if (input.EndsWith(obstruction))
                 {
@@ -265,7 +253,7 @@ namespace AppLogic.Logic
         }
         private static string ParseCommand(string input, ParsedText parsed)
         {
-            foreach (string command in commands.Keys)
+            foreach (string command in CommandDefinitions.Keys)
             {
                 if (input.StartsWith(command))
                 {
@@ -279,7 +267,7 @@ namespace AppLogic.Logic
         }
         private static string ParseItem(string input, ParsedText parsed, int itemNr)
         {
-            foreach (string item in items.Keys)
+            foreach (string item in ItemDefinitions.Keys)
             {
                 if (itemNr == 1 && input.StartsWith(item))
                 {
@@ -300,7 +288,7 @@ namespace AppLogic.Logic
         }
         private static string ParseContainer(string input, ParsedText parsed)
         {
-            foreach (string container in containers.Keys)
+            foreach (string container in ContainerDefinitions.Keys)
             {
                 if (input.EndsWith(container))
                 {
@@ -314,7 +302,7 @@ namespace AppLogic.Logic
         }
         private static string ParseNPC(string input, ParsedText parsed)
         {
-            foreach (string npc in npcs.Keys)
+            foreach (string npc in NpcDefinitions.Keys)
             {
                 if (input.EndsWith(npc))
                 {

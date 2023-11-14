@@ -1,3 +1,5 @@
+using Adventure.Classes.Forms;
+
 namespace Adventure
 {
     internal static class Program
@@ -11,7 +13,7 @@ namespace Adventure
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new GameForm());
+            Application.Run(new WelcomeForm());
         }
     }
 }

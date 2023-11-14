@@ -5,5 +5,6 @@
         public string Name { get; set; } = string.Empty;
         public int[]? ItemIDs { get; set; } = null;
         public int? ContainerID { get; set; } = null;
+        public int SaveLocationID { get; set; } = 0;
     }
 }

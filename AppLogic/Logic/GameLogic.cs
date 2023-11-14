@@ -9,78 +9,101 @@ namespace AppLogic.Logic
     public class GameLogic
     {
         private GameState GameState { get; set; }
-        public GameLogic()
+        public GameLogic(string saveFile = "")
         {
-            Data.LoadAllData();
-            GameState = new GameState();
-        }
-        public Outcome DecisionTree(string text)
-        {
-            Outcome outcome = new();
-            Dictionary<Commands, Func<ParsedText, Outcome, string>> methods = new()
+            if (saveFile == "")
             {
-                {Commands.Drop, DropX },
-                {Commands.Inventory, ShowPlayerInventory},
-                {Commands.Move, MoveCharacter },
-                {Commands.Check, CheckDirection },
-                {Commands.Examine, InspectX },
-                {Commands.Inspect, InspectX },
-                {Commands.Take, TakeX},
-                {Commands.Use, UseItemOnX },
-                {Commands.Give, GiveToNPC },
-                {Commands.Stop, StopTalkingToNPC },
-                {Commands.Help, HelpText },
-                {Commands.Talk, StartTalkingToNPC },
-                {Commands.Store, PutItemInContainer }
-            };
-            ParsedText parsedText = Parser.ParseText(text.ToLower());
-            if (parsedText.Command == Commands.Stop && GameState.ConversationMode)
-            {
-                outcome.Message = StopTalkingToNPC(parsedText, outcome);
-            } 
-            else if (parsedText.Command == Commands.Give && GameState.ConversationMode)
-            {
-                outcome.Message = GiveToNPC(parsedText, outcome);
-            }
-            else if (GameState.ConversationMode)
-            {
-                outcome.Message = TalkToNPC(text, outcome);
-            }
-            else if (methods.ContainsKey(parsedText.Command))
-            {
-                outcome.Message = methods[parsedText.Command](parsedText, outcome);
+                Data.LoadAllData();
+                GameState = new GameState(new Character());
+
             }
             else
             {
-                outcome.Message = "Command was not recognized";
+                Character PC = Data.LoadSave(saveFile);
+                GameState = new GameState(PC);
             }
+        }
+        
+        public Outcome DecisionTree(string text)
+        {
+            Outcome outcome = new();
+            ParsedText parsedText = Parser.ParseText(text.ToLower());
+            Dictionary<Mode, Action<string, ParsedText, Outcome>> ModeSelection = new()
+            {
+                {Mode.Dialogue, DialogueDecisionTree },
+                {Mode.Adventure, AdventureDecisionTree },
+            };
+            ModeSelection[GameState.Mode](text, parsedText, outcome);
             outcome.CurrentLocation = GameState.GetCurrentLocationInfo();
             outcome.InventoryNames = GameState.GetPlayerItems();
             outcome.HasWon = GameState.IsWon;
             return outcome;
         }
+        private void AdventureDecisionTree(string text, ParsedText parsed, Outcome outcome)
+        {
+            Dictionary<Command, Func<ParsedText, Outcome, string>> methods = new()
+            {
+                {Command.Drop, DropX },
+                {Command.Inventory, ShowPlayerInventory},
+                {Command.Move, MoveCharacter },
+                {Command.Check, CheckDirection },
+                {Command.Examine, InspectX },
+                {Command.Inspect, InspectX },
+                {Command.Take, TakeX},
+                {Command.Use, UseItemOnX },
+                {Command.Give, GiveToNPC },
+                {Command.Stop, StopTalkingToNPC },
+                {Command.Help, HelpText },
+                {Command.Talk, StartTalkingToNPC },
+                {Command.Store, PutItemInContainer }
+            };
+            if (methods.ContainsKey(parsed.Command))
+            {
+                outcome.Message = methods[parsed.Command](parsed, outcome);
+            }
+            else
+            {
+                outcome.Message = "Command was not recognized";
+            }
+        }
+        private void DialogueDecisionTree(string text, ParsedText parsed, Outcome outcome)
+        {
+            if (parsed.Command == Command.Stop && GameState.Mode == Mode.Dialogue)
+            {
+                outcome.Message = StopTalkingToNPC(parsed, outcome);
+            }
+            else if (parsed.Command == Command.Give && GameState.Mode == Mode.Dialogue)
+            {
+                outcome.Message = GiveToNPC(parsed, outcome);
+            }
+            else if (GameState.Mode == Mode.Dialogue)
+            {
+                outcome.Message = TalkToNPC(text, outcome);
+            }
+
+        }
         private string StartTalkingToNPC(ParsedText parsed, Outcome outcome)
         {
-            if (GameState.ConversationMode) return $"You're already talking to someone.";
-            if (parsed.NPC != NPCs.Unknown && parsed.Command == Commands.Talk
+            if (GameState.Mode == Mode.Dialogue) return $"You're already talking to someone.";
+            if (parsed.NPC != string.Empty && parsed.Command == Command.Talk
                 && parsed.RemainingContains("to"))
             {
-                return GameState.StartTalkingToNPC();
+                return GameState.StartTalkingToNPC(parsed, outcome);
             }
             return "Command was not recognized.";
 
         }
         private string TalkToNPC(string text, Outcome outcome)
         {
-            return GameState.TalkToNPC(text);
+            return GameState.TalkToNPC(text, outcome);
         }
         private string StopTalkingToNPC(ParsedText parsed, Outcome outcome)
         {
-            return GameState.StopTalkingToNPC();
+            return GameState.StopTalkingToNPC(outcome);
         }
         private string GiveToNPC(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.RemainingContains("to") && parsed.ItemOne != Items.Unknown && parsed.NPC != NPCs.Unknown)
+            if (parsed.RemainingContains("to") && parsed.ItemOne != string.Empty && parsed.NPC != string.Empty)
             {
                 return GameState.GiftNPC(parsed);
             }
@@ -88,11 +111,11 @@ namespace AppLogic.Logic
             {
                 return "The format is 'give item to NPC'.";
             }
-            if (parsed.NPC == NPCs.Unknown)
+            if (parsed.NPC == string.Empty)
             {
                 return "You need to specify the name of the NPC.";
             }
-            if (parsed.ItemOne == Items.Unknown)
+            if (parsed.ItemOne == string.Empty)
             {
                 return "You need to specify the item.";
             }
@@ -101,75 +124,76 @@ namespace AppLogic.Logic
         private string InspectX(ParsedText parsed, Outcome outcome)
         {
             bool isRemainingZero = parsed.Remaining.Length == 0;
-            if (parsed.ItemOne != Items.Unknown && isRemainingZero
+            if (parsed.ItemOne != string.Empty && isRemainingZero
                 && parsed.HasOnly("itemone command"))
             {
                 return GameState.ExamineItem(parsed);
             }
-            if (parsed.Container != Containers.Unknown && isRemainingZero
+            if (parsed.NPC != string.Empty) return GameState.InspectNPC(parsed);
+            if (parsed.Container != string.Empty && isRemainingZero
                 && parsed.HasOnly("container command"))
             {
                 return GameState.ExamineContainer(parsed);
 
             }
-            if (parsed.Container != Containers.Unknown && parsed.RemainingContains("on in")
-                && parsed.ItemOne != Items.Unknown && parsed.HasOnly("container command itemone"))
+            if (parsed.Container != string.Empty && parsed.RemainingContains("on in")
+                && parsed.ItemOne != string.Empty && parsed.HasOnly("container command itemone"))
             {
                 return GameState.InspectItemInContainer(parsed);
             }
-            if (parsed.Direction != Directions.Unknown && isRemainingZero 
+            if (parsed.Direction != Direction.Unknown && isRemainingZero 
                 && parsed.HasOnly("direction command")) 
             {
                 (bool check, string output) = GameState.CheckDirection(parsed);
                 return output;
             }
             if (isRemainingZero && parsed.HasOnly("command")) return GameState.InspectLocation();
-            if (parsed.Direction == Directions.Unknown && isRemainingZero) return "Not a valid direction";
+            if (parsed.Direction == Direction.Unknown && isRemainingZero) return "Not a valid direction";
             return "Command was not recognized.";
             
         }
         private string PutItemInContainer(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.Container == Containers.Unknown) return "You need to specify the container.";
+            if (parsed.Container == string.Empty) return "You need to specify the container.";
             if (!parsed.RemainingContains("in")) return "The format is 'put item in container'.";
-            if (parsed.ItemOne == Items.Unknown) return "You need to specify the item.";
+            if (parsed.ItemOne == string.Empty) return "You need to specify the item.";
             return GameState.PutItemInContainer(parsed);
         }
         private string DropX(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.ItemOne != Items.Unknown) return GameState.DropItem(parsed);
-            if (parsed.Container != Containers.Unknown && parsed.HasOnly("container command")) return GameState.DropContainer(parsed);
+            if (parsed.ItemOne != string.Empty) return GameState.DropItem(parsed);
+            if (parsed.Container != string.Empty && parsed.HasOnly("container command")) return GameState.DropContainer(parsed);
             return GameState.DropItem(parsed);
         }
         private string TakeX(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.Container != Containers.Unknown && parsed.Remaining.Contains("from")
-                && parsed.ItemOne != Items.Unknown && parsed.Remaining.Length == 4)
+            if (parsed.Container != string.Empty && parsed.Remaining.Contains("from")
+                && parsed.ItemOne != string.Empty && parsed.Remaining.Length == 4)
             {
                 return GameState.PickUpItemFromContainer(parsed);
             }
-            if (parsed.ItemOne != Items.Unknown &&parsed.Remaining.Length == 0) return GameState.PickUpItem(parsed);
-            if (parsed.Container != Containers.Unknown && parsed.HasOnly("container command")) return GameState.TakeContainer(parsed);
+            if (parsed.ItemOne != string.Empty && parsed.Remaining.Length == 0) return GameState.PickUpItem(parsed);
+            if (parsed.Container != string.Empty && parsed.HasOnly("container command")) return GameState.TakeContainer(parsed);
             return "Command was not recognized.";
         }
         private string UseItemOnX(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.ItemOne == Items.Unknown &&
-                (parsed.Obstruction == Obstructions.Unknown || parsed.ItemTwo == Items.Unknown ||
-                parsed.Direction != Directions.Unknown) && !parsed.Remaining.Contains("on in") && parsed.Remaining.Length != 2)
+            if (parsed.ItemOne == string.Empty &&
+                (parsed.Obstruction == string.Empty || parsed.ItemTwo == string.Empty ||
+                parsed.Direction != Direction.Unknown) && !parsed.Remaining.Contains("on in") && parsed.Remaining.Length != 2)
             {
                 return "Command was not recognized.";
             }
 
-            if (parsed.ItemTwo != Items.Unknown)
+            if (parsed.ItemTwo != string.Empty)
             {
                 return GameState.UseItemOnItem(parsed);
             }
-            if (parsed.Obstruction != Obstructions.Unknown)
+            if (parsed.Obstruction != string.Empty)
             {
                 return GameState.ClearObstruction(parsed);
             }
-            if (parsed.ItemOne != Items.Unknown && parsed.Direction != Directions.Unknown)
+            if (parsed.ItemOne != string.Empty && parsed.Direction != Direction.Unknown)
             {
                 return GameState.UnlockDoor(parsed);
             }
@@ -177,7 +201,7 @@ namespace AppLogic.Logic
         }
         private string CheckDirection(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.Direction == Directions.Unknown)
+            if (parsed.Direction == Direction.Unknown)
             {
                 return "The direction needs to be North, South, East or West.";
             }
@@ -187,7 +211,7 @@ namespace AppLogic.Logic
         }
         private string MoveCharacter(ParsedText parsed, Outcome outcome)
         {
-            if (parsed.Direction == Directions.Unknown)
+            if (parsed.Direction == Direction.Unknown)
             {
                 return "The direction needs to be North, South, East or West.";
             }
@@ -230,9 +254,11 @@ namespace AppLogic.Logic
                    $"\n talk to 'npc' - talks to an NPC." +
                    $"\n give 'item' to 'npc' - gives item to NPC.";
         }
-        public void SaveGame()
+        public string SaveGame(string saveFileName)
         {
-            GameState.SaveCharacter();
+            Character PC = GameState.GetCharacter();
+            string filePath = Data.SaveGame(saveFileName, PC);
+            return @$"Game saved as {saveFileName} at {filePath}.";
         }
     }
 }
